@@ -105,7 +105,7 @@ function Home_E() {
                     </div>
                     <div className='menu_link'>
                         <a ></a>
-                        <p>Stage de perfectionnent à l'étrangé</p>
+                        <p>Manifestation Scientifique Internationale</p>
                         
                     </div>
                 </li>
@@ -116,7 +116,7 @@ function Home_E() {
                     </div>
                     <div className='menu_link'>
                         <a ></a>
-                        <p>Stage de perfectionnent à l'étrangé</p>
+                        <p>Séjour scientifique de courte durée de haut niveau</p>
                         
                     </div>
                 </li>

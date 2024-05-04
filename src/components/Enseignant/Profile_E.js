@@ -172,8 +172,8 @@ function Profile_E() {
                 </nav>
       <section className="main">
        
-      <div className='container_form_edit_admin'>  
-            <h1>Profile Admin</h1>
+      <div >  
+            <h1>Profile </h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="Firstname">Firstname:</label>
                 <input type="text" name="Firstname" value={formData.Firstname_fr} onChange={handleChange} />

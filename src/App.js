@@ -24,6 +24,7 @@ import Doc_dem_SPE from './components/Doctorant/Doc_dem_SPE';
 import BinomesComponent from './components/vice/Binome_vice';
 import Profile_E from './components/Enseignant/Profile_E';
 import UpdateSessions from './components/Secrétaire/Gerer_session';
+import Page_SPE from './components/Doctorant/Demande/Page_SPE';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
@@ -50,7 +51,7 @@ function App() {
           <Route path="/homeDoctorant/:id" element={<Home_D />} />
           <Route path="/profileEnseignant/:id" element={<Profile_E />} />
           <Route path="/Session" element={<UpdateSessions />} />
-          
+          <Route path="/Page_SPE" element={<Page_SPE />} />
           <Route path="/demandeSPE" element={<Doc_dem_SPE />} />
           <Route path="/LoginG" element={<LoginG />} />
           <Route path="/Admin/:id/Profile" element={<Admin_profile />} />

@@ -1,96 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 function UpdateSession({ sessionId, sessionName }) {
   
-    const [message, setMessage] = useState('');
-  const [formData, setFormData] = useState({
-    Delai_fermeture: ''
-    
-});
+    const [ouvert, setOuvert] = useState();
 
+    useEffect(() => {
+        fetch(`/sessions/${sessionId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch session data');
+                }
+                return response.json();
+            })
+            .then(session => {
+              console.log('Session Est_ouverte:', session.id,session.Est_ouverte);
+              const sessionIsOpen = session.Est_ouverte === "true" ? true : false;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-        ...formData,
-        [name]: value
-    });
-};
+                setOuvert(sessionIsOpen);
+            })
+            .catch(error => {
+                console.error('Error fetching session data:', error);
+            });
+    }, [sessionId]);
 
-  const handleSubmit = async (e) => {
+    const handleOpenSession = async () => {
+        try {
+            const response = await Axios.put(`http://localhost:3002/sessions/${sessionId}/open`);
+            setOuvert(true);
+            alert('Session opened successfully');
+        } catch (error) {
+            console.error('Error opening session:', error);
+            alert('Failed to open session');
+        }
+    };
 
+    const handleCloseSession = async () => {
+        try {
+            const response = await Axios.put(`http://localhost:3002/sessions/${sessionId}/close`);
+            setOuvert(false);
+            alert('Session closed successfully');
+        } catch (error) {
+            console.error('Error closing session:', error);
+            alert('Failed to close session');
+        }
+    };
 
-    e.preventDefault();
-        
-
-        fetch(`/sessions/${sessionId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => {
-                    throw new Error(data.error || 'Failed to update session');
-                });
-            } else {
-                // Vice doyenne updated successfully
-                alert('sesion updated successfully');
-                //window.location.href = '/Admin/vice_deans';
-            }
-        })
-        .catch(error => {
-            if (error.response && error.response.status === 400) {
-                // Si le backend a renvoyé une erreur avec un code 400,
-                // cela signifie que le vice-doyenne n'est pas un enseignant.
-                // Afficher le message d'erreur renvoyé par le backend.
-                error.response.json().then(data => {
-                    alert(data.error);
-                    setMessage(data.error); // Stocker le message d'erreur dans l'état local pour affichage
-                });
-            } else {
-                // Si une autre erreur s'est produite, afficher un message générique.
-                alert(error.message || 'Failed to update Session');
-                console.error('Error updating Session:', error);
-            }
-        });
-        
-
-    
-  };
-
-  return (
-    <div>
-     <form onSubmit={handleSubmit}>
-      <h2>Update Session Duration for {sessionName}</h2>
-
-      <label htmlFor="Delai_fermeture">New Duration (in days):</label>
-                <input type="number" name="Delai_fermeture" value={formData.Delai_fermeture} onChange={handleChange} />
-      <button type="submit">Update Session</button>
-      </form>
-    </div>
-  );
+    return (
+        <div>
+            <h2>Update Session Status for {sessionName}</h2>
+            {console.log('Session Est_ouverte:',ouvert)}
+            {ouvert ? (
+                <button className="btn-sup" onClick={handleCloseSession}>Close Session</button>
+            ) : (
+                <button className="btn-ajout" onClick={handleOpenSession}>Open Session</button>
+            )}
+        </div>
+    );
 }
 
 function UpdateSessions() {
-  // Données des sessions
-  const sessions = [
-    { id: 1, name: "Manifestation Scientifique Internationale " },
-    { id: 2, name: "Séjour scientifique de courte durée de haut niveau" },
-    { id: 3, name: "Stage de perfectionnement à l’étrangé" },
-    { id: 4, name: "Session CSF" }
-  ];
+    const sessions = [
+        { id: 1, name: "Manifestation Scientifique Internationale " },
+        { id: 2, name: "Séjour scientifique de courte durée de haut niveau" },
+        { id: 3, name: "Stage de perfectionnement à l’étrangé" },
+        { id: 4, name: "Session CSF" }
+    ];
 
-  return (
-    <div>
-      {sessions.map(session => (
-        <UpdateSession key={session.id} sessionId={session.id} sessionName={session.name} />
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            {sessions.map(session => (
+                <UpdateSession key={session.id} sessionId={session.id} sessionName={session.name} />
+            ))}
+        </div>
+    );
 }
 
 export default UpdateSessions;
+
+

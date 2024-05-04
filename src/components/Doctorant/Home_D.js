@@ -107,17 +107,6 @@ function Home_D() {
                     </div>
                 </li>
 
-                <li className='megamenu_item'>
-                    <div className='menu_icone'>
-
-                    </div>
-                    <div className='menu_link'>
-                        <a ></a>
-                        <p>Stage de perfectionnent à l'étrangé</p>
-                        
-                    </div>
-                </li>
-
             </ul>
 
         </div>
