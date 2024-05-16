@@ -1,4 +1,3 @@
-// Importez React, useState et useEffect
 import React, { useState, useEffect } from "react";
 // Importez les éléments de react-router-dom
 import { NavLink, Link } from "react-router-dom";
@@ -13,7 +12,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./vice.css";
 
 // Définissez votre composant Admin_Viced_List
-function Comission_gestion() {
+function Doctorant() {
   // Déclarez votre état pour stocker les données des enseignants et le terme de recherche
   const { id } = useParams();
   const [enseignants, setenseignants] = useState([]);
@@ -81,33 +80,7 @@ function Comission_gestion() {
       .catch((error) => {
         console.error("Error fetching enseignant data:", error);
       });
-
-    // Fetch commission data from backend
-    fetch("/membre_commission/info")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch commission data");
-        }
-        return response.json();
-      })
-      .then(({ commission, president }) => {
-        // Mettre à jour l'état des enseignants en fonction de la commission et du président
-        setenseignants((enseignants) => {
-          return enseignants.map((enseignant) => {
-            const isInCommission = commission.includes(enseignant.Username_NSS)
-              ? true
-              : false;
-            const isPresident = president.includes(enseignant.Username_NSS)
-              ? true
-              : false;
-            return { ...enseignant, isInCommission, isPresident };
-          });
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching commission data:", error);
-      });
-  }, []);
+  });
 
   const handleClickAdd = (username) => {
     fetch("/membre_commission", {
@@ -159,147 +132,11 @@ function Comission_gestion() {
       });
   };
 
-  const handleMakePresident = (username) => {
-    fetch("/membre_commission/president/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ Username_NSS: username }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to make enseignant president");
-        }
-        // Mettre à jour la liste des enseignants après avoir défini le président de la commission
-        setenseignants(
-          enseignants.map((enseignant) => {
-            if (enseignant.Username_NSS === username) {
-              return { ...enseignant, isPresident: true };
-            }
-            return enseignant;
-          })
-        );
-      })
-      .catch((error) => {
-        console.error("Error making enseignant president:", error);
-      });
-  };
-
-  const handleRemovePresident = (username) => {
-    fetch(`/membre_commission/${username}/president/delete`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            "Failed to remove enseignant from president position"
-          );
-        }
-        // Mettre à jour la liste des enseignants après la suppression du président de la commission
-        setenseignants(
-          enseignants.map((enseignant) => {
-            if (enseignant.Username_NSS === username) {
-              return { ...enseignant, isPresident: false };
-            }
-            return enseignant;
-          })
-        );
-      })
-      .catch((error) => {
-        console.error(
-          "Error removing enseignant from president position:",
-          error
-        );
-      });
-  };
-
-  const handlebinome_comission = () => {
-    fetch("/binome_comission/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Binômes créés avec succès !");
-        } else {
-          console.error("Échec de la création des binômes.");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la création des binômes :", error);
-      });
-  };
-
-  // Filtrer les enseignants en fonction du terme de recherche
-  const filteredenseignants = enseignants.filter(
-    (enseignant) =>
-      enseignant.Firstname_fr.toLowerCase().includes(
-        searchTerm.firstname.toLowerCase()
-      ) &&
-      enseignant.Lastname_fr.toLowerCase().includes(
-        searchTerm.lastname.toLowerCase()
-      ) &&
-      enseignant.Username_NSS.toLowerCase().includes(
-        searchTerm.username.toLowerCase()
-      )
-  );
   const columns = [
     { field: "Username_NSS", headerName: "Social Security Number", width: 200 },
     { field: "Firstname_fr", headerName: "First name", width: 130 },
     { field: "Lastname_fr", headerName: "Last name", width: 130 },
     { field: "Grade", headerName: "Grade", width: 130 },
-    {
-      field: "isInCommission",
-      headerName: "Add Commission Member",
-      width: 150,
-      renderCell: (params) =>
-        params.value ? (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleClickRemove(params.row.Username_NSS)}
-          >
-            {" "}
-            <i className="bi bi-person-dash" style={{ fontSize: "24px" }}></i>
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleClickAdd(params.row.Username_NSS)}
-          >
-            <i className="bi bi-person-add" style={{ fontSize: "24px" }}></i>
-          </Button>
-        ),
-    },
-    {
-      field: "isPresident",
-      headerName: "Add Président",
-      width: 150,
-      renderCell: (params) =>
-        params.value ? (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleRemovePresident(params.row.Username_NSS)}
-          >
-            {" "}
-            <i className="bi bi-person-dash" style={{ fontSize: "24px" }}></i>
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleMakePresident(params.row.Username_NSS)}
-          >
-            {" "}
-            <i className="bi bi-person-check" style={{ fontSize: "24px" }}></i>
-          </Button>
-        ),
-    },
   ];
   // Retournez votre JSX pour le composant Admin_Viced_List
   return (
@@ -375,15 +212,11 @@ function Comission_gestion() {
           </div>
 
           <div>
-            <DataGrid rows={filteredenseignants} columns={columns} />
+            <DataGrid rows={enseignants} columns={columns} />
           </div>
           <div padding-left="10%">
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handlebinome_comission}
-            >
-              Create binome
+            <Button variant="contained" color="success">
+              add a TEACHER
             </Button>
           </div>
         </div>
@@ -391,27 +224,5 @@ function Comission_gestion() {
     </>
   );
 }
-
-// Styles pour l'en-tête du tableau
-const headerCellStyle = {
-  border: "1px solid #dddddd",
-  padding: "8px",
-  textAlign: "left",
-  backgroundColor: "#f2f2f2",
-};
-
-// Styles pour les cellules du tableau
-const cellStyle = {
-  border: "1px solid #000000",
-  padding: "10px 30px",
-  textAlign: "left",
-};
-
-// Styles pour les lignes de séparation
-const separatorRowStyle = {
-  height: "1px",
-  backgroundColor: "#dddddd",
-};
-
 // Exportez votre composant  Admin_super_user_List
-export default Comission_gestion;
+export default Doctorant;

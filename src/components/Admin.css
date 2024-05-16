@@ -11,48 +11,49 @@
   font-family: "Poppins", sans-serif;
 }
 
-
-
-.dashboard-container_admin  {
-    display: flex;
-    background-color: #fff;
-    /*border-radius: 30px;
-    /*box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);*/
-    position: relative;
-    /*overflow: hidden;*/
+.dashboard-container_admin {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: row;
+  background-color: #fff;
+  /* display: flex;
+  
+   position: relative;
     width: 100%;
-    height: 100vh; /* Ajustez la hauteur selon vos besoins */
-    width: 1488px; 
-    height: 750px; 
-    max-width: 500%;
-    min-height: 1000%;
+  height: 100vh; 
+  width: 1488px;
+  height: 750px;
+  max-width: 500%;
+  min-height: 1000%;*/
 }
 
-
 .nav_admin {
+  width: 250px;
+  background-color: #1679ab;
+
+  /*
   position: sticky;
   top: 0;
   left: 0;
   bottom: 0;
   width: 200px;
-  height: 100vh; /* Ajustez la hauteur selon vos besoins */
-  background-color: #512da8;
+  height: 100vh;  
   color: white;
   display: flex;
-  flex-direction: column; /* Pour aligner les éléments verticalement */
-  justify-content: flex-start; /* Pour aligner les éléments en haut */
+  flex-direction: column;  
+  justify-content: flex-start;  */
 }
 
 .navbar_admin li a {
-    font-size: 16px;
-    color: white; /* Modifier la couleur du texte en blanc */
-  }
-  
+  font-size: 16px;
+  color: white; /* Modifier la couleur du texte en blanc */
+}
 
-  .navbar_admin {
-    width: 100%; /* Ajustez la largeur selon vos besoins */
-    margin-top: 2rem; /* Ajustez la marge selon vos besoins */
-  }
+.navbar_admin {
+  width: 100%; /* Ajustez la largeur selon vos besoins */
+  margin-top: 2rem; /* Ajustez la marge selon vos besoins */
+}
 
 .logo {
   margin: 2rem 0 1rem 0;
@@ -85,8 +86,6 @@ li a {
   color: rgb(85, 83, 83);
 }
 
-
-
 .nav_admin i {
   width: 50px;
   font-size: 18px;
@@ -103,17 +102,26 @@ li a {
   width: 100%;
 }
 
-.main-top {
-  width: 100%;
+.main-top-admin {
+  /* background: #fff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;*/
   background: #fff;
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgb(43, 43, 43);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
+.top-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 15vh;
+}
 .main-body {
   padding: 10px 10px 10px 20px;
 }
@@ -245,7 +253,6 @@ h1 {
   text-decoration: none;
   transition: background-color 0.3s ease;
   font-size: 14px; /* Ajuster la taille de la police */
-
 }
 
 .btn:hover {
@@ -269,9 +276,6 @@ h1 {
   width: 1500px;
   max-width: 200%;
   min-height: 600px;
-
-
-  
 }
 
 .container_form_admin p {
@@ -375,13 +379,15 @@ h1 {
 }
 
 @keyframes move {
-  0%, 49.99% {
-      opacity: 0;
-      z-index: 1;
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
   }
-  50%, 100% {
-      opacity: 1;
-      z-index: 5;
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
   }
 }
 

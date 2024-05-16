@@ -1,10 +1,10 @@
-import React from 'react';
-import './vice.css'; // Assurez-vous d'avoir le fichier CSS correspondant
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Axios from 'axios'
-import  { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React from "react";
+import "./vice.css"; // Assurez-vous d'avoir le fichier CSS correspondant
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
 function Vice_homevice() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
@@ -12,10 +12,12 @@ function Vice_homevice() {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const response = await Axios.get(`http://localhost:3002/super_user_info/${id}`);
+        const response = await Axios.get(
+          `http://localhost:3002/super_user_info/${id}`
+        );
         setAdmin(response.data);
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.error("An error occurred:", error);
       }
     };
 
@@ -24,58 +26,42 @@ function Vice_homevice() {
 
   return (
     <div className="dashboard-container_vice ">
-      <nav className='nav_vice'>
-                    <div className="navbar_vice">
-                        <div className="logo">
-                            <img src="/pic/logo.jpg" alt="" />
-                            <h1>Logo</h1>
-                        </div>
-                        <ul>
-                        <li>
-    <Link to={`/Vice_deans/${id}/Profile`}>
-        <i className="bi bi-person-circle" style={{ marginRight: '20px' }}></i>
-        <span className="nav-item">Profile</span>
-    </Link>
-</li>
-
-<li>
-    <Link to={`/Vice_deans/${id}/binome`}>
-        
-        <span className="nav-item">Binome</span>
-    </Link>
-</li>
+      <nav className="nav_vice">
+        <div className="navbar_vice">
+          <div className="logo">
+            <h1>Vice Doyen</h1>
+          </div>
+          <ul>
             <li>
-            <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">Parameters management</span>
-              </a>
-            </li>
-            <li>
-<Link to={`/Vice_deans/${id}/comission`}>
-        
-        <span className="nav-item">Commission management</span>
-    </Link>
-            </li>
-            <li>
-            <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">Assignment of candidate files to the commission</span>
-              </a>
+              <Link to={`/Vice_deans/${id}/Profile`}>Profile</Link>
             </li>
 
-                            
-<li>
-    <Link to="/LoginG">
-        <i className="bi bi-box-arrow-left" style={{ marginRight: '5px' }}></i>
-        <span className="nav-item">Logout</span>
-    </Link>
-</li>
-
-                        </ul>
-                    </div>
-                </nav>
+            <li>
+              <Link to={`/Vice_deans/${id}/binome`}> Binome</Link>
+            </li>
+            <li>
+              <a href="#"> Parameters management</a>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/${id}/comission`}>
+                Commission management
+              </Link>
+            </li>
+            <li>candidate files to the commission</li>
+            <li>
+              <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/${id}/students`}>Students</Link>
+            </li>
+            <li>
+              <Link to="/LoginG">Logout</Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <section className="main">
-        <div >
+        <div>
           {admin && (
             <div>
               <h1>vice deans Details</h1>
