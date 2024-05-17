@@ -163,8 +163,20 @@ function Admin_super_user_List() {
           startIcon={<AutoFixNormalIcon />}
           onClick={() => {
             setOpen(true);
-            setSelectedSuperUser(params.row);
-            setIsEditing(true);
+            const super_userId = params.row.id;
+            fetch(`/super_users/${super_userId}`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Failed to fetch super_user data");
+                }
+                return response.json();
+              })
+              .then((super_user) => {
+                setFormData(super_user);
+              })
+              .catch((error) => {
+                console.error("Error fetching super_user  data:", error);
+              });
           }}
         >
           Update
@@ -209,9 +221,7 @@ function Admin_super_user_List() {
       setEmail(selectedSuperUser.Email);
     }
   };
-  useEffect(() => {
-    populateFields();
-  }, [selectedSuperUser]);
+
   // Retournez votre JSX pour le composant Admin_Viced_List
   return (
     <>

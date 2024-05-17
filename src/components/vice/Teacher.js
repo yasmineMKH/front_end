@@ -9,11 +9,30 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Axios from "axios";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
+import Axios from "axios";
+import {
+  Box,
+  Typography,
+  Modal,
+  TextField,
+  Select,
+  MenuItem,
+} from "@mui/material";
 // Importez le fichier CSS
 import "./vice.css";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  borderRadius: "10px 10px 10px 10px",
+  bgcolor: "background.paper",
+  boxShadow: 50,
+  p: 4,
+};
 // Définissez votre composant Admin_Viced_List
 function Teacher() {
   const [open, setOpen] = useState(false);
@@ -91,7 +110,7 @@ function Teacher() {
   });
 
   const handleClickAdd = (username) => {
-    fetch("/membre_commission", {
+    fetch("/addteacher", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -282,9 +301,74 @@ function Teacher() {
             <DataGrid rows={enseignants} columns={columns} />
           </div>
           <div padding-left="10%">
-            <Button variant="contained" color="success">
+            <Button variant="contained" color="success" onClick={handleOpen}>
               add a TEACHER
             </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <form onSubmit={handleSubmit}>
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Firstname"
+                    value={fm}
+                    onChange={(e) => setFirstname(e.target.value)}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Lastname"
+                    value={lm}
+                    onChange={(e) => setLastname(e.target.value)}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Username"
+                    value={u}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Select
+                    fullWidth
+                    margin="normal"
+                    value={r}
+                    onChange={(e) => setRole(e.target.value)}
+                    displayEmpty
+                  >
+                    <MenuItem value="" disabled>
+                      Select Role
+                    </MenuItem>
+                    <MenuItem value="Admin">Admin</MenuItem>
+                    <MenuItem value="Secrétaire">Secrétaire</MenuItem>
+                    <MenuItem value="Vice doyen">Vice doyen</MenuItem>
+                  </Select>
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Password"
+                    type="password"
+                    value={p}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Email"
+                    type="email"
+                    value={em}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <Button type="submit" variant="contained" color="primary">
+                    {isEditing ? "Update" : "Add"}
+                  </Button>
+                </form>
+              </Box>
+            </Modal>
           </div>
         </div>
       </div>
