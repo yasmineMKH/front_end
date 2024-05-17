@@ -13,7 +13,7 @@ function Add_super_user() {
   const [r, setRole] = useState("");
   const [p, setPassword] = useState("");
   const [em, setEmail] = useState("");
-
+  const [ici, setici] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3002/super_user/add", {
