@@ -8,7 +8,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { DataGrid } from "@mui/x-data-grid";
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
@@ -225,48 +232,41 @@ function Admin_super_user_List() {
   // Retournez votre JSX pour le composant Admin_Viced_List
   return (
     <>
-      <div className="dashboard-container_admin">
+      <div className="dashboard-container_vice">
         <nav className="nav_admin">
-          <div className="navbar_admin">
-            <div className="logo">
-              <h1>Logo</h1>
+          <div className="navbar_vice">
+            <div className="logo-vice">
+              <h1 className="sedan-regular">Faculty of Chemistry</h1>
+              <div>
+                <hr className="divider" />
+                <h3 className="sedan-regular">Admin</h3>
+              </div>
             </div>
-            <ul>
+
+            <ul className="sedan-sc-regular">
               <li>
                 <Link to={`/Admin/${id}/Profile`}>
-                  <i
-                    className="bi bi-person-circle"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Profile</span>
+                  <AccountCircleIcon style={{ marginRight: "9px" }} />
+                  Profile
                 </Link>
               </li>
+
               <li>
                 <Link to={`/Admin/${id}/user`}>
-                  <i
-                    className="bi bi-people"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Users</span>
+                  <PeopleAltIcon style={{ marginRight: "9px" }} /> Users
                 </Link>
               </li>
               <li>
                 <Link to={`/Admin/${id}/super_user`}>
-                  <i
-                    className="bi bi-people-fill"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Super user</span>
+                  <SchoolIcon style={{ marginRight: "9px" }} />
+                  Super User
                 </Link>
               </li>
 
               <li>
                 <Link to="/LoginG">
-                  <i
-                    className="bi bi-box-arrow-left"
-                    style={{ marginRight: "5px" }}
-                  ></i>
-                  <span className="nav-item">Logout</span>
+                  <LogoutIcon style={{ marginRight: "9px" }} />
+                  Logout
                 </Link>
               </li>
             </ul>

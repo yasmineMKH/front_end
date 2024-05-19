@@ -5,6 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -83,48 +91,41 @@ function Admin_Users_List() {
   ];
   return (
     <>
-      <div className="dashboard-container_admin ">
+      <div className="dashboard-container_admin">
         <nav className="nav_admin">
-          <div className="navbar_admin">
-            <div className="logo">
-              <h1>Logo</h1>
+          <div className="navbar_vice">
+            <div className="logo-vice">
+              <h1 className="sedan-regular">Faculty of Chemistry</h1>
+              <div>
+                <hr className="divider" />
+                <h3 className="sedan-regular">Admin</h3>
+              </div>
             </div>
-            <ul>
+
+            <ul className="sedan-sc-regular">
               <li>
                 <Link to={`/Admin/${id}/Profile`}>
-                  <i
-                    className="bi bi-person-circle"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Profile</span>
+                  <AccountCircleIcon style={{ marginRight: "9px" }} />
+                  Profile
                 </Link>
               </li>
+
               <li>
                 <Link to={`/Admin/${id}/user`}>
-                  <i
-                    className="bi bi-people"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Users</span>
+                  <PeopleAltIcon style={{ marginRight: "9px" }} /> Users
                 </Link>
               </li>
               <li>
                 <Link to={`/Admin/${id}/super_user`}>
-                  <i
-                    className="bi bi-people-fill"
-                    style={{ marginRight: "20px" }}
-                  ></i>
-                  <span className="nav-item">Super user</span>
+                  <SchoolIcon style={{ marginRight: "9px" }} />
+                  Super User
                 </Link>
               </li>
 
               <li>
                 <Link to="/LoginG">
-                  <i
-                    className="bi bi-box-arrow-left"
-                    style={{ marginRight: "5px" }}
-                  ></i>
-                  <span className="nav-item">Logout</span>
+                  <LogoutIcon style={{ marginRight: "9px" }} />
+                  Logout
                 </Link>
               </li>
             </ul>
@@ -161,48 +162,7 @@ function Admin_Users_List() {
               <FontAwesomeIcon icon={faSearch} />
             </i>
           </div>
-          <table style={{ borderCollapse: "collapse", width: "100%" }}>
-            <thead>
-              <tr>
-                <th style={headerCellStyle}>ID</th>
-                <th style={headerCellStyle}>Firstname</th>
-                <th style={headerCellStyle}>Lastname</th>
-                <th style={headerCellStyle}>Username</th>
-                <th style={headerCellStyle}>Role</th>
-                <th style={headerCellStyle}>Email</th>
-                <th style={headerCellStyle}>Actions</th>{" "}
-                {/* Nouvelle colonne pour les actions */}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user, index) => (
-                <React.Fragment key={user.id}>
-                  <tr>
-                    <td style={cellStyle}>{user.id}</td>
-                    <td style={cellStyle}>{user.Firstname}</td>
-                    <td style={cellStyle}>{user.Lastname}</td>
-                    <td style={cellStyle}>{user.Username}</td>
-                    <td style={cellStyle}>{user.Role}</td>
-                    <td style={cellStyle}>{user.Email}</td>
-                    <td style={cellStyle}>
-                      <button
-                        style={{ height: "40px", width: "110px" }}
-                        className="btn"
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        Supprimer
-                      </button>
-                    </td>
-                  </tr>
-                  {index < filteredUsers.length - 1 && (
-                    <tr style={separatorRowStyle}>
-                      <td colSpan="6"></td>
-                    </tr>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
+
           <div style={{ height: 400, width: "90%" }}>
             <DataGrid rows={filteredUsers} columns={columns} />
           </div>
@@ -211,23 +171,5 @@ function Admin_Users_List() {
     </>
   );
 }
-
-const headerCellStyle = {
-  border: "1px solid #dddddd",
-  padding: "8px",
-  textAlign: "left",
-  backgroundColor: "#f2f2f2",
-};
-
-const cellStyle = {
-  border: "1px solid #000000",
-  padding: "10px 30px",
-  textAlign: "left",
-};
-
-const separatorRowStyle = {
-  height: "1px",
-  backgroundColor: "#dddddd",
-};
 
 export default Admin_Users_List;

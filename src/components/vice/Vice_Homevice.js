@@ -5,6 +5,14 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
 function Vice_homevice() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
@@ -25,40 +33,64 @@ function Vice_homevice() {
   }, [id]);
 
   return (
-    <div className="dashboard-container_vice ">
+    <div className="dashboard-container_vice">
       <nav className="nav_vice">
         <div className="navbar_vice">
-          <div className="logo">
-            <h1>Vice Doyen</h1>
+          <div className="logo-vice">
+            <h1 className="sedan-regular">Faculty of Chemistry</h1>
+            <div>
+              <hr className=" divider" />
+              <h3 className="sedan-regular">Vice Doyen</h3>
+            </div>
           </div>
-          <ul>
+
+          <ul className="sedan-sc-regular">
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>Profile</Link>
+              <Link to={`/Vice_deans/${id}/Profile`}>
+                <AccountCircleIcon style={{ marginRight: "9px" }} />
+                Profile
+              </Link>
             </li>
 
             <li>
-              <Link to={`/Vice_deans/${id}/binome`}> Binome</Link>
+              <Link to={`/Vice_deans/${id}/teachers`}>
+                <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
+              </Link>
             </li>
             <li>
-              <a href="#"> Parameters management</a>
+              <Link to={`/Vice_deans/${id}/students`}>
+                <SchoolIcon style={{ marginRight: "9px" }} />
+                Students
+              </Link>
+            </li>
+            <li>
+              <Link to={``}>
+                <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
+              </Link>
             </li>
             <li>
               <Link to={`/Vice_deans/${id}/comission`}>
-                Commission management
+                <GroupsIcon style={{ marginRight: "9px" }} />
+                Commission
               </Link>
             </li>
-            <li>candidate files to the commission</li>
             <li>
-              <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
+              <Link to={`/Vice_deans/${id}/binome`}>
+                <PeopleOutlineIcon style={{ marginRight: "9px" }} />
+                Binome
+              </Link>
             </li>
             <li>
-              <Link to={`/Vice_deans/${id}/students`}>Students</Link>
+              <Link to={`/Vice_deans/${id}/DemandeDoc`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                files
+              </Link>
             </li>
             <li>
-              <Link to={`/Vice_deans/${id}/DemandeDoc`}>Candidate files</Link>
-            </li>
-            <li>
-              <Link to="/LoginG">Logout</Link>
+              <Link to="/LoginG">
+                <LogoutIcon style={{ marginRight: "9px" }} />
+                Logout
+              </Link>
             </li>
           </ul>
         </div>

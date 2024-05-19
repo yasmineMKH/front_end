@@ -16,6 +16,7 @@
   height: 100vh;
   width: 100vw;
   flex-direction: row;
+
   background-image: url("./Pic/USTHB2.jpg");
 }
 
@@ -23,6 +24,7 @@
   width: 250px;
   border-radius: 5px;
   color: white;
+  background-image: url("./Pic/USTHB2.jpg");
 }
 
 /*.navbar_vice li a {
@@ -108,11 +110,12 @@ li {
   width : 1400px;
 }*/
 .main-top {
-  background: #ffffff;
+  background: #ffffff7e;
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .top-vice {

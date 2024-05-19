@@ -30,8 +30,9 @@
 
 .nav_admin {
   width: 250px;
-  background-color: #1679ab;
-
+  background-image: url("./vice/Pic/usthb5.jpg");
+  background-size: cover;
+  color: white;
   /*
   position: sticky;
   top: 0;

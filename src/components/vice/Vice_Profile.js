@@ -5,6 +5,14 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
 function Viced_profile() {
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -80,67 +88,64 @@ function Viced_profile() {
       });
   };
   return (
-    <div className="dashboard_container_edit_vice">
+    <div className="dashboard-container_vice">
       <nav className="nav_vice">
         <div className="navbar_vice">
-          <div className="logo">
-            <img src="/pic/logo.jpg" alt="" />
-            <h1>jobs</h1>
+          <div className="logo-vice">
+            <h1 className="sedan-regular">Faculty of Chemistry</h1>
+            <div>
+              <hr className=" divider" />
+              <h3 className="sedan-regular">Vice Doyen</h3>
+            </div>
           </div>
-          <ul>
+
+          <ul className="sedan-sc-regular">
             <li>
               <Link to={`/Vice_deans/${id}/Profile`}>
-                <i
-                  className="bi bi-person-circle"
-                  style={{ marginRight: "20px" }}
-                ></i>
-                <span className="nav-item">Profile</span>
+                <AccountCircleIcon style={{ marginRight: "9px" }} />
+                Profile
               </Link>
             </li>
 
             <li>
-              <Link to={`/Vice_deans/${id}/binome`}>
-                <span className="nav-item">Binome</span>
+              <Link to={`/Vice_deans/${id}/teachers`}>
+                <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
             </li>
             <li>
-              <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
-              </li>
-              <li>
-                <Link to={`/Vice_deans/${id}/students`}>Students</Link>
-              </li>
-              <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">Parameters management</span>
-              </a>
+              <Link to={`/Vice_deans/${id}/students`}>
+                <SchoolIcon style={{ marginRight: "9px" }} />
+                Students
+              </Link>
+            </li>
+            <li>
+              <Link to={``}>
+                <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
+              </Link>
             </li>
             <li>
               <Link to={`/Vice_deans/${id}/comission`}>
-                <span className="nav-item">Commission management</span>
+                <GroupsIcon style={{ marginRight: "9px" }} />
+                Commission
               </Link>
             </li>
             <li>
-              <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">
-                  Assignment of candidate files to the commission
-                </span>
-              </a>
+              <Link to={`/Vice_deans/${id}/binome`}>
+                <PeopleOutlineIcon style={{ marginRight: "9px" }} />
+                Binome
+              </Link>
             </li>
-
+            <li>
+              <Link to={`/Vice_deans/${id}/DemandeDoc`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                files
+              </Link>
+            </li>
             <li>
               <Link to="/LoginG">
-                <i
-                  className="bi bi-box-arrow-left"
-                  style={{ marginRight: "5px" }}
-                ></i>
-
-                <span className="nav-item">Logout</span>
+                <LogoutIcon style={{ marginRight: "9px" }} />
+                Logout
               </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/${id}/DemandeDoc`}>Candidate files</Link>
             </li>
           </ul>
         </div>
