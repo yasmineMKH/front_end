@@ -137,8 +137,12 @@ function Viced_profile() {
                   className="bi bi-box-arrow-left"
                   style={{ marginRight: "5px" }}
                 ></i>
+
                 <span className="nav-item">Logout</span>
               </Link>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/${id}/DemandeDoc`}>Candidate files</Link>
             </li>
           </ul>
         </div>

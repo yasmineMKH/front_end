@@ -55,6 +55,9 @@ function Vice_homevice() {
               <Link to={`/Vice_deans/${id}/students`}>Students</Link>
             </li>
             <li>
+              <Link to={`/Vice_deans/${id}/DemandeDoc`}>Candidate files</Link>
+            </li>
+            <li>
               <Link to="/LoginG">Logout</Link>
             </li>
           </ul>

@@ -9,8 +9,31 @@ import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 // Importez le fichier CSS
 import "./vice.css";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  borderRadius: "10px 10px 10px 10px",
+  boxShadow: 24,
+  p: 4,
+};
 
 // Définissez votre composant Admin_Viced_List
 function Comission_gestion() {
@@ -23,7 +46,20 @@ function Comission_gestion() {
     lastname: "",
     username: "",
   });
+  const [binomes, setBinomes] = useState([]); // État pour stocker les binômes
+  const [open, setOpen] = useState(false); // État pour le Modal
 
+  const handleOpen = () => {
+    fetch("/binome_comission") // Fetch binômes data from backend
+      .then((response) => response.json())
+      .then((data) => {
+        setBinomes(data);
+        setOpen(true);
+      })
+      .catch((error) => console.error("Error fetching binome data:", error));
+  };
+
+  const handleClose = () => setOpen(false);
   // Utilisez useEffect pour effectuer une action dès que le composant est monté
   /*useEffect(() => {
         // Fetch enseignants data from backend
@@ -301,79 +337,100 @@ function Comission_gestion() {
         ),
     },
   ];
-  // Retournez votre JSX pour le composant Admin_Viced_List
+  const binomeColumns = [
+    { field: "Username_NSS1", headerName: "Member 1", width: 200 },
+    { field: "Username_NSS2", headerName: "Member 2", width: 200 },
+    { field: "Type_traitement", headerName: "Type of Treatment", width: 200 },
+  ];
   return (
     <>
       <div className="dashboard-container_vice">
         <nav className="nav_vice">
           <div className="navbar_vice">
-            <div className="logo">
-              <h1>Faculty of Chemistry</h1>
+            <div className="logo-vice">
+              <h1 className="sedan-regular">Faculty of Chemistry</h1>
+              <div>
+                <hr className=" divider" />
+                <h3 className="sedan-regular">Vice Doyen</h3>
+              </div>
             </div>
-            <ul>
+
+            <ul className="sedan-sc-regular">
               <li>
-                <Link to={`/Vice_deans/${id}/Profile`}>Vice Doyen</Link>
+                <Link to={`/Vice_deans/${id}/Profile`}>
+                  <AccountCircleIcon style={{ marginRight: "9px" }} />
+                  Profile
+                </Link>
               </li>
 
               <li>
-                <Link to={`/Vice_deans/${id}/binome`}> Binome</Link>
+                <Link to={`/Vice_deans/${id}/teachers`}>
+                  <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
+                </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
+                <Link to={`/Vice_deans/${id}/students`}>
+                  <SchoolIcon style={{ marginRight: "9px" }} />
+                  Students
+                </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/students`}>Students</Link>
-              </li>
-              <li>
-                <a href="#"> Parameters management</a>
+                <Link to={``}>
+                  <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
+                </Link>
               </li>
               <li>
                 <Link to={`/Vice_deans/${id}/comission`}>
-                  Commission management
+                  <GroupsIcon style={{ marginRight: "9px" }} />
+                  Commission
                 </Link>
               </li>
-              <li> candidate files </li>
-
               <li>
-                <Link to="/LoginG">Logout</Link>
+                <Link to={`/Vice_deans/${id}/binome`}>
+                  <PeopleOutlineIcon style={{ marginRight: "9px" }} />
+                  Binome
+                </Link>
+              </li>
+              <li>
+                <Link to={`/Vice_deans/${id}/DemandeDoc`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                  files
+                </Link>
+              </li>
+              <li>
+                <Link to="/LoginG">
+                  <LogoutIcon style={{ marginRight: "9px" }} />
+                  Logout
+                </Link>
               </li>
             </ul>
           </div>
         </nav>
         <div className="main-top">
-          <div className="top">
-            <div className="search-bar">
-              <input
+          <div className="top-vice">
+            <div className="search-bar_vice">
+              {/*<input
                 type="text"
-                placeholder="Search by firstname"
-                value={searchTerm.firstname}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, firstname: e.target.value })
-                }
-              />
-              <input
-                type="text"
+                className="input_vice "
                 placeholder="Search by lastname"
-                value={searchTerm.lastname}
+                value={/*searchTerm.lastname}
                 onChange={(e) =>
                   setSearchTerm({ ...searchTerm, lastname: e.target.value })
                 }
               />
-              <input
-                type="text"
-                placeholder="Search by username"
-                value={searchTerm.username}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, username: e.target.value })
-                }
-              />
-
               <i className="search-icon">
                 <FontAwesomeIcon icon={faSearch} />
-              </i>
+              </i>*/}
             </div>
           </div>
-
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleOpen}
+            style={{ marginLeft: "10px" }}
+          >
+            View pair
+          </Button>
           <div>
             <DataGrid rows={filteredenseignants} columns={columns} />
           </div>
@@ -383,11 +440,26 @@ function Comission_gestion() {
               color="success"
               onClick={handlebinome_comission}
             >
-              Create binome
+              Create pair
             </Button>
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            List of Binomes
+          </Typography>
+          <div style={{ height: "100%", width: "100%" }}>
+            <DataGrid rows={binomes} columns={binomeColumns} />
+          </div>
+        </Box>
+      </Modal>
     </>
   );
 }

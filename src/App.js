@@ -33,11 +33,6 @@ import UpdateSessions from "./components/Secrétaire/Gerer_session";
 import Page_SPE from "./components/Doctorant/Demande/Page_SPE";
 import Doc_dem_SPE2 from "./components/Doctorant/Demande/Doc_dem_SPE2";
 import Teacher from "./components/vice/Teacher";
-import Home_sec from "./components/Secrétaire/Home_sec";
-import Profile_sec from "./components/Secrétaire/Profile_sec";
-import Comment_SPE from "./components/Doctorant/Demande/recours_SPE";
-import Doctorants from "./components/vice/Doc_List";
-import Traitement_Demande from "./components/Enseignant/Traitement_demande";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
@@ -72,8 +67,11 @@ function App() {
         <Route path="/Vice_deans/:id/Profile" element={<Viced_profile />} />
         <Route path="/Vice_deans/:id" element={<Vice_homevice />} />
         <Route path="/Vice_deans/:id/teachers" element={<Teacher />} />
-        <Route path="/Vice_deans/:id/Doctorants" element={<Doctorants />} />
-        <Route path="/Vice_deans/:id/comission"element={<Comission_gestion />}/>
+
+        <Route
+          path="/Vice_deans/:id/comission"
+          element={<Comission_gestion />}
+        />
         <Route path="/Vice_deans/:id/binome" element={<BinomesComponent />} />
 
 

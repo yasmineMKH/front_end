@@ -1,20 +1,42 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import "../Edit_admin.css";
+import { useState } from "react";
+import "./Demande/inscription.css";
 import { NavLink, Link } from "react-router-dom";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import React from "react";
+import { styled } from "@mui/material/styles";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 function Doc_dem_SPE() {
   //const history = useHistory();
   const { Username } = useParams();
   const [u, setUsername_Mat] = useState("");
   const [p, setPays] = useState("");
-  const [v, setVille] = useState("");
   const [et, setEtablissement] = useState("");
   const [pe, setPeriode] = useState("");
   
   const [d, setdebut] = useState("");
   const [f, setfin] = useState("");
+<<<<<<< HEAD
   const [menuVisible, setMenuVisible] = useState(false);
       
     const toggleMenu = () => {
@@ -24,8 +46,17 @@ function Doc_dem_SPE() {
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post(`http://localhost:3002/${Username}/demande_SPE`, {
+=======
+  const addSPE = async (e) => {
+    e.preventDefault();
+    if (!u || !p || !et || !pe || !a || !d || !f) {
+      alert("Veuillez remplir tous les champs");
+      return;
+    }
+    Axios.post("http://localhost:3002/demande_SPE", {
+      Username_Mat: u,
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
       Pays: p,
-      Ville: v,
       Etablissement_acc: et,
       Periode_Stage: pe,
       
@@ -34,19 +65,38 @@ function Doc_dem_SPE() {
     })
       .then((res) => {
         if (res.status === 201) {
+          console.log(res);
           alert("Add successful");
         } else {
           return res.json().then((data) => {
-            alert("Failed to add Super_user");
+            alert("Failed to add inscription");
           });
         }
       })
       .catch((error) => {
-        alert("An error occurred. Please try again later.");
-        console.error("Error adding Super_user:");
+        alert("Please try again later.");
+        console.error("Error adding inscription:");
       });
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "/upload",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const [selectedFile, setSelectedFile] = React.useState(null);
 
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
   return (
     <div>
       <header>
@@ -97,6 +147,7 @@ function Doc_dem_SPE() {
 
 </header>
       <div>
+<<<<<<< HEAD
         <h1>Formulaire de la demande de Stage de perfectionnent à l'étrangé</h1>
         <form>
           {/*<label htmlFor="Username_Mat">Username_Mat:</label>
@@ -110,50 +161,127 @@ function Doc_dem_SPE() {
           <input
             type="text"
             name="Pays"
+=======
+        <h1 className="h1-inscri">
+          Formulaire de la demande de Stage de perfectionnent à l'étrangé
+        </h1>
+        <form className="body-inscri">
+          <TextField
+            id="usernameMat"
+            name="usernameMat"
+            label="Username_Mat"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={u}
+            onChange={(e) => setUsername_Mat(e.target.value)}
+          />
+          <TextField
+            id="pays"
+            name="pays"
+            label="Pays"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={p}
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
             onChange={(e) => setPays(e.target.value)}
           />
 
-          <label htmlFor="Ville">Ville:</label>
-          <input
-            type="text"
-            name="Ville"
-            onChange={(e) => setVille(e.target.value)}
-          />
-
-          <label htmlFor="Etablissement d'accueil">
-            Etablissement d'accueil:
-          </label>
-          <input
-            type="text"
-            name="Etablissement_acc"
+          <TextField
+            id="etablissement"
+            name="etablissement"
+            label="Etablissement d'accueil"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={et}
             onChange={(e) => setEtablissement(e.target.value)}
           />
-
-          <label htmlFor="Période">Période:</label>
-          <select
-            title="Sélectionnez une option"
-            onChange={(e) => setPeriode(e.target.value)}
-          >
-            <option value=""></option>
-            <option value="Semestre1">Semestre 1</option>
-            <option value="Semestre2">Semestre 2</option>
-          </select>
-
-          <label htmlFor="Date">Date de début du stage:</label>
-          <input
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel id="periode-label">Période</InputLabel>
+            <Select
+              labelId="periode-label"
+              id="periode"
+              name="periode"
+              value={pe}
+              onChange={(e) => setPeriode(e.target.value)}
+              label="Période"
+            >
+              <MenuItem value="">
+                <em>Sélectionnez la période</em>
+              </MenuItem>
+              <MenuItem value="Semetre1">Semetre1</MenuItem>
+              <MenuItem value="Semetre2">Semetre2</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            id="dateDebut"
+            name="dateDebut"
+            label="Date de début du stage"
             type="date"
-            name="debut"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={d}
+            InputLabelProps={{
+              shrink: true,
+            }}
             onChange={(e) => setdebut(e.target.value)}
           />
-
-          <label htmlFor="Date">Date de fin du stage:</label>
-          <input
+          <TextField
+            id="dateFin"
+            name="dateFin"
+            label="Date de fin du stage"
             type="date"
-            name="fin"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={f}
             onChange={(e) => setfin(e.target.value)}
           />
+<<<<<<< HEAD
 
           <button onClick={handleSubmit}>Envoyer</button>
+=======
+          <TextField
+            id="anneeBourse"
+            name="anneeBourse"
+            label="Année Bénéfice de bourse"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={a}
+            onChange={(e) => setAnnee(e.target.value)}
+          />
+          <form>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              onChange={handleFileSelect}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" />
+            </Button>
+            {selectedFile && <p>{selectedFile.name}</p>}
+          </form>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "20px" }}
+            onClick={addSPE}
+          >
+            Envoyer
+          </Button>
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         </form>
       </div>
     </div>

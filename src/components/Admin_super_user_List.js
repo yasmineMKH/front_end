@@ -160,7 +160,27 @@ function Admin_super_user_List() {
         <Button
           variant="outlined"
           startIcon={<AutoFixNormalIcon />}
+<<<<<<< HEAD
           onClick={() => handleUpdate(params.row)}
+=======
+          onClick={() => {
+            setOpen(true);
+            const super_userId = params.row.id;
+            fetch(`/super_users/${super_userId}`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Failed to fetch super_user data");
+                }
+                return response.json();
+              })
+              .then((super_user) => {
+                setFormData(super_user);
+              })
+              .catch((error) => {
+                console.error("Error fetching super_user  data:", error);
+              });
+          }}
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         >
           Update
         </Button>
@@ -182,7 +202,34 @@ function Admin_super_user_List() {
       ),
     },
   ];
+<<<<<<< HEAD
 
+=======
+  const handleOpen = (superUser) => {
+    if (superUser) {
+      // Si un super utilisateur est passé en argument, cela signifie que nous voulons le modifier
+      setSelectedSuperUser(superUser);
+      setIsEditing(true);
+    } else {
+      // Sinon, nous voulons ajouter un nouveau super utilisateur
+      setSelectedSuperUser(null);
+      setIsEditing(false);
+    }
+    setOpen(true);
+  };
+  const populateFields = () => {
+    if (selectedSuperUser) {
+      setFirstname(selectedSuperUser.Firstname);
+      setLastname(selectedSuperUser.Lastname);
+      setUsername(selectedSuperUser.Username);
+      setRole(selectedSuperUser.Role);
+      setPassword(selectedSuperUser.Password);
+      setEmail(selectedSuperUser.Email);
+    }
+  };
+
+  // Retournez votre JSX pour le composant Admin_Viced_List
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
   return (
     <>
       <div className="dashboard-container_admin">

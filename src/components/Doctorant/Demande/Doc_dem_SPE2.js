@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
 import "./inscription.css";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
