@@ -6,8 +6,10 @@ import Axios from 'axios'
 import  { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useNavigate } from 'react-router-dom';
 function Admin_profile() {
   const { id } = useParams();
+  const navigate = useNavigate();
     const [formData, setFormData] = useState({
         Firstname: '',
         Lastname: '',
@@ -59,7 +61,7 @@ function Admin_profile() {
           } else {
               // Vice doyenne updated successfully
               alert('super_user updated successfully');
-              window.location.href = '/Admin/vice_deans';
+              navigate(`/Admin/${id}`);
           }
       })
       

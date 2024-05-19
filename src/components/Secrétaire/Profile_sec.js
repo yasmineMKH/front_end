@@ -1,12 +1,12 @@
 import React from "react";
-import "./Edit_vice.css"; // Assurez-vous d'avoir le fichier CSS correspondant
+import "./Edit_sec.css"; // Assurez-vous d'avoir le fichier CSS correspondant
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 //import { useUser } from './UserContext';
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-function Viced_profile() {
+function Profile_sec() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ function Viced_profile() {
         } else {
           // Vice doyenne updated successfully
           alert("super_user updated successfully");
-          navigate(`/Vice_deans/${id}`);
+          navigate(`/Secrétaire/${id}`);
         }
       })
 
@@ -82,70 +82,37 @@ function Viced_profile() {
       });
   };
   return (
-    <div className="dashboard_container_edit_vice">
-      <nav className="nav_vice">
-        <div className="navbar_vice">
+    <div className="dashboard_container_edit_sec">
+      <nav className="nav_sec">
+        <div className="navbar_sec">
           <div className="logo">
             <img src="/pic/logo.jpg" alt="" />
             <h1>jobs</h1>
           </div>
           <ul>
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>
-                <i
-                  className="bi bi-person-circle"
-                  style={{ marginRight: "20px" }}
-                ></i>
-                <span className="nav-item">Profile</span>
-              </Link>
+              <Link to={`/Secrétaire/${id}/Profile`}>Profile</Link>
             </li>
 
             <li>
-              <Link to={`/Vice_deans/${id}/binome`}>
-                <span className="nav-item">Binome</span>
-              </Link>
+              <Link to={`/Secrétaire/${id}/binome`}> Binome</Link>
+            </li>
+            
+            <li>
+              <Link to={`/Secrétaire/${id}/teachers`}>Teachers</Link>
             </li>
             <li>
-              <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
-              </li>
-              <li>
-                <Link to={`/Vice_deans/${id}/students`}>Students</Link>
-              </li>
-              <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">Parameters management</span>
-              </a>
+              <Link to={`/Secrétaire/${id}/students`}>Students</Link>
             </li>
             <li>
-              <Link to={`/Vice_deans/${id}/comission`}>
-                <span className="nav-item">Commission management</span>
-              </Link>
-            </li>
-            <li>
-              <a href="#">
-                <i className="fas fa-user"></i>
-                <span className="nav-item">
-                  Assignment of candidate files to the commission
-                </span>
-              </a>
-            </li>
-
-            <li>
-              <Link to="/LoginG">
-                <i
-                  className="bi bi-box-arrow-left"
-                  style={{ marginRight: "5px" }}
-                ></i>
-                <span className="nav-item">Logout</span>
-              </Link>
+              <Link to="/LoginG">Logout</Link>
             </li>
           </ul>
         </div>
       </nav>
 
-      <div className="container_form_edit_vice">
-        <h1>Profile vice dean</h1>
+      <div className="container_form_edit_sec">
+        <h1>Profile Secrétaire</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="Firstname">Firstname:</label>
           <input
@@ -200,4 +167,4 @@ function Viced_profile() {
   );
 }
 
-export default Viced_profile;
+export default Profile_sec;

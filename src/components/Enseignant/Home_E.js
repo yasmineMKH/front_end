@@ -128,7 +128,8 @@ function Home_E() {
         </li>
         {isCommissionMember && (
                 <li className='nav_item'>
-                    <a className='nav_link' href="#">Commission</a>
+                    
+                    <Link className='nav_link' to={`/commission/${user.Username}/${id}`}> <span className="nav-item">Traitement comission </span></Link>
                 </li>
             )}
 

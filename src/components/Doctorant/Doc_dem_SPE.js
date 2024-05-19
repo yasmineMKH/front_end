@@ -6,25 +6,29 @@ import Axios from "axios";
 import { useParams } from "react-router-dom";
 function Doc_dem_SPE() {
   //const history = useHistory();
-  const { id } = useParams();
+  const { Username } = useParams();
   const [u, setUsername_Mat] = useState("");
   const [p, setPays] = useState("");
   const [v, setVille] = useState("");
   const [et, setEtablissement] = useState("");
   const [pe, setPeriode] = useState("");
-  const [a, setAnnee] = useState("");
+  
   const [d, setdebut] = useState("");
   const [f, setfin] = useState("");
+  const [menuVisible, setMenuVisible] = useState(false);
+      
+    const toggleMenu = () => {
+          setMenuVisible(!menuVisible);
+        };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:3002/demande_SPE", {
-      Username_Mat: u,
+    Axios.post(`http://localhost:3002/${Username}/demande_SPE`, {
       Pays: p,
       Ville: v,
       Etablissement_acc: et,
       Periode_Stage: pe,
-      Annee: a,
+      
       Date_dep: d,
       Date_retour: f,
     })
@@ -45,15 +49,62 @@ function Doc_dem_SPE() {
 
   return (
     <div>
+      <header>
+    <nav className='nav_home_doc'>
+        <div className='lab'>
+            <a href='#'>Logo</a>
+        </div>
+        <div className='toggle_menu'>
+        <i class='bx bx-grid-alt'></i>
+        </div>
+        <ul className='nav_list'></ul>
+        <div className='close_menu'>
+        <i class='bx bx-x'></i>
+        </div>
+        <li className='nav_item'><a className='nav_link' href="#"> <i class='bx bx-home'></i></a></li>
+        <li className='nav_item'><a className='nav_link' href="#">Profile <i class='bx bxs-user-detail' style={{ marginRight: '20px' }}></i></a></li>
+        <li className='nav_item'><a className='nav_link' href="#">Faculty</a></li>
+        <li className='nav_item'><a className='nav_link dropdown_link' href="#" onClick={toggleMenu}>Formation <i class='bx bx-chevron-down'></i></a>
+        {menuVisible && (
+        <div className='megamenu'>
+            <ul className='content'>
+                <li className='megamenu_item header_megamenu'></li>
+                <li className='megamenu_item'>
+                    <div className='menu_icone'>
+
+                    </div>
+                    <div className='menu_link'>
+                    <Link to={`/Page_SPE/${Username}`}>
+        
+        <span className="nav-item">Stage de perfectionnent à l'étrangé</span>
+    </Link>
+                        
+                        
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+        )}
+        </li>
+        <li className='nav_item'><a className='nav_link' href="#">About</a></li>
+        <li className='nav_item'><a className='nav_link' href="#">Contact Us</a></li>
+        <li className='nav_item'> <Link className='nav_link' to="/Login"> <i className="fas fa-user"></i><span className="nav-item">Logout <i class="bi bi-box-arrow-left"></i></span></Link></li>
+
+
+    </nav>
+
+</header>
       <div>
         <h1>Formulaire de la demande de Stage de perfectionnent à l'étrangé</h1>
         <form>
-          <label htmlFor="Username_Mat">Username_Mat:</label>
+          {/*<label htmlFor="Username_Mat">Username_Mat:</label>
           <input
             type="text"
             name="Username_Mat"
             onChange={(e) => setUsername_Mat(e.target.value)}
-          />
+      />*/}
 
           <label htmlFor="Pays">Pays:</label>
           <input
@@ -100,13 +151,6 @@ function Doc_dem_SPE() {
             type="date"
             name="fin"
             onChange={(e) => setfin(e.target.value)}
-          />
-
-          <label htmlFor="Année">Année Binificement de bource:</label>
-          <input
-            type="text"
-            name="Année"
-            onChange={(e) => setAnnee(e.target.value)}
           />
 
           <button onClick={handleSubmit}>Envoyer</button>

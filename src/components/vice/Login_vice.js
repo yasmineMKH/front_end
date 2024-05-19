@@ -31,7 +31,7 @@ function Loginviced() {
                     navigate(`/Admin/${id}`);
                     break;
                 case 'Secrétaire':
-                    //navigate(`/Secrétaire/${id}`);
+                    navigate(`/Secrétaire/${id}`);
                     alert("login successfuly")
                     break;
                 case 'Vice doyen':

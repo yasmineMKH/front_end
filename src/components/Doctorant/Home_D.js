@@ -8,7 +8,7 @@ function Home_D() {
   const { id } = useParams();
     const [user, setUser] = useState(null);
 
-    
+     
     const [menuVisible, setMenuVisible] = useState(false);
       
     const toggleMenu = () => {
@@ -101,8 +101,11 @@ function Home_D() {
 
                     </div>
                     <div className='menu_link'>
-                        <a ></a>
-                        <p>Stage de perfectionnent à l'étrangé</p>
+                    <Link to={`/Page_SPE/${user.Username}`}>
+        
+        <span className="nav-item">Stage de perfectionnent à l'étrangé</span>
+    </Link>
+                        
                         
                     </div>
                 </li>
