@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import "./Demande/inscription.css";
 import { NavLink, Link } from "react-router-dom";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import React from "react";
+import { styled } from "@mui/material/styles";
 import {
   TextField,
   Button,
@@ -12,7 +14,18 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 function Doc_dem_SPE() {
   //const history = useHistory();
   const { id } = useParams();
@@ -23,7 +36,7 @@ function Doc_dem_SPE() {
   const [a, setAnnee] = useState("");
   const [d, setdebut] = useState("");
   const [f, setfin] = useState("");
-  const addSPE = (e) => {
+  const addSPE = async (e) => {
     e.preventDefault();
     if (!u || !p || !et || !pe || !a || !d || !f) {
       alert("Veuillez remplir tous les champs");
@@ -52,8 +65,26 @@ function Doc_dem_SPE() {
         alert("Please try again later.");
         console.error("Error adding inscription:");
       });
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "/upload",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const [selectedFile, setSelectedFile] = React.useState(null);
 
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
   return (
     <div>
       <div>
@@ -147,7 +178,20 @@ function Doc_dem_SPE() {
             value={a}
             onChange={(e) => setAnnee(e.target.value)}
           />
-
+          <form>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              onChange={handleFileSelect}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" />
+            </Button>
+            {selectedFile && <p>{selectedFile.name}</p>}
+          </form>
           <Button
             type="submit"
             variant="contained"

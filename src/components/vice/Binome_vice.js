@@ -85,7 +85,7 @@ function BinomesComponent() {
                 </Link>
               </li>
               <li>
-                <a href="#"> candidate files</a>
+                <Link to={`/Vice_deans/${id}/DemandeDoc`}>Candidate files</Link>
               </li>
 
               <li>

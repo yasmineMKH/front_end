@@ -33,6 +33,7 @@ import UpdateSessions from "./components/Secrétaire/Gerer_session";
 import Page_SPE from "./components/Doctorant/Demande/Page_SPE";
 import Doc_dem_SPE2 from "./components/Doctorant/Demande/Doc_dem_SPE2";
 import Teacher from "./components/vice/Teacher";
+import DossierDoc from "./components/vice/DossierDoc";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
@@ -62,7 +63,7 @@ function App() {
         <Route path="/Vice_deans/:id/Profile" element={<Viced_profile />} />
         <Route path="/Vice_deans/:id" element={<Vice_homevice />} />
         <Route path="/Vice_deans/:id/teachers" element={<Teacher />} />
-
+        <Route path="/Vice_deans/:id/DemandeDoc" element={<DossierDoc />} />
         <Route
           path="/Vice_deans/:id/comission"
           element={<Comission_gestion />}
