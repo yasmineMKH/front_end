@@ -33,6 +33,8 @@ import UpdateSessions from "./components/Secrétaire/Gerer_session";
 import Page_SPE from "./components/Doctorant/Demande/Page_SPE";
 import Doc_dem_SPE2 from "./components/Doctorant/Demande/Doc_dem_SPE2";
 import Teacher from "./components/vice/Teacher";
+import Home_sec from "./components/Secrétaire/Home_sec";
+import Profile_sec from "./components/Secrétaire/Profile_sec";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
@@ -51,17 +53,18 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/home" element={<Home />} />
 
-
         <Route path="/homeEnseignant/:id" element={<Home_E />} />
         <Route path="/profileEnseignant/:id" element={<Profile_E />} />
-        <Route path="/commission/:Username/:id" element={<Traitement_Demande />} />
+        <Route
+          path="/commission/:Username/:id"
+          element={<Traitement_Demande />}
+        />
 
         <Route path="/homeDoctorant/:id" element={<Home_D />} />
         <Route path="/Page_SPE/:Username" element={<Page_SPE />} />
         <Route path="/demandeSPE/:Username" element={<Doc_dem_SPE />} />
         <Route path="/demandeSPE2/:Username" element={<Doc_dem_SPE2 />} />
         <Route path="/recours_SPE/:Username" element={<Comment_SPE />} />
-        
 
         <Route path="/LoginG" element={<LoginG />} />
         <Route path="/Vice_deans/:id/Profile" element={<Viced_profile />} />
@@ -74,21 +77,22 @@ function App() {
         />
         <Route path="/Vice_deans/:id/binome" element={<BinomesComponent />} />
 
-
         <Route path="/Admin/:id" element={<AdminDashboard />} />
         <Route path="/Admin/:id/user" element={<Admin_Users_List />} />
-        <Route path="/Admin/:id/super_user"element={<Admin_super_user_List />}/>
-        <Route path="/Admin/:id/super_user/Edit/:id"element={<Edit_super_user />}/>
+        <Route
+          path="/Admin/:id/super_user"
+          element={<Admin_super_user_List />}
+        />
+        <Route
+          path="/Admin/:id/super_user/Edit/:id"
+          element={<Edit_super_user />}
+        />
         <Route path="/Admin/:id/super_user/add" element={<Add_super_user />} />
-        <Route path="/Admin/:id/Profile" element={<Admin_profile />} /> 
-        
+        <Route path="/Admin/:id/Profile" element={<Admin_profile />} />
 
         <Route path="/Secrétaire/:id" element={<Home_sec />} />
         <Route path="/Secrétaire/:id/Profile" element={<Profile_sec />} />
         <Route path="/Session" element={<UpdateSessions />} />
-
-
-
       </Routes>
     </div>
   );

@@ -9,11 +9,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
-<<<<<<< HEAD
 import AddIcon from "@mui/icons-material/Add";
-import Axios from "axios";
-=======
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import Axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -49,26 +45,13 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: '30vw', // Ajustez la largeur selon vos besoins
-  maxHeight: '80vh', // Limitez la hauteur à 80% de la hauteur de la vue
-  overflowY: 'auto', // Ajoutez le défilement vertical
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
   width: 400,
   borderRadius: "10px 10px 10px 10px",
   bgcolor: "background.paper",
   boxShadow: 50,
   p: 4,
 };
-// Définissez votre composant Admin_Viced_List
+
 function Teacher() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -92,6 +75,7 @@ function Teacher() {
     Usthb: "",
     Situation: "",
   });
+
   // Déclarez votre état pour stocker les données des enseignants et le terme de recherche
   const { id } = useParams();
   const [enseignants, setenseignants] = useState([]);
@@ -100,13 +84,24 @@ function Teacher() {
     Firstname_fr: "",
     Lastname_fr: "",
     Username_NSS: "",
+    Firstname_fr: "",
+    Lastname_fr: "",
+    Username_NSS: "",
   });
-
+  const [fm, setFirstname] = useState("");
+  const [lm, setLastname] = useState("");
+  const [u, setUsername] = useState("");
+  const [r, setRole] = useState("");
+  const [p, setPassword] = useState("");
+  const [em, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEditing) {
-      Axios.put(`http://localhost:3002/updateacher/${selectedEnseignant.id}`, formData)
+      Axios.put(
+        `http://localhost:3002/updateacher/${selectedEnseignant.id}`,
+        formData
+      )
         .then((res) => {
           if (res.status === 200) {
             alert("Update successful");
@@ -179,12 +174,9 @@ function Teacher() {
       ) &&
       enseignant.Username_NSS.toLowerCase().includes(
         searchTerm.Username_NSS.toLowerCase()
-      ) 
-
+      )
   );
 
-<<<<<<< HEAD
-=======
   const handleClickAdd = (username) => {
     fetch("/addteacher", {
       method: "POST",
@@ -211,8 +203,6 @@ function Teacher() {
         console.error("Error adding enseignant to commission:", error);
       });
   };
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
-
 
   const columns = [
     { field: "Username_NSS", headerName: "Username NSS", width: 150 },
@@ -242,7 +232,9 @@ function Teacher() {
           onClick={() => {
             setOpen(true);
             setSelectedEnseignant(params.row);
+            setSelectedEnseignant(params.row);
             setIsEditing(true);
+            setFormData(params.row);
             setFormData(params.row);
           }}
         >
@@ -332,6 +324,7 @@ function Teacher() {
                   <GroupsIcon style={{ marginRight: "9px" }} />
                   Commission
                 </Link>
+                <Link to={`/Vice_deans/${id}/Doctorants`}>Doctorants</Link>
               </li>
               <li>
                 <Link to={`/Vice_deans/${id}/binome`}>
@@ -382,13 +375,14 @@ function Teacher() {
                 }
               />
 
-<button type="button">
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
+              <i className="search-icon">
+                <button>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </i>
             </div>
           </div>
 
-<<<<<<< HEAD
           <Box sx={{ height: 1000, width: 2800 }}>
             <DataGrid
               rows={filteredEnseignants}
@@ -403,8 +397,8 @@ function Teacher() {
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            sx={{ mt: 2, margin: "auto", }}
-            style={{ marginBottom: "20px", fontSize: "14px" ,width: "20%"}}
+            sx={{ mt: 2, margin: "auto" }}
+            style={{ marginBottom: "20px", fontSize: "14px", width: "20%" }}
           >
             Add Enseignant
           </Button>
@@ -592,7 +586,6 @@ function Teacher() {
                   sx={{ mb: 2 }}
                 />
                 <Button
-                  
                   variant="contained"
                   color="primary"
                   type="submit"
@@ -603,81 +596,6 @@ function Teacher() {
               </form>
             </Box>
           </Modal>
-=======
-          <div>
-            <DataGrid rows={enseignants} columns={columns} />
-          </div>
-          <div padding-left="10%">
-            <Button variant="contained" color="success" onClick={handleOpen}>
-              add a TEACHER
-            </Button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Firstname"
-                    value={fm}
-                    onChange={(e) => setFirstname(e.target.value)}
-                  />
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Lastname"
-                    value={lm}
-                    onChange={(e) => setLastname(e.target.value)}
-                  />
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Username"
-                    value={u}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <Select
-                    fullWidth
-                    margin="normal"
-                    value={r}
-                    onChange={(e) => setRole(e.target.value)}
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select Role
-                    </MenuItem>
-                    <MenuItem value="Admin">Admin</MenuItem>
-                    <MenuItem value="Secrétaire">Secrétaire</MenuItem>
-                    <MenuItem value="Vice doyen">Vice doyen</MenuItem>
-                  </Select>
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Password"
-                    type="password"
-                    value={p}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Email"
-                    type="email"
-                    value={em}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <Button type="submit" variant="contained" color="primary">
-                    {isEditing ? "Update" : "Add"}
-                  </Button>
-                </form>
-              </Box>
-            </Modal>
-          </div>
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         </div>
       </div>
     </>

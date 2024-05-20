@@ -1,6 +1,7 @@
 // Importez React, useState et useEffect
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, useParams } from "react-router-dom";
+import { NavLink, Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -14,10 +15,6 @@ import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
-import AddIcon from "@mui/icons-material/Add";
-import Axios from "axios";
 import {
   Box,
   Button,
@@ -27,6 +24,10 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import Axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
+import AddIcon from "@mui/icons-material/Add";
 import Axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
@@ -70,7 +71,9 @@ function Admin_super_user_List() {
     fetch("/super_users")
       .then((response) => response.json())
       .then((data) => setSuperUsers(data))
-      .catch((error) => console.error("Error fetching super_user data:", error));
+      .catch((error) =>
+        console.error("Error fetching super_user data:", error)
+      );
   }, []);
 
   const handleOpen = () => setOpen(true);
@@ -173,27 +176,7 @@ function Admin_super_user_List() {
         <Button
           variant="outlined"
           startIcon={<AutoFixNormalIcon />}
-<<<<<<< HEAD
           onClick={() => handleUpdate(params.row)}
-=======
-          onClick={() => {
-            setOpen(true);
-            const super_userId = params.row.id;
-            fetch(`/super_users/${super_userId}`)
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error("Failed to fetch super_user data");
-                }
-                return response.json();
-              })
-              .then((super_user) => {
-                setFormData(super_user);
-              })
-              .catch((error) => {
-                console.error("Error fetching super_user  data:", error);
-              });
-          }}
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         >
           Update
         </Button>
@@ -215,10 +198,7 @@ function Admin_super_user_List() {
       ),
     },
   ];
-<<<<<<< HEAD
-
-=======
-  const handleOpen = (superUser) => {
+  /* const handleOpen = (superUser) => {
     if (superUser) {
       // Si un super utilisateur est passé en argument, cela signifie que nous voulons le modifier
       setSelectedSuperUser(superUser);
@@ -229,7 +209,7 @@ function Admin_super_user_List() {
       setIsEditing(false);
     }
     setOpen(true);
-  };
+  }; */
   const populateFields = () => {
     if (selectedSuperUser) {
       setFirstname(selectedSuperUser.Firstname);
@@ -242,7 +222,6 @@ function Admin_super_user_List() {
   };
 
   // Retournez votre JSX pour le composant Admin_Viced_List
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
   return (
     <>
       <div className="dashboard-container_vice">
@@ -422,23 +401,4 @@ function Admin_super_user_List() {
   );
 }
 
-const headerCellStyle = {
-  border: "1px solid #dddddd",
-  padding: "8px",
-  textAlign: "left",
-  backgroundColor: "#f2f2f2",
-};
-
-const cellStyle = {
-  border: "1px solid #000000",
-  padding: "10px 30px",
-  textAlign: "left",
-};
-
-const separatorRowStyle = {
-  height: "1px",
-  backgroundColor: "#dddddd",
-};
-
 export default Admin_super_user_List;
-
