@@ -1,11 +1,8 @@
 // Importez React, useState et useEffect
 import React, { useState, useEffect } from "react";
-// Importez les éléments de react-router-dom
-import { NavLink, Link } from "react-router-dom";
-// Importez FontAwesomeIcon et l'icône de recherche
+import { NavLink, Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { DataGrid } from "@mui/x-data-grid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -23,14 +20,17 @@ import AddIcon from "@mui/icons-material/Add";
 import Axios from "axios";
 import {
   Box,
+  Button,
   Typography,
   Modal,
   TextField,
   Select,
   MenuItem,
 } from "@mui/material";
-
-// Importez le fichier CSS
+import Axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
+import AddIcon from "@mui/icons-material/Add";
 import "./Admin.css";
 
 const style = {
@@ -44,12 +44,13 @@ const style = {
   boxShadow: 50,
   p: 4,
 };
-// Définissez votre composant Admin_Viced_List
-function Admin_super_user_List() {
-  const [open, setOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false); // Variable d'état pour déterminer si on est en mode édition ou ajout
-  const [selectedSuperUser, setSelectedSuperUser] = useState(null); // Variable d'état pour stocker les données du super utilisateur sélectionné pour l'édition
 
+function Admin_super_user_List() {
+  const { id } = useParams();
+  const [superUsers, setSuperUsers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedSuperUser, setSelectedSuperUser] = useState(null);
   const [formData, setFormData] = useState({
     Firstname: "",
     Lastname: "",
@@ -58,106 +59,110 @@ function Admin_super_user_List() {
     Email: "",
     Password: "",
   });
-  // Déclarez votre état pour stocker les données des super_users et le terme de recherche
-  const { id } = useParams();
-  const [super_users, setsuper_users] = useState([]);
   const [searchTerm, setSearchTerm] = useState({
     firstname: "",
     lastname: "",
     username: "",
     role: "",
   });
-  const [fm, setFirstname] = useState("");
-  const [lm, setLastname] = useState("");
-  const [u, setUsername] = useState("");
-  const [r, setRole] = useState("");
-  const [p, setPassword] = useState("");
-  const [em, setEmail] = useState("");
+
+  useEffect(() => {
+    fetch("/super_users")
+      .then((response) => response.json())
+      .then((data) => setSuperUsers(data))
+      .catch((error) => console.error("Error fetching super_user data:", error));
+  }, []);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setIsEditing(false);
+    setFormData({
+      Firstname: "",
+      Lastname: "",
+      Username: "",
+      Role: "",
+      Email: "",
+      Password: "",
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:3002/super_user/add", {
-      Firstname: fm,
-      Lastname: lm,
-      Username: u,
-      Role: r,
-      Email: em,
-      Password: p,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          alert("Add successful");
-          window.location.href = "/Admin/vice_deans";
-        } else {
-          return res.json().then((data) => {
+    if (isEditing) {
+      Axios.put(`/super_users/edit/${selectedSuperUser.id}`, formData)
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Update successful");
+            window.location.reload();
+          } else {
+            alert("Failed to update Super_user");
+          }
+        })
+        .catch((error) => {
+          alert("An error occurred. Please try again later.");
+          console.error("Error updating Super_user:", error);
+        });
+    } else {
+      Axios.post("http://localhost:3002/super_user/add", formData)
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Add successful");
+            window.location.href = `/Admin/${id}/super_user`;
+          } else {
             alert("Failed to add Super_user");
-          });
-        }
-      })
-      .catch((error) => {
-        alert("An error occurred. Please try again later.");
-        console.error("Error adding Super_user:");
-      });
+          }
+        })
+        .catch((error) => {
+          alert("An error occurred. Please try again later.");
+          console.error("Error adding Super_user:", error);
+        });
+    }
   };
-  // Utilisez useEffect pour effectuer une action dès que le composant est monté
-  useEffect(() => {
-    // Fetch super_users data from backend
-    fetch("/super_users")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch super_user data");
-        }
-        return response.json();
-      })
-      .then((super_users) => {
-        setsuper_users(super_users);
-      })
-      .catch((error) => {
-        console.error("Error fetching super_user data:", error);
-      });
-  }, []);
 
-  // Définissez votre fonction pour gérer la suppression d'un vice-doyen
+  const handleUpdate = (superUser) => {
+    setSelectedSuperUser(superUser);
+    setFormData({
+      Firstname: superUser.Firstname,
+      Lastname: superUser.Lastname,
+      Username: superUser.Username,
+      Role: superUser.Role,
+      Email: superUser.Email,
+      Password: superUser.Password,
+    });
+    setIsEditing(true);
+    handleOpen();
+  };
+
   const handleDelete = (id) => {
-    // Send DELETE request to backend to delete super_user
-    fetch(`/super_users/${id}`, {
-      method: "DELETE",
-    })
+    fetch(`/super_users/${id}`, { method: "DELETE" })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to delete super_user");
         }
-        // Filter out the deleted vice-doyenne from the state
-        setsuper_users(
-          super_users.filter((super_user) => super_user.id !== id)
-        );
+        setSuperUsers(superUsers.filter((superUser) => superUser.id !== id));
       })
-      .catch((error) => {
-        console.error("Error deleting super_user:", error);
-      });
+      .catch((error) => console.error("Error deleting super_user:", error));
   };
 
-  const handleClose = () => setOpen(false);
-
-  // Filtrer les vice-doyennes en fonction du terme de recherche
-  const filteredsuper_users = super_users.filter(
-    (super_user) =>
-      super_user.Firstname.toLowerCase().includes(
+  const filteredSuperUsers = superUsers.filter(
+    (superUser) =>
+      superUser.Firstname.toLowerCase().includes(
         searchTerm.firstname.toLowerCase()
       ) &&
-      super_user.Lastname.toLowerCase().includes(
+      superUser.Lastname.toLowerCase().includes(
         searchTerm.lastname.toLowerCase()
       ) &&
-      super_user.Username.toLowerCase().includes(
+      superUser.Username.toLowerCase().includes(
         searchTerm.username.toLowerCase()
       ) &&
-      super_user.Role.toLowerCase().includes(searchTerm.role.toLowerCase())
+      superUser.Role.toLowerCase().includes(searchTerm.role.toLowerCase())
   );
+
   const columns = [
     { field: "Username", headerName: "Social Security Number", width: 200 },
     { field: "Firstname", headerName: "First name", width: 130 },
     { field: "Lastname", headerName: "Last name", width: 130 },
-
     { field: "Role", headerName: "Role", width: 130 },
     { field: "Email", headerName: "Email", width: 200 },
     {
@@ -168,6 +173,9 @@ function Admin_super_user_List() {
         <Button
           variant="outlined"
           startIcon={<AutoFixNormalIcon />}
+<<<<<<< HEAD
+          onClick={() => handleUpdate(params.row)}
+=======
           onClick={() => {
             setOpen(true);
             const super_userId = params.row.id;
@@ -185,6 +193,7 @@ function Admin_super_user_List() {
                 console.error("Error fetching super_user  data:", error);
               });
           }}
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         >
           Update
         </Button>
@@ -206,6 +215,9 @@ function Admin_super_user_List() {
       ),
     },
   ];
+<<<<<<< HEAD
+
+=======
   const handleOpen = (superUser) => {
     if (superUser) {
       // Si un super utilisateur est passé en argument, cela signifie que nous voulons le modifier
@@ -230,6 +242,7 @@ function Admin_super_user_List() {
   };
 
   // Retournez votre JSX pour le composant Admin_Viced_List
+>>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
   return (
     <>
       <div className="dashboard-container_vice">
@@ -262,7 +275,6 @@ function Admin_super_user_List() {
                   Super User
                 </Link>
               </li>
-
               <li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
@@ -307,21 +319,22 @@ function Admin_super_user_List() {
                   setSearchTerm({ ...searchTerm, role: e.target.value })
                 }
               />
-
               <i className="search-icon">
                 <FontAwesomeIcon icon={faSearch} />
               </i>
             </div>
           </div>
-
           <div style={{ height: 400 }}>
-            <DataGrid rows={filteredsuper_users} columns={columns} />
+            <DataGrid rows={filteredSuperUsers} columns={columns} />
           </div>
-          <div padding-left="10%">
+          <div style={{ paddingLeft: "10%" }}>
             <Button
               variant="outlined"
               startIcon={<AddIcon />}
-              onClick={handleOpen}
+              onClick={() => {
+                setIsEditing(false);
+                handleOpen();
+              }}
             >
               Add Super_user
             </Button>
@@ -337,28 +350,36 @@ function Admin_super_user_List() {
                     fullWidth
                     margin="normal"
                     label="Firstname"
-                    value={fm}
-                    onChange={(e) => setFirstname(e.target.value)}
+                    value={formData.Firstname}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Firstname: e.target.value })
+                    }
                   />
                   <TextField
                     fullWidth
                     margin="normal"
                     label="Lastname"
-                    value={lm}
-                    onChange={(e) => setLastname(e.target.value)}
+                    value={formData.Lastname}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Lastname: e.target.value })
+                    }
                   />
                   <TextField
                     fullWidth
                     margin="normal"
                     label="Username"
-                    value={u}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={formData.Username}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Username: e.target.value })
+                    }
                   />
                   <Select
                     fullWidth
                     margin="normal"
-                    value={r}
-                    onChange={(e) => setRole(e.target.value)}
+                    value={formData.Role}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Role: e.target.value })
+                    }
                     displayEmpty
                   >
                     <MenuItem value="" disabled>
@@ -373,16 +394,20 @@ function Admin_super_user_List() {
                     margin="normal"
                     label="Password"
                     type="password"
-                    value={p}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.Password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Password: e.target.value })
+                    }
                   />
                   <TextField
                     fullWidth
                     margin="normal"
                     label="Email"
                     type="email"
-                    value={em}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.Email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Email: e.target.value })
+                    }
                   />
                   <Button type="submit" variant="contained" color="primary">
                     {isEditing ? "Update" : "Add"}
@@ -397,7 +422,6 @@ function Admin_super_user_List() {
   );
 }
 
-// Styles pour l'en-tête du tableau
 const headerCellStyle = {
   border: "1px solid #dddddd",
   padding: "8px",
@@ -405,18 +429,16 @@ const headerCellStyle = {
   backgroundColor: "#f2f2f2",
 };
 
-// Styles pour les cellules du tableau
 const cellStyle = {
   border: "1px solid #000000",
   padding: "10px 30px",
   textAlign: "left",
 };
 
-// Styles pour les lignes de séparation
 const separatorRowStyle = {
   height: "1px",
   backgroundColor: "#dddddd",
 };
 
-// Exportez votre composant  Admin_super_user_List
 export default Admin_super_user_List;
+

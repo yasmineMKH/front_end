@@ -1,21 +1,12 @@
 import React from "react";
-import "./Edit_vice.css"; // Assurez-vous d'avoir le fichier CSS correspondant
+import "./Edit_sec.css"; // Assurez-vous d'avoir le fichier CSS correspondant
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 //import { useUser } from './UserContext';
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import SchoolIcon from "@mui/icons-material/School";
-import GroupsIcon from "@mui/icons-material/Groups";
-import UpdateIcon from "@mui/icons-material/Update";
-import FolderCopyIcon from "@mui/icons-material/FolderCopy";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
-function Viced_profile() {
+import { useNavigate } from 'react-router-dom';
+function Profile_sec() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -70,7 +61,7 @@ function Viced_profile() {
         } else {
           // Vice doyenne updated successfully
           alert("super_user updated successfully");
-          navigate(`/Vice_deans/${id}`);
+          navigate(`/Secrétaire/${id}`);
         }
       })
 
@@ -91,71 +82,37 @@ function Viced_profile() {
       });
   };
   return (
-    <div className="dashboard-container_vice">
-      <nav className="nav_vice">
-        <div className="navbar_vice">
-          <div className="logo-vice">
-            <h1 className="sedan-regular">Faculty of Chemistry</h1>
-            <div>
-              <hr className=" divider" />
-              <h3 className="sedan-regular">Vice Doyen</h3>
-            </div>
+    <div className="dashboard_container_edit_sec">
+      <nav className="nav_sec">
+        <div className="navbar_sec">
+          <div className="logo">
+            <img src="/pic/logo.jpg" alt="" />
+            <h1>jobs</h1>
           </div>
-
-          <ul className="sedan-sc-regular">
+          <ul>
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>
-                <AccountCircleIcon style={{ marginRight: "9px" }} />
-                Profile
-              </Link>
+              <Link to={`/Secrétaire/${id}/Profile`}>Profile</Link>
             </li>
 
             <li>
-              <Link to={`/Vice_deans/${id}/teachers`}>
-                <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
-              </Link>
+              <Link to={`/Secrétaire/${id}/binome`}> Binome</Link>
+            </li>
+            
+            <li>
+              <Link to={`/Secrétaire/${id}/teachers`}>Teachers</Link>
             </li>
             <li>
-              <Link to={`/Vice_deans/${id}/students`}>
-                <SchoolIcon style={{ marginRight: "9px" }} />
-                Students
-              </Link>
+              <Link to={`/Secrétaire/${id}/students`}>Students</Link>
             </li>
             <li>
-              <Link to={``}>
-                <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
-              </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/${id}/comission`}>
-                <GroupsIcon style={{ marginRight: "9px" }} />
-                Commission
-              </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/${id}/binome`}>
-                <PeopleOutlineIcon style={{ marginRight: "9px" }} />
-                Binome
-              </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/${id}/DemandeDoc`}>
-                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                files
-              </Link>
-            </li>
-            <li>
-              <Link to="/LoginG">
-                <LogoutIcon style={{ marginRight: "9px" }} />
-                Logout
-              </Link>
+              <Link to="/LoginG">Logout</Link>
             </li>
           </ul>
         </div>
       </nav>
 
-      <div className="container_form_edit_vice">
-        <h1>Profile vice dean</h1>
+      <div className="container_form_edit_sec">
+        <h1>Profile Secrétaire</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="Firstname">Firstname:</label>
           <input
@@ -210,4 +167,4 @@ function Viced_profile() {
   );
 }
 
-export default Viced_profile;
+export default Profile_sec;

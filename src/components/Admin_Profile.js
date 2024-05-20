@@ -6,14 +6,6 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import SchoolIcon from "@mui/icons-material/School";
-import GroupsIcon from "@mui/icons-material/Groups";
-import UpdateIcon from "@mui/icons-material/Update";
-import FolderCopyIcon from "@mui/icons-material/FolderCopy";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import LogoutIcon from "@mui/icons-material/Logout";
 function Admin_profile() {
   const { id } = useParams();
   const [formData, setFormData] = useState({
