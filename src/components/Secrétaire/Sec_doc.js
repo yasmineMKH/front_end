@@ -17,8 +17,8 @@ import UpdateIcon from "@mui/icons-material/Update";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-import LockResetIcon from "@mui/icons-material/LockReset";
 import {
   Box,
   Typography,
@@ -44,7 +44,7 @@ const style = {
   overflowY: "auto",
 };
 
-function Doc_list() {
+function Sec_doc() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedDoctorant, setSelectedDoctorant] = useState(null);
@@ -326,52 +326,35 @@ function Doc_list() {
 
   return (
     <>
-      <div className="dashboard-container_vice">
-        <nav className="nav_vice">
-          <div className="navbar_vice">
-            <div className="logo-vice">
+      <div className="dashboard-container_sec ">
+        <nav className="nav_sec_">
+          <div className="navbar_sec">
+            <div className="logo-sec">
               <h1 className="sedan-regular">Faculty of Chemistry</h1>
               <div>
                 <hr className=" divider" />
-                <h3 className="sedan-regular">Vice Doyen</h3>
+                <h3 className="sedan-regular">Secretaria</h3>
               </div>
             </div>
 
-            <ul className="sedan-sc-regular">
+            <ul>
               <li>
-                <Link to={`/Vice_deans/${id}/Profile`}>
+                <Link to={`/Secrétaire/Profile`}>
                   <AccountCircleIcon style={{ marginRight: "9px" }} />
                   Profile
                 </Link>
               </li>
 
               <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>
+                <Link to={`/Secrétaire /teachers`}>
                   <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
                 </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/students`}>
+                <Link to={`/Secrétaire/ students`}>
+                  {" "}
                   <SchoolIcon style={{ marginRight: "9px" }} />
                   Students
-                </Link>
-              </li>
-              <li>
-                <Link to={``}>
-                  <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
-                </Link>
-              </li>
-              <li>
-                <Link to={`/Vice_deans/${id}/comission`}>
-                  <GroupsIcon style={{ marginRight: "9px" }} />
-                  Commission
-                </Link>
-              </li>
-
-              <li>
-                <Link to={`/Vice_deans/${id}/Dossier`}>
-                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                  files
                 </Link>
               </li>
               <li>
@@ -396,6 +379,7 @@ function Doc_list() {
             </ul>
           </div>
         </nav>
+
         <div className="main-top">
           <div className="top"></div>
           <Box sx={{ height: 1000, width: 2800 }}>
@@ -745,4 +729,4 @@ function Doc_list() {
   );
 }
 
-export default Doc_list;
+export default Sec_doc;

@@ -31,8 +31,9 @@ import {
   MenuItem,
 } from "@mui/material";
 // Importez le fichier CSS
-import "./vice.css";
+import "./Sec.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 const style = {
   position: "absolute",
@@ -44,9 +45,11 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 50,
   p: 4,
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
-function Teacher() {
+function Sec_teacher() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedEnseignant, setSelectedEnseignant] = useState(null);
@@ -93,7 +96,7 @@ function Teacher() {
     e.preventDefault();
     if (isEditing) {
       Axios.put(
-        `http://localhost:3002/updateacher/${selectedEnseignant.id}`,
+        `http://localhost:3002/updatdoctorant/${selectedEnseignant.id}`,
         formData
       )
         .then((res) => {
@@ -199,29 +202,19 @@ function Teacher() {
   };
 
   const columns = [
-    { field: "Username_NSS", headerName: "Username NSS", width: 150 },
+    { field: "Username_NSS", headerName: "Username NSS", width: 100 },
     { field: "Firstname_fr", headerName: "First name (FR)", width: 150 },
     { field: "Lastname_fr", headerName: "Last name (FR)", width: 150 },
-    { field: "Firstname_ab", headerName: "First name (AB)", width: 150 },
-    { field: "Lastname_ab", headerName: "Last name (AB)", width: 150 },
-    { field: "Date_naissance", headerName: "Birth Date", width: 150 },
-    { field: "Lieu_naissance", headerName: "Birth Place", width: 150 },
-    { field: "Numero_telephone", headerName: "Phone Number", width: 150 },
-    { field: "Sexe", headerName: "Gender", width: 100 },
-    { field: "Grade", headerName: "Grade", width: 150 },
-    { field: "Specialite", headerName: "Speciality", width: 150 },
-    { field: "Laboratoire", headerName: "Laboratory", width: 150 },
+    { field: "Grade", headerName: "Grade", width: 100 },
     { field: "Departement", headerName: "Department", width: 150 },
-    { field: "Email", headerName: "Email", width: 200 },
-    { field: "Usthb", headerName: "USTHB", width: 150 },
-    { field: "Situation", headerName: "Situation", width: 150 },
+    { field: "Situation", headerName: "status", width: 100 },
     {
       field: "Update",
       headerName: "Update",
       width: 150,
       renderCell: (params) => (
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<AutoFixNormalIcon />}
           onClick={() => {
             setOpen(true);
@@ -242,7 +235,7 @@ function Teacher() {
       width: 150,
       renderCell: (params) => (
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<DeleteIcon />}
           color="error"
           onClick={() => handleDelete(params.row.id)}
@@ -278,52 +271,35 @@ function Teacher() {
   };
   return (
     <>
-      <div className="dashboard-container_vice">
-        <nav className="nav_vice">
-          <div className="navbar_vice">
-            <div className="logo-vice">
+      <div className="dashboard-container_sec ">
+        <nav className="nav_sec_">
+          <div className="navbar_sec">
+            <div className="logo-sec">
               <h1 className="sedan-regular">Faculty of Chemistry</h1>
               <div>
                 <hr className=" divider" />
-                <h3 className="sedan-regular">Vice Doyen</h3>
+                <h3 className="sedan-regular">Secretaria</h3>
               </div>
             </div>
 
-            <ul className="sedan-sc-regular">
+            <ul>
               <li>
-                <Link to={`/Vice_deans/${id}/Profile`}>
+                <Link to={`/Secrétaire/Profile`}>
                   <AccountCircleIcon style={{ marginRight: "9px" }} />
                   Profile
                 </Link>
               </li>
 
               <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>
+                <Link to={`/Secrétaire /teachers`}>
                   <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
                 </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/students`}>
+                <Link to={`/Secrétaire/ students`}>
+                  {" "}
                   <SchoolIcon style={{ marginRight: "9px" }} />
                   Students
-                </Link>
-              </li>
-              <li>
-                <Link to={``}>
-                  <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
-                </Link>
-              </li>
-              <li>
-                <Link to={`/Vice_deans/${id}/comission`}>
-                  <GroupsIcon style={{ marginRight: "9px" }} />
-                  Commission
-                </Link>
-              </li>
-
-              <li>
-                <Link to={`/Vice_deans/${id}/DemandeDoc`}>
-                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                  files
                 </Link>
               </li>
               <li>
@@ -339,6 +315,7 @@ function Teacher() {
                   News
                 </Link>
               </li>
+
               <li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
@@ -368,7 +345,7 @@ function Teacher() {
             sx={{ mt: 2, margin: "auto" }}
             style={{ marginBottom: "20px", fontSize: "14px", width: "20%" }}
           >
-            Add Enseignant
+            Add Teacher
           </Button>
 
           <Modal
@@ -544,7 +521,7 @@ function Teacher() {
                   sx={{ mb: 2 }}
                 />
                 <TextField
-                  label="Situation"
+                  label="status"
                   variant="outlined"
                   fullWidth
                   value={formData.Situation}
@@ -559,7 +536,7 @@ function Teacher() {
                   type="submit"
                   fullWidth
                 >
-                  {isEditing ? "Update Enseignant" : "Add Enseignant"}
+                  {isEditing ? "Update teacher" : "Add Enseignant"}
                 </Button>
               </form>
             </Box>
@@ -570,4 +547,4 @@ function Teacher() {
   );
 }
 // Exportez votre composant  Admin_super_user_List
-export default Teacher;
+export default Sec_teacher;

@@ -5,6 +5,11 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LockResetIcon from "@mui/icons-material/LockReset";
 function Home_sec() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
@@ -26,28 +31,48 @@ function Home_sec() {
 
   return (
     <div className="dashboard-container_sec ">
-      <nav className="nav_sec">
+      <nav className="nav_sec_">
         <div className="navbar_sec">
-          <div className="logo">
-            <h1>Secrétaire</h1>
+          <div className="logo-sec">
+            <h1 className="sedan-regular">Faculty of Chemistry</h1>
+            <div>
+              <hr className=" divider" />
+              <h3 className="sedan-regular">Secretaria</h3>
+            </div>
           </div>
+
           <ul>
             <li>
-              <Link to={`/Secrétaire/${id}/Profile`}>Profile</Link>
+              <Link to={`/Secrétaire/${id}/Profile`}>
+                <AccountCircleIcon style={{ marginRight: "9px" }} />
+                Profile
+              </Link>
             </li>
 
             <li>
-              <Link to={`/Secrétaire/${id}/binome`}> Binome</Link>
-            </li>
-            
-            <li>
-              <Link to={`/Secrétaire/${id}/teachers`}>Teachers</Link>
+              <Link to={`/Secrétaire/${id}/teachers`}>
+                <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
+              </Link>
             </li>
             <li>
-              <Link to={`/Secrétaire/${id}/students`}>Students</Link>
+              <Link to={`/Secrétaire/${id}/students`}>
+                {" "}
+                <SchoolIcon style={{ marginRight: "9px" }} />
+                Students
+              </Link>
             </li>
             <li>
-              <Link to="/LoginG">Logout</Link>
+              <Link to={`/Secrétaire/${id}/students`}>
+                {" "}
+                <LockResetIcon style={{ marginRight: "9px" }} />
+                Session
+              </Link>
+            </li>
+            <li>
+              <Link to="/LoginG">
+                <LogoutIcon style={{ marginRight: "9px" }} />
+                Logout
+              </Link>
             </li>
           </ul>
         </div>

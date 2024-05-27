@@ -6,6 +6,10 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import LogoutIcon from "@mui/icons-material/Logout";
 function Admin_profile() {
   const { id } = useParams();
   const [formData, setFormData] = useState({

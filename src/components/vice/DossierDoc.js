@@ -12,7 +12,10 @@ import UpdateIcon from "@mui/icons-material/Update";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import { Select, MenuItem } from "@mui/material";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 function DossierDoc() {
   const { id } = useParams();
   const [demande, setDemande] = useState([]);
@@ -43,6 +46,18 @@ function DossierDoc() {
     fetchBinomes();
   }, []);
 
+  const renderPdfButton = (url) => (
+    <Button
+      variant="contained"
+      color="error"
+      href={"http://localhost:3002/uploadfile/url"}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <PictureAsPdfIcon />
+    </Button>
+  );
+
   const handleBinomeSelect = (event, demandeId) => {
     const { value } = event.target;
     setSelectedBinomes((prev) => ({ ...prev, [demandeId]: value }));
@@ -71,37 +86,72 @@ function DossierDoc() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "Username_Mat", headerName: "Social Security Number", width: 130 },
-    { field: "Pays", headerName: "Destination", width: 130 },
+    { field: "Username_Mat", headerName: "Social Security Number", width: 100 },
+    { field: "Pays", headerName: "Destination", width: 100 },
     {
       field: "Etablissement_acc",
       headerName: "Receiving facility",
-      width: 130,
+      width: 100,
     },
-    { field: "Date_dep", headerName: "Commencement date", width: 130 },
-    { field: "Date_retour", headerName: "Completion date", width: 130 },
-    { field: "Periode_Stage", headerName: "Internship period", width: 130 },
-    { field: "Annee", headerName: "Year of eligibility", width: 130 },
-    { field: "Certificat", headerName: "Certificat Document", width: 130 },
+    { field: "Date_dep", headerName: "Commencement date", width: 100 },
+    { field: "Date_retour", headerName: "Completion date", width: 100 },
+    { field: "Periode_Stage", headerName: "Internship period", width: 100 },
+    {
+      field: "Certificat",
+      headerName: " Documents",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          href={`http://localhost:3002/uploadfile/${params.row.Certificat}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <PictureAsPdfIcon />
+        </Button>
+      ),
+    },
+    {
+      field: "Certificat",
+      headerName: " Documents",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          href={`http://localhost:3002/uploadfile/${params.row.Document}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <PictureAsPdfIcon />
+        </Button>
+      ),
+    },
     {
       field: "Binome",
-      headerName: "Binome",
-      width: 200,
+      headerName: "Pair",
+      width: 150,
       renderCell: (params) => (
-        <select
+        <Select
+          fullWidth
+          margin="normal"
           value={selectedBinomes[params.row.id] || ""}
           onChange={(e) => handleBinomeSelect(e, params.row.id)}
         >
-          <option value="">Sélectionnez un binome</option>
+          <MenuItem value="" disabled>
+            Select a pair
+          </MenuItem>
           {binomes.map((binome) => (
-            <option
+            <MenuItem
               key={binome.id}
               value={`${binome.Username_Nss1}-${binome.Username_Nss2}`}
             >
+              {" "}
               {binome.id} - {binome.Username_Nss1} - {binome.Username_Nss2}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </Select>
       ),
     },
     {
@@ -163,16 +213,25 @@ function DossierDoc() {
                 Commission
               </Link>
             </li>
+
             <li>
-              <Link to={`/Vice_deans/${id}/binome`}>
-                <PeopleOutlineIcon style={{ marginRight: "9px" }} />
-                Binome
+              <Link to={`/Vice_deans/${id}/Dossier`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                files
+              </Link>
+            </li>
+
+            <li>
+              <Link to={`/Session`}>
+                {" "}
+                <LockResetIcon style={{ marginRight: "9px" }} />
+                Session
               </Link>
             </li>
             <li>
-              <Link to={`/Vice_deans/${id}/DemandeDoc`}>
-                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                files
+              <Link to="/LoginG">
+                <NewspaperIcon style={{ marginRight: "9px" }} />
+                News
               </Link>
             </li>
             <li>
@@ -184,8 +243,11 @@ function DossierDoc() {
           </ul>
         </div>
       </nav>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid rows={demande} columns={columns} />
+      <div className="main-top">
+        <div className="top-vice"></div>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid rows={demande} columns={columns} />
+        </div>
       </div>
     </div>
   );

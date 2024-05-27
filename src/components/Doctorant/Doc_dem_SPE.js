@@ -33,61 +33,48 @@ function Doc_dem_SPE() {
   const [p, setPays] = useState("");
   const [et, setEtablissement] = useState("");
   const [pe, setPeriode] = useState("");
-  
   const [d, setdebut] = useState("");
   const [f, setfin] = useState("");
-<<<<<<< HEAD
   const [menuVisible, setMenuVisible] = useState(false);
-      
-    const toggleMenu = () => {
-          setMenuVisible(!menuVisible);
-        };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    Axios.post(`http://localhost:3002/${Username}/demande_SPE`, {
-=======
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
   const addSPE = async (e) => {
     e.preventDefault();
-    if (!u || !p || !et || !pe || !a || !d || !f) {
-      alert("Veuillez remplir tous les champs");
+    if (!u || !p || !et || !pe || !d || !f || !selectedFile) {
+      alert("Veuillez remplir tous les champs et sélectionner un fichier");
       return;
     }
-    Axios.post("http://localhost:3002/demande_SPE", {
-      Username_Mat: u,
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
-      Pays: p,
-      Etablissement_acc: et,
-      Periode_Stage: pe,
-      
-      Date_dep: d,
-      Date_retour: f,
-    })
-      .then((res) => {
-        if (res.status === 201) {
-          console.log(res);
-          alert("Add successful");
-        } else {
-          return res.json().then((data) => {
-            alert("Failed to add inscription");
-          });
-        }
-      })
-      .catch((error) => {
-        alert("Please try again later.");
-        console.error("Error adding inscription:");
-      });
+
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("Username_Mat", u);
+    formData.append("Pays", p);
+    formData.append("Etablissement_acc", et);
+    formData.append("Periode_Stage", pe);
+    formData.append("Date_dep", d);
+    formData.append("Date_retour", f);
+    formData.append("certificat", selectedFile);
+
     try {
-      const response = await axios({
-        method: "post",
-        url: "/upload",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        "http://localhost:3002/demande_SPE",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log(response);
+        alert("Add successful");
+      } else {
+        alert("Failed to add inscription");
+      }
     } catch (error) {
-      console.log(error);
+      alert("Please try again later.");
+      console.error("Error adding inscription:", error);
     }
   };
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -100,72 +87,84 @@ function Doc_dem_SPE() {
   return (
     <div>
       <header>
-    <nav className='nav_home_doc'>
-        <div className='lab'>
-            <a href='#'>Logo</a>
-        </div>
-        <div className='toggle_menu'>
-        <i class='bx bx-grid-alt'></i>
-        </div>
-        <ul className='nav_list'></ul>
-        <div className='close_menu'>
-        <i class='bx bx-x'></i>
-        </div>
-        <li className='nav_item'><a className='nav_link' href="#"> <i class='bx bx-home'></i></a></li>
-        <li className='nav_item'><a className='nav_link' href="#">Profile <i class='bx bxs-user-detail' style={{ marginRight: '20px' }}></i></a></li>
-        <li className='nav_item'><a className='nav_link' href="#">Faculty</a></li>
-        <li className='nav_item'><a className='nav_link dropdown_link' href="#" onClick={toggleMenu}>Formation <i class='bx bx-chevron-down'></i></a>
-        {menuVisible && (
-        <div className='megamenu'>
-            <ul className='content'>
-                <li className='megamenu_item header_megamenu'></li>
-                <li className='megamenu_item'>
-                    <div className='menu_icone'>
-
+        <nav className="nav_home_doc">
+          <div className="lab">
+            <p className="sedan-regular">Faculty of Chemistry</p>
+          </div>
+          <div className="toggle_menu">
+            <i class="bx bx-grid-alt"></i>
+          </div>
+          <ul className="nav_list"></ul>
+          <div className="close_menu">
+            <i class="bx bx-x"></i>
+          </div>
+          <li className="nav_item">
+            <a className="nav_link" href="#">
+              {" "}
+              <i class="bx bx-home"></i>
+            </a>
+          </li>
+          <li className="nav_item">
+            <a className="nav_link" href="#">
+              Profil{" "}
+              <i class="bx bxs-user-detail" style={{ marginRight: "20px" }}></i>
+            </a>
+          </li>
+          <li className="nav_item">
+            <a className="nav_link" href="#">
+              Faculty
+            </a>
+          </li>
+          <li className="nav_item">
+            <a className="nav_link dropdown_link" href="#" onClick={toggleMenu}>
+              Formation <i class="bx bx-chevron-down"></i>
+            </a>
+            {menuVisible && (
+              <div className="megamenu">
+                <ul className="content">
+                  <li className="megamenu_item header_megamenu"></li>
+                  <li className="megamenu_item">
+                    <div className="menu_icone"></div>
+                    <div className="menu_link">
+                      <Link to={`/Page_SPE/${Username}`}>
+                        <span className="nav-item">
+                          Stage de perfectionnent à l'étrangé
+                        </span>
+                      </Link>
                     </div>
-                    <div className='menu_link'>
-                    <Link to={`/Page_SPE/${Username}`}>
-        
-        <span className="nav-item">Stage de perfectionnent à l'étrangé</span>
-    </Link>
-                        
-                        
-                    </div>
-                </li>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </li>
+          <li className="nav_item">
+            <a className="nav_link" href="#">
+              About
+            </a>
+          </li>
+          <li className="nav_item">
+            <a className="nav_link" href="#">
+              Contact Us
+            </a>
+          </li>
+          <li className="nav_item">
+            {" "}
+            <Link className="nav_link" to="/Login">
+              {" "}
+              <i className="fas fa-user"></i>
+              <span className="nav-item">
+                Logout <i class="bi bi-box-arrow-left"></i>
+              </span>
+            </Link>
+          </li>
+        </nav>
+      </header>
+      <div className="container-form1">
+        <form className="container1">
+          <h1 className="h1-inscri">
+            Form for the application for an internship abroad.
+          </h1>
 
-            </ul>
-
-        </div>
-        )}
-        </li>
-        <li className='nav_item'><a className='nav_link' href="#">About</a></li>
-        <li className='nav_item'><a className='nav_link' href="#">Contact Us</a></li>
-        <li className='nav_item'> <Link className='nav_link' to="/Login"> <i className="fas fa-user"></i><span className="nav-item">Logout <i class="bi bi-box-arrow-left"></i></span></Link></li>
-
-
-    </nav>
-
-</header>
-      <div>
-<<<<<<< HEAD
-        <h1>Formulaire de la demande de Stage de perfectionnent à l'étrangé</h1>
-        <form>
-          {/*<label htmlFor="Username_Mat">Username_Mat:</label>
-          <input
-            type="text"
-            name="Username_Mat"
-            onChange={(e) => setUsername_Mat(e.target.value)}
-      />*/}
-
-          <label htmlFor="Pays">Pays:</label>
-          <input
-            type="text"
-            name="Pays"
-=======
-        <h1 className="h1-inscri">
-          Formulaire de la demande de Stage de perfectionnent à l'étrangé
-        </h1>
-        <form className="body-inscri">
           <TextField
             id="usernameMat"
             name="usernameMat"
@@ -177,21 +176,20 @@ function Doc_dem_SPE() {
             onChange={(e) => setUsername_Mat(e.target.value)}
           />
           <TextField
-            id="pays"
-            name="pays"
-            label="Pays"
+            id="Country"
+            name="Country"
+            label="Country"
             variant="outlined"
             fullWidth
             margin="normal"
             value={p}
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
             onChange={(e) => setPays(e.target.value)}
           />
 
           <TextField
-            id="etablissement"
-            name="etablissement"
-            label="Etablissement d'accueil"
+            id="receiving institution"
+            name="receiving institution"
+            label="receiving institution"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -199,26 +197,26 @@ function Doc_dem_SPE() {
             onChange={(e) => setEtablissement(e.target.value)}
           />
           <FormControl variant="outlined" fullWidth margin="normal">
-            <InputLabel id="periode-label">Période</InputLabel>
+            <InputLabel id="Semester-label">Semester</InputLabel>
             <Select
-              labelId="periode-label"
-              id="periode"
-              name="periode"
+              labelId="Semester"
+              id="Semester"
+              name="Semester"
               value={pe}
               onChange={(e) => setPeriode(e.target.value)}
-              label="Période"
+              label="Semester"
             >
               <MenuItem value="">
-                <em>Sélectionnez la période</em>
+                <em>Select the semester</em>
               </MenuItem>
-              <MenuItem value="Semetre1">Semetre1</MenuItem>
-              <MenuItem value="Semetre2">Semetre2</MenuItem>
+              <MenuItem value="Semeter1">Semeter1</MenuItem>
+              <MenuItem value="Semeter2">Semeter2</MenuItem>
             </Select>
           </FormControl>
           <TextField
-            id="dateDebut"
-            name="dateDebut"
-            label="Date de début du stage"
+            id="start date"
+            name="start date"
+            label="start date of the internship"
             type="date"
             variant="outlined"
             fullWidth
@@ -230,9 +228,9 @@ function Doc_dem_SPE() {
             onChange={(e) => setdebut(e.target.value)}
           />
           <TextField
-            id="dateFin"
-            name="dateFin"
-            label="Date de fin du stage"
+            id="end date"
+            name="end date"
+            label="end date of the internship"
             type="date"
             variant="outlined"
             fullWidth
@@ -243,21 +241,8 @@ function Doc_dem_SPE() {
             value={f}
             onChange={(e) => setfin(e.target.value)}
           />
-<<<<<<< HEAD
-
-          <button onClick={handleSubmit}>Envoyer</button>
-=======
-          <TextField
-            id="anneeBourse"
-            name="anneeBourse"
-            label="Année Bénéfice de bourse"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={a}
-            onChange={(e) => setAnnee(e.target.value)}
-          />
           <form>
+            <p>Enter your school certificate form pdf</p>
             <Button
               component="label"
               role={undefined}
@@ -279,9 +264,8 @@ function Doc_dem_SPE() {
             style={{ marginTop: "20px" }}
             onClick={addSPE}
           >
-            Envoyer
+            Send
           </Button>
->>>>>>> 0aabe4d63021a2e010493cf655258c87c9085834
         </form>
       </div>
     </div>

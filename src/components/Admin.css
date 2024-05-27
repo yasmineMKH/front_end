@@ -17,6 +17,8 @@
   width: 100vw;
   flex-direction: row;
   background-color: #fff;
+  background-image: url("./Secrétaire/Pic-2/usthb7.jpg");
+  background-size: cover;
   /* display: flex;
   
    position: relative;
@@ -30,8 +32,6 @@
 
 .nav_admin {
   width: 250px;
-  background-image: url("./vice/Pic/usthb5.jpg");
-  background-size: cover;
   color: white;
   /*
   position: sticky;
@@ -109,11 +109,12 @@ li a {
   display: flex;
   flex-direction: column;
   overflow: auto;*/
-  background: #fff;
+  background: #ffffff96;
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .top-admin {

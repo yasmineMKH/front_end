@@ -1,7 +1,6 @@
 // Importez React, useState et useEffect
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, useParams } from "react-router-dom";
-import { NavLink, Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -9,12 +8,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import SchoolIcon from "@mui/icons-material/School";
-import GroupsIcon from "@mui/icons-material/Groups";
-import UpdateIcon from "@mui/icons-material/Update";
-import FolderCopyIcon from "@mui/icons-material/FolderCopy";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Button from "@mui/material/Button";
 import {
   Box,
   Button,
@@ -24,10 +18,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import Axios from "axios";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
-import AddIcon from "@mui/icons-material/Add";
 import Axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
@@ -164,17 +154,16 @@ function Admin_super_user_List() {
 
   const columns = [
     { field: "Username", headerName: "Social Security Number", width: 200 },
-    { field: "Firstname", headerName: "First name", width: 130 },
-    { field: "Lastname", headerName: "Last name", width: 130 },
-    { field: "Role", headerName: "Role", width: 130 },
-    { field: "Email", headerName: "Email", width: 200 },
+    { field: "Firstname", headerName: "First name", width: 150 },
+    { field: "Lastname", headerName: "Last name", width: 150 },
+    { field: "Role", headerName: "Role", width: 160 },
     {
       field: "Update",
       headerName: "Update",
       width: 150,
       renderCell: (params) => (
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<AutoFixNormalIcon />}
           onClick={() => handleUpdate(params.row)}
         >
@@ -188,7 +177,7 @@ function Admin_super_user_List() {
       width: 150,
       renderCell: (params) => (
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<DeleteIcon />}
           color="error"
           onClick={() => handleDelete(params.row.id)}
@@ -210,21 +199,11 @@ function Admin_super_user_List() {
     }
     setOpen(true);
   }; */
-  const populateFields = () => {
-    if (selectedSuperUser) {
-      setFirstname(selectedSuperUser.Firstname);
-      setLastname(selectedSuperUser.Lastname);
-      setUsername(selectedSuperUser.Username);
-      setRole(selectedSuperUser.Role);
-      setPassword(selectedSuperUser.Password);
-      setEmail(selectedSuperUser.Email);
-    }
-  };
 
   // Retournez votre JSX pour le composant Admin_Viced_List
   return (
     <>
-      <div className="dashboard-container_vice">
+      <div className="dashboard-container_admin">
         <nav className="nav_admin">
           <div className="navbar_vice">
             <div className="logo-vice">
@@ -265,50 +244,18 @@ function Admin_super_user_List() {
         </nav>
         <div className="main-top-admin">
           <div className="top-admin">
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder="Search by firstname"
-                value={searchTerm.firstname}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, firstname: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Search by lastname"
-                value={searchTerm.lastname}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, lastname: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Search by username"
-                value={searchTerm.username}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, username: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Search by role"
-                value={searchTerm.role}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, role: e.target.value })
-                }
-              />
-              <i className="search-icon">
-                <FontAwesomeIcon icon={faSearch} />
-              </i>
-            </div>
+            <h1 color="black">Super Users List</h1>
           </div>
+
           <div style={{ height: 400 }}>
             <DataGrid rows={filteredSuperUsers} columns={columns} />
           </div>
           <div style={{ paddingLeft: "10%" }}>
             <Button
-              variant="outlined"
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2, margin: "auto" }}
+              style={{ marginBottom: "20px", fontSize: "14px", width: "20%" }}
               startIcon={<AddIcon />}
               onClick={() => {
                 setIsEditing(false);

@@ -1,38 +1,44 @@
-import React, { useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { Button, Modal, Box, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-
+import React, { useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { Button, Modal, Box, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { useParams } from "react-router-dom";
+import Axios from "axios";
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };
 
 function Comment_SPE() {
   const [open, setOpen] = useState(false);
-  const [Commentaire, setComment] = useState('');
-  const [message, setMessage] = useState('');
+  const [Commentaire, setComment] = useState("");
+  const [message, setMessage] = useState("");
+
+  const { Username } = useParams();
+  const [u, setUsername_Mat] = useState("");
+  const [p, setPays] = useState("");
+  const [et, setEtablissement] = useState("");
+  const [pe, setPeriode] = useState("");
+  const [d, setdebut] = useState("");
+  const [f, setfin] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3002/demande_SPE", {
       Commentaire: Commentaire,
       Pays: p,
-      Ville: v,
       Etablissement_acc: et,
       Periode_Stage: pe,
-      Annee: a,
+
       Date_dep: d,
       Date_retour: f,
     })
@@ -51,21 +57,10 @@ function Comment_SPE() {
       });
   };
 
-
-
-
-
-
-
-  
   return (
     <div>
-      <div style={{ paddingLeft: '10%' }}>
-        <Button
-          variant="outlined"
-          startIcon={<AddIcon />}
-          onClick={handleOpen}
-        >
+      <div style={{ paddingLeft: "10%" }}>
+        <Button variant="outlined" startIcon={<AddIcon />} onClick={handleOpen}>
           Add Comment
         </Button>
         <Modal

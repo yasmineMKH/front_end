@@ -74,14 +74,9 @@ function Vice_homevice() {
                 Commission
               </Link>
             </li>
+
             <li>
-              <Link to={`/Vice_deans/${id}/binome`}>
-                <PeopleOutlineIcon style={{ marginRight: "9px" }} />
-                Binome
-              </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/${id}/DemandeDoc`}>
+              <Link to={`/Vice_deans/${id}/Dossier`}>
                 <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
                 files
               </Link>

@@ -131,41 +131,13 @@ function Admin_Users_List() {
             </ul>
           </div>
         </nav>
-        <div style={{ overflowY: "auto", maxHeight: "900px", width: "1400px" }}>
-          <h1>User List</h1>
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by firstname"
-              value={searchTerm.firstname}
-              onChange={(e) =>
-                setSearchTerm({ ...searchTerm, firstname: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Search by lastname"
-              value={searchTerm.lastname}
-              onChange={(e) =>
-                setSearchTerm({ ...searchTerm, lastname: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Search by username"
-              value={searchTerm.username}
-              onChange={(e) =>
-                setSearchTerm({ ...searchTerm, username: e.target.value })
-              }
-            />
-            <i className="search-icon">
-              <FontAwesomeIcon icon={faSearch} />
-            </i>
-          </div>
+        <div className="main-top-admin">
+          <div className="top-admin"></div>
+        </div>
 
-          <div style={{ height: 400, width: "90%" }}>
-            <DataGrid rows={filteredUsers} columns={columns} />
-          </div>
+        <div style={{ height: 400, width: "90%" }}>
+          <h1> Users List</h1>
+          <DataGrid rows={filteredUsers} columns={columns} />
         </div>
       </div>
     </>

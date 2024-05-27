@@ -17,11 +17,14 @@ import UpdateIcon from "@mui/icons-material/Update";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import LockResetIcon from "@mui/icons-material/LockReset";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-// Importez le fichier CSS
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
 import "./vice.css";
 const style = {
   position: "absolute",
@@ -54,12 +57,32 @@ function Comission_gestion() {
       .then((response) => response.json())
       .then((data) => {
         setBinomes(data);
+        console.log(data);
         setOpen(true);
       })
       .catch((error) => console.error("Error fetching binome data:", error));
   };
 
   const handleClose = () => setOpen(false);
+  const [participants, setParticipants] = useState([]);
+  const [openParticipants, setOpenParticipants] = useState(false);
+
+  /*fetch("/enseignants_participants")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch participants");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setParticipants(data);
+        setOpenParticipants(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching participants:", error);
+      });
+  };*/
+
   // Utilisez useEffect pour effectuer une action dès que le composant est monté
   /*useEffect(() => {
         // Fetch enseignants data from backend
@@ -282,6 +305,31 @@ function Comission_gestion() {
         searchTerm.username.toLowerCase()
       )
   );
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3002/delete_all_binome_comission"
+      );
+      if (response.status === 200) {
+        // Mise à jour des boutons de sélection après la suppression réussie
+        setenseignants((enseignants) => {
+          return enseignants.map((enseignant) => {
+            return { ...enseignant, isInCommission: false, isPresident: false };
+          });
+        });
+        alert("All records in Binome_Comission table have been deleted.");
+      } else {
+        alert("Failed to delete records.");
+      }
+    } catch (error) {
+      console.error("Error deleting records:", error);
+      alert(
+        "An error occurred while deleting records. Please try again later."
+      );
+    }
+  };
+
   const columns = [
     { field: "Username_NSS", headerName: "Social Security Number", width: 200 },
     { field: "Firstname_fr", headerName: "First name", width: 130 },
@@ -338,8 +386,8 @@ function Comission_gestion() {
     },
   ];
   const binomeColumns = [
-    { field: "Username_NSS1", headerName: "Member 1", width: 200 },
-    { field: "Username_NSS2", headerName: "Member 2", width: 200 },
+    { field: "Username_Nss1", headerName: "Member 1", width: 200 },
+    { field: "Username_Nss2", headerName: "Member 2", width: 200 },
     { field: "Type_traitement", headerName: "Type of Treatment", width: 200 },
   ];
   return (
@@ -385,16 +433,24 @@ function Comission_gestion() {
                   Commission
                 </Link>
               </li>
+
               <li>
-                <Link to={`/Vice_deans/${id}/binome`}>
-                  <PeopleOutlineIcon style={{ marginRight: "9px" }} />
-                  Binome
+                <Link to={`/Vice_deans/${id}/Dossier`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                  files
                 </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/DemandeDoc`}>
-                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                  files
+                <Link to={`/Session`}>
+                  {" "}
+                  <LockResetIcon style={{ marginRight: "9px" }} />
+                  Session
+                </Link>
+              </li>
+              <li>
+                <Link to="/LoginG">
+                  <NewspaperIcon style={{ marginRight: "9px" }} />
+                  News
                 </Link>
               </li>
               <li>
@@ -423,6 +479,7 @@ function Comission_gestion() {
               </i>*/}
             </div>
           </div>
+
           <Button
             variant="contained"
             color="primary"
@@ -431,7 +488,7 @@ function Comission_gestion() {
           >
             View pair
           </Button>
-          <div>
+          <div style={{ height: 500 }}>
             <DataGrid rows={filteredenseignants} columns={columns} />
           </div>
           <div padding-left="10%">
@@ -453,11 +510,19 @@ function Comission_gestion() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            List of Binomes
+            List of Pair
           </Typography>
           <div style={{ height: "100%", width: "100%" }}>
             <DataGrid rows={binomes} columns={binomeColumns} />
           </div>
+          <Button
+            variant="contained"
+            startIcon={<DeleteIcon />}
+            color="error"
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
         </Box>
       </Modal>
     </>

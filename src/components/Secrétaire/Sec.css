@@ -16,22 +16,12 @@
   height: 100vh;
   width: 100vw;
   flex-direction: row;
+  background-image: url("./Pic-2/usthb16.jpg");
+  background-size: cover;
 }
-.nav_sec {
-  /* position: sticky;
-  top: 0;
-  left: 0;
-  bottom: 0;
+.nav_sec_ {
   width: 250px;
-  height: 100vh; /* Ajustez la hauteur selon vos besoins */
-  /*background-color: #273583;
-  color: white;
-  display: flex;
-  flex-direction: column; /* Pour aligner les éléments verticalement */
-  /*justify-content: flex-start; /* Pour aligner les éléments en haut */
-  /* border-radius: 0px 15px 15px 0px; */
-  width: 250px;
-  background-color: #fdad0e;
+  border-radius: 5px;
 }
 
 /*.navbar_vice li a {
@@ -48,26 +38,23 @@
   background-color: #c7c7c78c;
   /* font-size: 80%;*/
   height: 8vh;
-  width: 240px;
-  border-radius: 20px;
   transition: 0.5s;
-  padding: 3%;
 }
 
-.logo {
+.logo-sec {
   margin: 2rem 0 1rem 0;
   padding-bottom: 3rem;
-  display: flex;
+
   align-items: center;
 }
 
-.logo img {
+.logo-sec img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 
-.logo h1 {
+.logo-sec h1 {
   margin-left: 1rem;
   text-transform: uppercase;
 }
@@ -107,16 +94,7 @@ li a {
   width : 1400px;
 }*/
 .main-top {
-  /*width: 80%;
-  background: #fff;
-  padding-top: 5%;
-  padding-left: 13%;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgb(43, 43, 43);*/
-  background: #fff;
+  background: #ffffff96;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -137,8 +115,16 @@ li a {
 
 h1 {
   margin: 20px 10px;
+  color: #fff;
 }
-
+h3 {
+  color: #fff;
+}
+.container-sec {
+  flex: 1;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #ffffffe0;
+}
 .search_bar {
   display: flex;
   padding: 10px;

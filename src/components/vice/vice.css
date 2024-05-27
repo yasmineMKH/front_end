@@ -16,8 +16,13 @@
   height: 100vh;
   width: 100vw;
   flex-direction: row;
-
   background-image: url("./Pic/USTHB2.jpg");
+}
+.dashboard-container_ens {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: row;
 }
 
 .nav_vice {
@@ -37,12 +42,17 @@
   margin-top: 2rem; /* Ajustez la marge selon vos besoins */
 }
 
-.navbar_vice ul :hover {
+.navbar_vice li:hover {
   background-color: #c7c7c78c;
   /* font-size: 80%;*/
   height: 8vh;
   transition: 0.5s;
 }
+.navbar_vice li:active {
+  border-bottom: 3px solid #338ecf;
+  background: #eee;
+}
+
 .sedan-regular {
   font-family: "Sedan", serif;
   font-weight: 550;
@@ -110,7 +120,7 @@ li {
   width : 1400px;
 }*/
 .main-top {
-  background: #ffffff7e;
+  background: #fdfdfd3a;
   flex: 1;
   display: flex;
   flex-direction: column;
