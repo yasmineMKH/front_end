@@ -30,7 +30,7 @@ import BinomesComponent from "./components/vice/Binome_vice";
 
 import Profile_E from "./components/Enseignant/Profile_E";
 import UpdateSessions from "./components/Secrétaire/Gerer_session";
-import Page_SPE from "./components/Doctorant/Demande/Page_SPE";
+import Page_SPE from "./components/Doctorant/Page_C_R_SPE";
 import Doc_dem_SPE2 from "./components/Doctorant/Demande/Doc_dem_SPE2";
 import Teacher from "./components/vice/Teacher";
 import Home_sec from "./components/Secrétaire/Home_sec";
@@ -42,6 +42,15 @@ import Traitement_demande from "./components/Membre_commission/Traitement_dossie
 import recours_SPE from "./components/Doctorant/Demande/recours_SPE";
 import Gerer_BP from "./components/vice/Gerer_BP";
 import CSF from "./components/Membre_commission/CSF";
+import Doc_dem_MSI1 from "./components/Enseignant/Demandes/MSI1";
+import Doc_dem_MSI2 from "./components/Enseignant/Demandes/MSI2";
+import Doc_dem_SSHN2 from "./components/Enseignant/Demandes/SSHN2";
+import Doc_dem_SSHN1 from "./components/Enseignant/Demandes/SSHN1";
+import DossierEns from "./components/vice/DossierEns";
+import Page_MSI from "./components/Enseignant/Page_C_R_MSI";
+import Page_SSHN from "./components/Enseignant/Page_C_R_SSHN";
+import Traitement_Demande_recours from "./components/Membre_commission/Traitement_apres_recours";
+import NullifyNotesButton from "./components/vice/Vider_notes";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
@@ -61,9 +70,24 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/homeEnseignant/:id" element={<Home_E />} />
         <Route path="/profileEnseignant/:id" element={<Profile_E />} />
+        <Route
+          path="/:Username/Traitement_dossier"
+          element={<Traitement_demande />}
+        />
+        <Route path="/Eseignant/MSI1/:Username" element={<Doc_dem_MSI1 />} />
+        <Route path="/Eseignant/MSI2/:Username" element={<Doc_dem_MSI2 />} />
+        <Route path="/Eseignant/SSHN1/:Username" element={<Doc_dem_SSHN1 />} />
+        <Route path="/Eseignant/SSHN2/:Username" element={<Doc_dem_SSHN2 />} />
+        <Route path="/:Username/Page_SSHN" element={<Page_SSHN />} />
+        <Route path="/:Username/Page_MSI" element={<Page_MSI />} />
+        <Route path="/:Username/CSF" element={<CSF />} />
+        <Route
+          path="/:Username/Recours"
+          element={<Traitement_Demande_recours />}
+        />
 
         <Route path="/homeDoctorant/:id" element={<Home_D />} />
-        <Route path="/Page_SPE/:Username" element={<Page_SPE />} />
+        <Route path="/:Username/Page_SPE" element={<Page_SPE />} />
         <Route path="/demandeSPE/:Username" element={<Doc_dem_SPE />} />
         <Route path="/demandeSPE2/:Username" element={<Doc_dem_SPE2 />} />
         <Route path="/recours_SPE/:Username" element={<recours_SPE />} />
@@ -73,12 +97,17 @@ function App() {
         <Route path="/Vice_deans/:id" element={<Vice_homevice />} />
         <Route path="/Vice_deans/:id/teachers" element={<Teacher />} />
         <Route path="/Vice_deans/:id/Dossier" element={<DossierDoc />} />
-        <Route path="CSF" element={<CSF />} />
+        <Route path="/Vice_deans/:id/DossierEns" element={<DossierEns />} />
+        <Route
+          path="/Vice_deans/:id/Recours"
+          element={<NullifyNotesButton />}
+        />
+
         <Route
           path="/Vice_deans/:id/comission"
           element={<Comission_gestion />}
         />
-        <Route path="/Traitement_dossier" element={<Traitement_demande />} />
+
         <Route path="/Vice_deans/:id/binome" element={<BinomesComponent />} />
         <Route path="/Vice_deans/:id/Budget" element={<Gerer_BP />} />
         <Route path="/Admin/:id" element={<AdminDashboard />} />
@@ -103,5 +132,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

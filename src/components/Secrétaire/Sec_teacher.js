@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-// Importez les éléments de react-router-dom
 import { NavLink, Link } from "react-router-dom";
-// Importez FontAwesomeIcon et l'icône de recherche
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -33,7 +33,6 @@ import {
 // Importez le fichier CSS
 import "./Sec.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 
 const style = {
   position: "absolute",
@@ -96,7 +95,7 @@ function Sec_teacher() {
     e.preventDefault();
     if (isEditing) {
       Axios.put(
-        `http://localhost:3002/updatdoctorant/${selectedEnseignant.id}`,
+        `http://localhost:3002/updateacher/${selectedEnseignant.id}`,
         formData
       )
         .then((res) => {
@@ -284,19 +283,19 @@ function Sec_teacher() {
 
             <ul>
               <li>
-                <Link to={`/Secrétaire/Profile`}>
+                <Link to={`/Secrétaire/id`}>
                   <AccountCircleIcon style={{ marginRight: "9px" }} />
                   Profile
                 </Link>
               </li>
 
               <li>
-                <Link to={`/Secrétaire /teachers`}>
+                <Link to={`/Secrétaire/:id/Teachers`}>
                   <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
                 </Link>
               </li>
               <li>
-                <Link to={`/Secrétaire/ students`}>
+                <Link to={`/Secrétaire/:id/Doctorants`}>
                   {" "}
                   <SchoolIcon style={{ marginRight: "9px" }} />
                   Students
@@ -310,12 +309,18 @@ function Sec_teacher() {
                 </Link>
               </li>
               <li>
+                <Link to={`/Vice_deans/:id/Recours`}>
+                  {" "}
+                  <LockResetIcon style={{ marginRight: "9px" }} />
+                  Recours
+                </Link>
+              </li>
+              <li>
                 <Link to="/LoginG">
                   <NewspaperIcon style={{ marginRight: "9px" }} />
                   News
                 </Link>
               </li>
-
               <li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
@@ -415,14 +420,17 @@ function Sec_teacher() {
                   sx={{ mb: 2 }}
                 />
                 <TextField
-                  label="Birth Date"
-                  variant="outlined"
-                  fullWidth
+                  label="Date of Birth"
+                  type="date"
                   value={formData.Date_naissance}
                   onChange={(e) =>
                     setFormData({ ...formData, Date_naissance: e.target.value })
                   }
-                  sx={{ mb: 2 }}
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Birth Place"
@@ -447,29 +455,47 @@ function Sec_teacher() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <Select
-                  label="Gender"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Sexe}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Sexe: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  <MenuItem value="M">Male</MenuItem>
-                  <MenuItem value="F">Female</MenuItem>
-                </Select>
-                <TextField
-                  label="Grade"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Grade}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Grade: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Gender"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Sexe}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Sexe: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="M">Male</MenuItem>
+                    <MenuItem value="F">Female</MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Grade"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Grade}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Grade: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Professeur">Professeur</MenuItem>
+                    <MenuItem value="Maitre de Conférance A">
+                      Maitre de Conférance A
+                    </MenuItem>
+                    <MenuItem value="Maitre de Conférance B">
+                      Maitre de Conférance B
+                    </MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="Speciality"
                   variant="outlined"
@@ -520,16 +546,24 @@ function Sec_teacher() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="status"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Situation}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Situation: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Grade"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Situation}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Situation: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="En poste">En poste</MenuItem>
+                    <MenuItem value="En congé">En congé</MenuItem>
+                  </Select>
+                </FormControl>
                 <Button
                   variant="contained"
                   color="primary"
@@ -546,5 +580,4 @@ function Sec_teacher() {
     </>
   );
 }
-// Exportez votre composant  Admin_super_user_List
 export default Sec_teacher;

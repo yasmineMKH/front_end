@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -44,6 +46,8 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 50,
   p: 4,
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
 function Teacher() {
@@ -370,7 +374,6 @@ function Teacher() {
           >
             Add Enseignant
           </Button>
-
           <Modal
             open={open}
             onClose={handleClose}
@@ -438,14 +441,17 @@ function Teacher() {
                   sx={{ mb: 2 }}
                 />
                 <TextField
-                  label="Birth Date"
-                  variant="outlined"
-                  fullWidth
+                  label="Date of Birth"
+                  type="date"
                   value={formData.Date_naissance}
                   onChange={(e) =>
                     setFormData({ ...formData, Date_naissance: e.target.value })
                   }
-                  sx={{ mb: 2 }}
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Birth Place"
@@ -470,29 +476,47 @@ function Teacher() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <Select
-                  label="Gender"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Sexe}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Sexe: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  <MenuItem value="M">Male</MenuItem>
-                  <MenuItem value="F">Female</MenuItem>
-                </Select>
-                <TextField
-                  label="Grade"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Grade}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Grade: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Gender"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Sexe}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Sexe: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="M">Male</MenuItem>
+                    <MenuItem value="F">Female</MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Grade"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Grade}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Grade: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Professeur">Professeur</MenuItem>
+                    <MenuItem value="Maitre de Conférance A">
+                      Maitre de Conférance A
+                    </MenuItem>
+                    <MenuItem value="Maitre de Conférance B">
+                      Maitre de Conférance B
+                    </MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="Speciality"
                   variant="outlined"
@@ -543,23 +567,31 @@ function Teacher() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="Situation"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Situation}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Situation: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Grade"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Situation}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Situation: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="En poste">En poste</MenuItem>
+                    <MenuItem value="En congé">En congé</MenuItem>
+                  </Select>
+                </FormControl>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   fullWidth
                 >
-                  {isEditing ? "Update Enseignant" : "Add Enseignant"}
+                  {isEditing ? "Update teacher" : "Add Enseignant"}
                 </Button>
               </form>
             </Box>

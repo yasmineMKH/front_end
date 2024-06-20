@@ -1,11 +1,5 @@
 import React from "react";
-import "./Sec.css"; // Assurez-vous d'avoir le fichier CSS correspondant
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Axios from "axios";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import "bootstrap-icons/font/bootstrap-icons.css";
-
+import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import SchoolIcon from "@mui/icons-material/School";
@@ -13,24 +7,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-function Home_sec() {
-  const { id } = useParams();
-  const [admin, setAdmin] = useState(null);
-
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      try {
-        const response = await Axios.get(
-          `http://localhost:3002/super_user_info/${id}`
-        );
-        setAdmin(response.data);
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    };
-
-    fetchAdmin();
-  }, [id]);
+import { Link } from "react-router-dom";
+function NullifyNotesButton() {
+  const nullifyNotes = async () => {
+    try {
+      const response = await axios.put("/nullify-notes");
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error nullifying notes:", error);
+      alert("Failed to nullify notes.");
+    }
+  };
 
   return (
     <div className="dashboard-container_sec ">
@@ -46,19 +33,19 @@ function Home_sec() {
 
           <ul>
             <li>
-              <Link to={`/Secrétaire/id`}>
+              <Link to={`/Secrétaire/Profile`}>
                 <AccountCircleIcon style={{ marginRight: "9px" }} />
                 Profile
               </Link>
             </li>
 
             <li>
-              <Link to={`/Secrétaire/:id/Teachers`}>
+              <Link to={`/Secrétaire /teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
             </li>
             <li>
-              <Link to={`/Secrétaire/:id/Doctorants`}>
+              <Link to={`/Secrétaire/ students`}>
                 {" "}
                 <SchoolIcon style={{ marginRight: "9px" }} />
                 Students
@@ -69,13 +56,6 @@ function Home_sec() {
                 {" "}
                 <LockResetIcon style={{ marginRight: "9px" }} />
                 Session
-              </Link>
-            </li>
-            <li>
-              <Link to={`/Vice_deans/:id/Recours`}>
-                {" "}
-                <LockResetIcon style={{ marginRight: "9px" }} />
-                Recours
               </Link>
             </li>
             <li>
@@ -93,23 +73,14 @@ function Home_sec() {
           </ul>
         </div>
       </nav>
-      <section className="main">
-        <div>
-          {admin && (
-            <div>
-              <h1>Secrétaire Details</h1>
-              <p>Firstname: {admin.Firstname}</p>
-              <p>Lastname: {admin.Lastname}</p>
-              <p>Username: {admin.Username}</p>
-              <p>Role: {admin.Role}</p>
-              <p>Email: {admin.Email}</p>
-              {/* Autres informations de l'administrateur si nécessaire */}
-            </div>
-          )}
+      <div className="container-sec">
+        <div className="main-top">
+          <div className="top"></div>
+          <Button onClick={nullifyNotes}>Nullify Notes</Button>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
 
-export default Home_sec;
+export default NullifyNotesButton;

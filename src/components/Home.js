@@ -167,15 +167,14 @@ function Home() {
       </header>
 
       <div className="container-home">
-        {/* <h1 className="sedan-regular1" font-size="10%">
+        <h1 className="sedan-regular1" font-size="10%">
           Welcome to Our Web-site
           <p className="sedan-regular1">
             Here, you will find all news and updates about
             <p className="sedan-regular1">The faculty of Chemistry At USTHB</p>
           </p>
-          
-        </h1>*/}
-        <div style={{ flex: 1, display: "flex", flexDirection: "row" }}>
+        </h1>
+        {/*<div style={{ flex: 1, display: "flex", flexDirection: "row" }}>
           <Box
             sx={{
               maxWidth: 800,
@@ -211,10 +210,7 @@ function Home() {
                 display: "flex",
               }}
             >
-              <div style={{ flex: 2 }}>{steps[activeStep].description}</div>
-              <div style={{ flex: 1 }}>
-                <image src={Image1} width="100" height="100"></image>
-              </div>
+              <div style={{ flex: 1 }}>{steps[activeStep].description}</div>
             </Box>
             <MobileStepper
               variant="text"
@@ -244,7 +240,7 @@ function Home() {
               }
             />
           </Box>
-        </div>
+            </div>*/}
 
         <div>
           {user && (

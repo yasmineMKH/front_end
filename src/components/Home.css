@@ -11,7 +11,7 @@ a {
   text-decoration: none;
 }
 li {
-  list-style: none;
+  padding: 10px;
 }
 .body_HomeDoc {
   background-color: #f0f0f0; /* Couleur de fond */
@@ -27,20 +27,48 @@ li {
   font-family: "Sedan", serif;
   font-weight: 650;
   font-style: normal;
+  color: #f0f0f0;
 }
 .header-new-home {
   background-color: rgb(11, 4, 54);
 }
+.container_MSI2 {
+  background-color: #ffffff;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container_info {
+  background-color: rgba(151, 0, 0, 0.432);
+  margin: auto;
+  width: 50%;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container_info h1 {
+  color: rgb(5, 5, 5);
+}
 .container-home {
   flex: 1;
-  display: flex;
+  /*display: flex;*/
+  padding: 100px;
 }
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(200, 207, 223);
+  background-color: rgb(14, 26, 51);
+
   z-index: 999;
 }
 
@@ -57,7 +85,7 @@ header {
 
 .nav_home_doc li a {
   font-size: 19px;
-  color: rgb(0, 0, 0); /* Modifier la couleur du texte en blanc */
+  color: rgb(255, 255, 255); /* Modifier la couleur du texte en blanc */
 }
 
 .toggle_menu,
@@ -77,6 +105,7 @@ header {
 .nav_item {
   margin: 0 1.5rem;
   padding: 1.4rem 0;
+  color: #f0f0f0;
 }
 
 .nav_link {
@@ -112,20 +141,18 @@ header {
 .content {
   position: absolute;
   display: flex;
-  padding: 1rem 1rem;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 0 0 20px 20px;
+  background-color: rgb(14, 26, 51);
+  border-radius: 0 0 10px 10px;
   justify-content: center;
   left: 0;
+  text-align: center;
 }
 .megamenu_item {
   display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
+  align-items: flex-end;
 }
-.header_megamenu {
-}
+
 /*#diaporama {
     position: relative;
     width: 100%;

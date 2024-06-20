@@ -89,7 +89,7 @@ function Doc_dem_SPE() {
       <header>
         <nav className="nav_home_doc">
           <div className="lab">
-            <p className="sedan-regular">Faculty of Chemistry</p>
+            <p className="sedan-regular1">Faculty of Chemistry</p>
           </div>
           <div className="toggle_menu">
             <i class="bx bx-grid-alt"></i>
@@ -110,11 +110,7 @@ function Doc_dem_SPE() {
               <i class="bx bxs-user-detail" style={{ marginRight: "20px" }}></i>
             </a>
           </li>
-          <li className="nav_item">
-            <a className="nav_link" href="#">
-              Faculty
-            </a>
-          </li>
+
           <li className="nav_item">
             <a className="nav_link dropdown_link" href="#" onClick={toggleMenu}>
               Formation <i class="bx bx-chevron-down"></i>
@@ -137,16 +133,7 @@ function Doc_dem_SPE() {
               </div>
             )}
           </li>
-          <li className="nav_item">
-            <a className="nav_link" href="#">
-              About
-            </a>
-          </li>
-          <li className="nav_item">
-            <a className="nav_link" href="#">
-              Contact Us
-            </a>
-          </li>
+
           <li className="nav_item">
             {" "}
             <Link className="nav_link" to="/Login">
@@ -161,7 +148,7 @@ function Doc_dem_SPE() {
       </header>
       <div className="container-form1">
         <form className="container1">
-          <h1 className="h1-inscri">
+          <h1 className="h1-SPE">
             Form for the application for an internship abroad.
           </h1>
 
@@ -242,7 +229,9 @@ function Doc_dem_SPE() {
             onChange={(e) => setfin(e.target.value)}
           />
           <form>
-            <p>Enter your school certificate form pdf</p>
+            <p className="sedan-regular3">
+              Enter your school certificate form pdf
+            </p>
             <Button
               component="label"
               role={undefined}

@@ -4,7 +4,15 @@
   justify-content: center;
   align-items: center;
 }
-
+.body-SSHN {
+  background-color: #f1f5ff;
+  background: linear-gradient(to right, #f0f0f0, #f1f5ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 30vh;
+}
 .form-inscri {
   background: #000000;
   padding: 40px;
@@ -13,6 +21,109 @@
   max-width: 600px;
   width: 500px;
   padding-left: 10px;
+}
+.container_info_SSHN {
+  background-color: rgb(151, 0, 0);
+  margin: auto;
+  width: 50%;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+  position: absolute;
+  top: 27%;
+  height: 30vh;
+  font-size: medium;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container_info_SSHN2 {
+  background-color: rgb(151, 0, 0);
+  margin: auto;
+  width: 50%;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+  position: absolute;
+  top: 27%;
+  font-size: medium;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container_info_MSI {
+  background-color: rgb(151, 0, 0);
+  margin: auto;
+  width: 50%;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+  position: absolute;
+  top: 27%;
+  font-size: small;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container_SSHN {
+  background-color: #ffffffab;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 87%;
+  left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
+}
+.container_MSI {
+  background-color: #ffffffab;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
+}
+.sedan-regular3 {
+  font-family: "Sedan", serif;
+  font-weight: 650;
+  font-style: normal;
+  color: #f10a0a;
+}
+.container_info_MSI2 {
+  background-color: rgb(151, 0, 0);
+  margin: auto;
+  width: 50%;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container_SSHN {
+  background-color: #ffffffab;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 93%;
+  left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
+}
+.container_SSHN2 {
+  background-color: #ffffffab;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
 }
 .container1 {
   /*width: 50vw;
@@ -28,15 +139,83 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  margin-top: 10%;
+  transform: translate(-50%, -50%);
+}
+.container2 {
+  /*width: 50vw;
+  height: 100vh;
+  
+  padding: 50px;
+  padding-left: 50px;*/
+  background-color: #ffffffab;
+  margin: auto;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 10%;
   transform: translate(-50%, -50%);
 }
 .container-form1 {
   width: 100vw;
-  height: 100vh;
+  height: 160vh;
   background-color: #fffcfc;
   border-radius: 10px 10px 10px 10px;
   background-image: url("./Pic-1/formilaire.jpg");
   background-size: cover;
+  padding-top: 10px;
+}
+.container-inscri-SSHN {
+  width: 100vw;
+  height: 250vh;
+  background-color: #fffcfc;
+  border-radius: 10px 10px 10px 10px;
+  background-image: url("../../vice/Pic//pexels-asia-culture-center-3116378-4940642.jpg");
+  background-size: cover;
+  padding-top: 10px;
+}
+.container-inscri-SSHN2 {
+  width: 100vw;
+  height: 200vh;
+  background-color: #fffcfc;
+  border-radius: 10px 10px 10px 10px;
+  background-image: url("../../vice/Pic//pexels-asia-culture-center-3116378-4940642.jpg");
+  background-size: cover;
+  padding-top: 10px;
+}
+.container-inscri-MSI {
+  width: 100vw;
+  height: 300vh;
+  background-color: #fffcfc;
+  border-radius: 10px 10px 10px 10px;
+  background-image: url("../../vice/Pic//pexels-asia-culture-center-3116378-4940642.jpg");
+  background-size: cover;
+  padding-top: 10px;
+}
+.container-inscri-MSI2 {
+  width: 100vw;
+  height: 150vh;
+  background-color: #fffcfc;
+  border-radius: 10px 10px 10px 10px;
+  background-image: url("../../vice/Pic//pexels-asia-culture-center-3116378-4940642.jpg");
+  background-size: cover;
+  padding-top: 10px;
+}
+
+.h1-SPE {
+  font-family: "Sedan", serif;
+  font-weight: 550;
+  font-style: normal;
+  color: #000000;
+}
+.h1-info {
+  font-family: "Sedan", serif;
+  font-weight: 550;
+  font-style: normal;
+  color: #ffffff;
 }
 .h1-inscri {
   margin-bottom: 20px;

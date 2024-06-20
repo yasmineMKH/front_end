@@ -5,7 +5,14 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Button from "@mui/material/Button";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 function Profile_sec() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -83,29 +90,61 @@ function Profile_sec() {
   };
   return (
     <div className="dashboard_container_edit_sec">
-      <nav className="nav_sec">
+      <nav className="nav_sec_">
         <div className="navbar_sec">
-          <div className="logo">
-            <img src="/pic/logo.jpg" alt="" />
-            <h1>jobs</h1>
+          <div className="logo-sec">
+            <h1 className="sedan-regular">Faculty of Chemistry</h1>
+            <div>
+              <hr className=" divider" />
+              <h3 className="sedan-regular">Secretaria</h3>
+            </div>
           </div>
+
           <ul>
             <li>
-              <Link to={`/Secrétaire/${id}/Profile`}>Profile</Link>
+              <Link to={`/Secrétaire/id`}>
+                <AccountCircleIcon style={{ marginRight: "9px" }} />
+                Profile
+              </Link>
             </li>
 
             <li>
-              <Link to={`/Secrétaire/${id}/binome`}> Binome</Link>
-            </li>
-            
-            <li>
-              <Link to={`/Secrétaire/${id}/teachers`}>Teachers</Link>
+              <Link to={`/Secrétaire/:id/Teachers`}>
+                <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
+              </Link>
             </li>
             <li>
-              <Link to={`/Secrétaire/${id}/students`}>Students</Link>
+              <Link to={`/Secrétaire/:id/Doctorants`}>
+                {" "}
+                <SchoolIcon style={{ marginRight: "9px" }} />
+                Students
+              </Link>
             </li>
             <li>
-              <Link to="/LoginG">Logout</Link>
+              <Link to={`/Session`}>
+                {" "}
+                <LockResetIcon style={{ marginRight: "9px" }} />
+                Session
+              </Link>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/:id/Recours`}>
+                {" "}
+                <LockResetIcon style={{ marginRight: "9px" }} />
+                Recours
+              </Link>
+            </li>
+            <li>
+              <Link to="/LoginG">
+                <NewspaperIcon style={{ marginRight: "9px" }} />
+                News
+              </Link>
+            </li>
+            <li>
+              <Link to="/LoginG">
+                <LogoutIcon style={{ marginRight: "9px" }} />
+                Logout
+              </Link>
             </li>
           </ul>
         </div>

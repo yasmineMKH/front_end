@@ -16,18 +16,28 @@ import { Select, MenuItem } from "@mui/material";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-function DossierDoc() {
+function DossierEns() {
   const { id } = useParams();
-  const [demande, setDemande] = useState([]);
+  const [demande, setDemandes] = useState([]);
   const [binomes, setBinomes] = useState([]);
   const [selectedBinomes, setSelectedBinomes] = useState({});
   const [validated, setValidated] = useState({});
+  const [demandesSSHN, setDemandesSSHN] = useState([]);
 
   useEffect(() => {
-    const fetchDemandes = async () => {
+    const fetchDemandes_MSI = async () => {
       try {
-        const response = await axios.get("/demande");
-        setDemande(response.data);
+        const response = await axios.get("/demande_MSI");
+        const demandesMSI = response.data.demandesMSI.map((demande) => ({
+          ...demande,
+          id: `MSI-${demande.id}`,
+        }));
+        const demandesSSHN = response.data.demandesSSHN.map((demande) => ({
+          ...demande,
+          id: `SSHN-${demande.id}`,
+        }));
+        const allDemandes = [...demandesMSI, ...demandesSSHN];
+        setDemandes(allDemandes);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,14 +45,14 @@ function DossierDoc() {
 
     const fetchBinomes = async () => {
       try {
-        const response = await axios.get("/binomes_doc");
+        const response = await axios.get("/binomes_ens");
         setBinomes(response.data);
       } catch (error) {
         console.error("Error fetching binomes:", error);
       }
     };
 
-    fetchDemandes();
+    fetchDemandes_MSI();
     fetchBinomes();
   }, []);
 
@@ -70,12 +80,17 @@ function DossierDoc() {
     const [id_binome, Username_Nss1, Username_Nss2] = selectedBinome.split("-");
 
     try {
-      await axios.post("/demande/affectation", {
-        id: demandeId,
+      const endpoint = demandeId.startsWith("MSI-")
+        ? "/demande/affectation_MSI"
+        : "/demande/affectation_SSHN";
+
+      await axios.post(endpoint, {
+        id: demandeId.replace("MSI-", "").replace("SSHN-", ""),
         id_binome,
         Username_Nss1,
         Username_Nss2,
       });
+
       setValidated((prev) => ({ ...prev, [demandeId]: true }));
       alert("Demande validée avec succès");
     } catch (error) {
@@ -86,8 +101,9 @@ function DossierDoc() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "Username_Mat", headerName: "Social Security Number", width: 100 },
+    { field: "Username_NSS", headerName: "Social Security Number", width: 100 },
     { field: "Pays", headerName: "Destination", width: 100 },
+    { field: "Ville", headerName: "City", width: 80 },
     {
       field: "Etablissement_acc",
       headerName: "Receiving facility",
@@ -96,26 +112,10 @@ function DossierDoc() {
     { field: "Date_dep", headerName: "Commencement date", width: 100 },
     { field: "Date_retour", headerName: "Completion date", width: 100 },
     { field: "Periode_Stage", headerName: "Internship period", width: 100 },
-    /* {
-      field: "Certificat",
-      headerName: " Documents",
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="error"
-          href={`http://localhost:3002/uploadfile/${params.row.Certificat}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <PictureAsPdfIcon />
-        </Button>
-      ),
-    },
     {
       field: "Certificat",
       headerName: " Documents",
-      width: 150,
+      width: 100,
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -127,11 +127,12 @@ function DossierDoc() {
           <PictureAsPdfIcon />
         </Button>
       ),
-    },*/
+    },
     {
       field: "Binome",
       headerName: "Pair",
       width: 150,
+
       renderCell: (params) => (
         <Select
           fullWidth
@@ -145,7 +146,7 @@ function DossierDoc() {
           {binomes.map((binome) => (
             <MenuItem
               key={binome.id}
-              value={`${binome.Username_Nss1}-${binome.Username_Nss2}`}
+              value={`${binome.id}-${binome.Username_Nss1}-${binome.Username_Nss2}`}
             >
               {" "}
               {binome.id} - {binome.Username_Nss1} - {binome.Username_Nss2}
@@ -215,10 +216,12 @@ function DossierDoc() {
             </li>
 
             <li>
-              <Link to={`/Vice_deans/:id/DossierEns`}>
-                <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
+              <Link to={`/Vice_deans/${id}/DossierEns`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                files
               </Link>
             </li>
+
             <li>
               <Link to={`/Session`}>
                 {" "}
@@ -251,7 +254,7 @@ function DossierDoc() {
   );
 }
 
-export default DossierDoc;
+export default DossierEns;
 /*
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -271,37 +274,14 @@ import { Select, MenuItem } from "@mui/material";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-function DossierDoc() {
+
+function DossierEns() {
   const { id } = useParams();
-  const [demande, setDemande] = useState([]);
+  const [demande, setDemandes] = useState([]);
   const [binomes, setBinomes] = useState([]);
   const [selectedBinomes, setSelectedBinomes] = useState({});
-  const [selectedBinomes1, setSelectedBinomes1] = useState({});
   const [validated, setValidated] = useState({});
-  const [validated1, setValidated1] = useState({});
-  const [demande1, setDemandes] = useState([]);
-  useEffect(() => {
-    const fetchDemandes = async () => {
-      try {
-        const response = await axios.get("/demande");
-        setDemande(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    const fetchBinomes = async () => {
-      try {
-        const response = await axios.get("/binomes_doc");
-        setBinomes(response.data);
-      } catch (error) {
-        console.error("Error fetching binomes:", error);
-      }
-    };
-
-    fetchDemandes();
-    fetchBinomes();
-  }, []);
+  const [demandesSSHN, setDemandesSSHN] = useState([]);
 
   useEffect(() => {
     const fetchDemandes_MSI = async () => {
@@ -317,23 +297,31 @@ function DossierDoc() {
         }));
         const allDemandes = [...demandesMSI, ...demandesSSHN];
         setDemandes(allDemandes);
+
+        const currentDemande = allDemandes.find((demande) => demande.id === id);
+        if (currentDemande) {
+          const fetchBinomes = async () => {
+            try {
+              const response = await axios.get("/binomes_ens");
+              const filteredBinomes = response.data.filter(
+                (binome) =>
+                  currentDemande.Username_NSS !== binome.Username_Nss1 &&
+                  currentDemande.Username_NSS !== binome.Username_Nss2
+              );
+              setBinomes(filteredBinomes);
+            } catch (error) {
+              console.error("Error fetching binomes:", error);
+            }
+          };
+          fetchBinomes();
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    const fetchBinomes1 = async () => {
-      try {
-        const response = await axios.get("/binomes_ens");
-        setBinomes(response.data);
-      } catch (error) {
-        console.error("Error fetching binomes:", error);
-      }
-    };
-
     fetchDemandes_MSI();
-    fetchBinomes1();
-  }, []);
+  }, [id]);
 
   const renderPdfButton = (url) => (
     <Button
@@ -359,12 +347,17 @@ function DossierDoc() {
     const [id_binome, Username_Nss1, Username_Nss2] = selectedBinome.split("-");
 
     try {
-      await axios.post("/demande/affectation", {
-        id: demandeId,
+      const endpoint = demandeId.startsWith("MSI-")
+        ? "/demande/affectation_MSI"
+        : "/demande/affectation_SSHN";
+
+      await axios.post(endpoint, {
+        id: demandeId.replace("MSI-", "").replace("SSHN-", ""),
         id_binome,
         Username_Nss1,
         Username_Nss2,
       });
+
       setValidated((prev) => ({ ...prev, [demandeId]: true }));
       alert("Demande validée avec succès");
     } catch (error) {
@@ -375,8 +368,9 @@ function DossierDoc() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "Username_Mat", headerName: "Social Security Number", width: 100 },
+    { field: "Username_NSS", headerName: "Social Security Number", width: 100 },
     { field: "Pays", headerName: "Destination", width: 100 },
+    { field: "Ville", headerName: "City", width: 80 },
     {
       field: "Etablissement_acc",
       headerName: "Receiving facility",
@@ -385,26 +379,10 @@ function DossierDoc() {
     { field: "Date_dep", headerName: "Commencement date", width: 100 },
     { field: "Date_retour", headerName: "Completion date", width: 100 },
     { field: "Periode_Stage", headerName: "Internship period", width: 100 },
-    /* {
-      field: "Certificat",
-      headerName: " Certificat",
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="error"
-          href={`http://localhost:3002/uploadfile/${params.row.Certificat}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <PictureAsPdfIcon />
-        </Button>
-      ),
-    },
     {
       field: "Certificat",
       headerName: " Documents",
-      width: 150,
+      width: 100,
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -436,8 +414,7 @@ function DossierDoc() {
               key={binome.id}
               value={`${binome.id}-${binome.Username_Nss1}-${binome.Username_Nss2}`}
             >
-              {" "}
-              {binome.id} - {binome.Username_Nss1} - {binome.Username_Nss2}
+              {`${binome.id} - ${binome.Username_Nss1} - ${binome.Username_Nss2}`}
             </MenuItem>
           ))}
         </Select>
@@ -454,112 +431,7 @@ function DossierDoc() {
           onClick={() => handleValidate(params.row.id)}
           disabled={validated[params.row.id]}
         >
-          {validated[params.row.id] ? "Valide" : "Valide"}
-        </Button>
-      ),
-    },
-  ];
-
-  const handleBinomeSelect1 = (event, demandeId) => {
-    const { value } = event.target;
-    setSelectedBinomes1((prev) => ({ ...prev, [demandeId]: value }));
-  };
-
-  const handleValidate1 = async (demandeId) => {
-    const selectedBinome1 = selectedBinomes1[demandeId];
-    if (!selectedBinome1) return;
-
-    const [id_binome, Username_Nss1, Username_Nss2] =
-      selectedBinome1.split("-");
-
-    try {
-      const endpoint = demandeId.startsWith("MSI-")
-        ? "/demande/affectation_MSI"
-        : "/demande/affectation_SSHN";
-
-      await axios.post(endpoint, {
-        id: demandeId.replace("MSI-", "").replace("SSHN-", ""),
-        id_binome,
-        Username_Nss1,
-        Username_Nss2,
-      });
-
-      setValidated1((prev) => ({ ...prev, [demandeId]: true }));
-      alert("Demande validée avec succès");
-    } catch (error) {
-      console.error("Error validating demande:", error);
-      alert("Erreur lors de la validation de la demande");
-    }
-  };
-
-  const columns1 = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "Username_NSS", headerName: "Social Security Number", width: 100 },
-    { field: "Pays", headerName: "Destination", width: 100 },
-    { field: "Ville", headerName: "City", width: 80 },
-    {
-      field: "Etablissement_acc",
-      headerName: "Receiving facility",
-      width: 100,
-    },
-    { field: "Date_dep", headerName: "Commencement date", width: 100 },
-    { field: "Date_retour", headerName: "Completion date", width: 100 },
-    { field: "Periode_Stage", headerName: "Internship period", width: 100 },
-    /* {
-      field: "Certificat",
-      headerName: " Documents",
-      width: 100,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="error"
-          href={`http://localhost:3002/uploadfile/${params.row.Document}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <PictureAsPdfIcon />
-        </Button>
-      ),
-    },
-    {
-      field: "Binome",
-      headerName: "Pair",
-      width: 150,
-
-      renderCell: (params) => (
-        <Select
-          fullWidth
-          margin="normal"
-          value={selectedBinomes1[params.row.id] || ""}
-          onChange={(e) => handleBinomeSelect1(e, params.row.id)}
-        >
-          <MenuItem value="" disabled>
-            Select a pair
-          </MenuItem>
-          {binomes.map((binome) => (
-            <MenuItem
-              key={binome.id}
-              value={`${binome.id}-${binome.Username_Nss1}-${binome.Username_Nss2}`}
-            >
-              {" "}
-              {binome.id} - {binome.Username_Nss1} - {binome.Username_Nss2}
-            </MenuItem>
-          ))}
-        </Select>
-      ),
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleValidate1(params.row.id)}
-          disabled={validated1[params.row.id]}
-        >
-          {validated1[params.row.id] ? "Valide" : "Valide"}
+          {validated[params.row.id] ? "Validé" : "Validé"}
         </Button>
       ),
     },
@@ -572,11 +444,10 @@ function DossierDoc() {
           <div className="logo-vice">
             <h1 className="sedan-regular">Faculty of Chemistry</h1>
             <div>
-              <hr className=" divider" />
+              <hr className="divider" />
               <h3 className="sedan-regular">Vice Doyen</h3>
             </div>
           </div>
-
           <ul className="sedan-sc-regular">
             <li>
               <Link to={`/Vice_deans/${id}/Profile`}>
@@ -584,7 +455,6 @@ function DossierDoc() {
                 Profile
               </Link>
             </li>
-
             <li>
               <Link to={`/Vice_deans/${id}/teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
@@ -607,17 +477,14 @@ function DossierDoc() {
                 Commission
               </Link>
             </li>
-
             <li>
               <Link to={`/Vice_deans/${id}/Dossier`}>
                 <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
                 files
               </Link>
             </li>
-
             <li>
               <Link to={`/Session`}>
-                {" "}
                 <LockResetIcon style={{ marginRight: "9px" }} />
                 Session
               </Link>
@@ -638,12 +505,8 @@ function DossierDoc() {
         </div>
       </nav>
       <div className="main-top">
-        <h1 className="sedan-regular1">Teachers Files</h1>
-        <div style={{ height: 800, width: "100%" }}>
-          <DataGrid rows={demande1} columns={columns1} />
-        </div>
-        <h1 className="sedan-regular1">Students Files</h1>
-        <div style={{ height: 600, width: "100%" }}>
+        <div className="top-vice"></div>
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid rows={demande} columns={columns} />
         </div>
       </div>
@@ -651,5 +514,5 @@ function DossierDoc() {
   );
 }
 
-export default DossierDoc;
+export default DossierEns;
 */

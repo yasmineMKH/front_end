@@ -12,6 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
+import axios from "react";
 function UpdateSession({ sessionId, sessionName }) {
   const [ouvert, setOuvert] = useState();
 
@@ -61,7 +62,7 @@ function UpdateSession({ sessionId, sessionName }) {
   };
 
   return (
-    <div style={{ padding: "50px" }}>
+    <div style={{ padding: "30px" }}>
       <h2 style={{ fontSize: "20px", color: "black" }}>
         Update Session Status for "{sessionName}"
       </h2>
@@ -90,7 +91,17 @@ function UpdateSessions() {
     { id: 2, name: "Séjour scientifique de courte durée de haut niveau" },
     { id: 3, name: "Stage de perfectionnement à l’étrangé" },
     { id: 4, name: "Session CSF" },
+    { id: 5, name: "Recours" },
   ];
+  const nullifyNotes = async () => {
+    try {
+      const response = await axios.put("/nullify-notes");
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error nullifying notes:", error);
+      alert("Failed to nullify notes.");
+    }
+  };
 
   return (
     <div className="dashboard-container_sec ">
@@ -106,19 +117,19 @@ function UpdateSessions() {
 
           <ul>
             <li>
-              <Link to={`/Secrétaire/Profile`}>
+              <Link to={`/Secrétaire/id`}>
                 <AccountCircleIcon style={{ marginRight: "9px" }} />
                 Profile
               </Link>
             </li>
 
             <li>
-              <Link to={`/Secrétaire /teachers`}>
+              <Link to={`/Secrétaire/:id/Teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
             </li>
             <li>
-              <Link to={`/Secrétaire/ students`}>
+              <Link to={`/Secrétaire/:id/Doctorants`}>
                 {" "}
                 <SchoolIcon style={{ marginRight: "9px" }} />
                 Students
@@ -129,6 +140,13 @@ function UpdateSessions() {
                 {" "}
                 <LockResetIcon style={{ marginRight: "9px" }} />
                 Session
+              </Link>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/:id/Recours`}>
+                {" "}
+                <LockResetIcon style={{ marginRight: "9px" }} />
+                Recours
               </Link>
             </li>
             <li>
@@ -160,3 +178,94 @@ function UpdateSessions() {
 }
 
 export default UpdateSessions;
+
+/*import * as React from "react";
+import { useState, useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import Axios from "axios";
+
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "name", headerName: "Session Name", width: 250 },
+  {
+    field: "action",
+    headerName: "Action",
+    width: 150,
+    renderCell: (params) => (
+      <ActionButton sessionId={params.row.id} sessionName={params.row.name} />
+    ),
+  },
+];
+
+function ActionButton({ sessionId, sessionName }) {
+  const [ouvert, setOuvert] = useState(false);
+
+  useEffect(() => {
+    Axios.get(`/sessions/${sessionId}`)
+      .then((response) => {
+        const sessionIsOpen = response.data.Est_ouverte === "true";
+        setOuvert(sessionIsOpen);
+      })
+      .catch((error) => {
+        console.error("Error fetching session data:", error);
+      });
+  }, [sessionId]);
+
+  const handleOpenSession = async () => {
+    try {
+      await Axios.put(`/sessions/${sessionId}/open`);
+      setOuvert(true);
+      alert("Session opened successfully");
+    } catch (error) {
+      console.error("Error opening session:", error);
+      alert("Failed to open session");
+    }
+  };
+
+  const handleCloseSession = async () => {
+    try {
+      await Axios.put(`/sessions/${sessionId}/close`);
+      setOuvert(false);
+      alert("Session closed successfully");
+    } catch (error) {
+      console.error("Error closing session:", error);
+      alert("Failed to close session");
+    }
+  };
+
+  return (
+    <Button
+      variant="contained"
+      color={ouvert ? "error" : "success"}
+      onClick={ouvert ? handleCloseSession : handleOpenSession}
+    >
+      {ouvert ? "Close Session" : "Open Session"}
+    </Button>
+  );
+}
+
+export default function UpdateSessions() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    Axios.get("/sessions")
+      .then((response) => {
+        setRows(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching sessions:", error);
+      });
+  }, []);
+
+  return (
+    <div style={{ height: 400, width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
+      />
+    </div>
+  );
+}*/
