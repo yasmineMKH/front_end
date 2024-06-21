@@ -49,6 +49,7 @@ import Doc_dem_SSHN1 from "./components/Enseignant/Demandes/SSHN1";
 import DossierEns from "./components/vice/DossierEns";
 import Page_MSI from "./components/Enseignant/Page_C_R_MSI";
 import Page_SSHN from "./components/Enseignant/Page_C_R_SSHN";
+import Liste_Condidat from "./components/vice/Liste_condidat";
 import Traitement_Demande_recours from "./components/Membre_commission/Traitement_apres_recours";
 import NullifyNotesButton from "./components/vice/Vider_notes";
 function App() {
@@ -107,9 +108,10 @@ function App() {
           path="/Vice_deans/:id/comission"
           element={<Comission_gestion />}
         />
-
         <Route path="/Vice_deans/:id/binome" element={<BinomesComponent />} />
         <Route path="/Vice_deans/:id/Budget" element={<Gerer_BP />} />
+        <Route path="/Vice_deans/:id/ListeC" element={<Liste_Condidat />} />
+
         <Route path="/Admin/:id" element={<AdminDashboard />} />
         <Route path="/Admin/:id/user" element={<Admin_Users_List />} />
         <Route

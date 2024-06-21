@@ -431,6 +431,12 @@ function Comission_gestion() {
                   files
                 </Link>
               </li>
+              <li>
+                <Link to={`/Vice_deans/${id}/ListeC`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> liste des
+                  condidats
+                </Link>
+              </li>
               {/*<li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
