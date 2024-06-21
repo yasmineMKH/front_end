@@ -1,4 +1,3 @@
-// Importez React, useState et useEffect
 import React, { useState, useEffect } from "react";
 // Importez les éléments de react-router-dom
 import { NavLink, Link } from "react-router-dom";
@@ -66,64 +65,6 @@ function Comission_gestion() {
   const handleClose = () => setOpen(false);
   const [participants, setParticipants] = useState([]);
   const [openParticipants, setOpenParticipants] = useState(false);
-
-  /*fetch("/enseignants_participants")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch participants");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setParticipants(data);
-        setOpenParticipants(true);
-      })
-      .catch((error) => {
-        console.error("Error fetching participants:", error);
-      });
-  };*/
-
-  // Utilisez useEffect pour effectuer une action dès que le composant est monté
-  /*useEffect(() => {
-        // Fetch enseignants data from backend
-        fetch('/enseignants')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch enseignant data');
-                }
-                return response.json();
-            })
-            .then(enseignants => {
-                setenseignants(enseignants);
-            })
-            .catch(error => {
-                console.error('Error fetching enseignant data:', error);
-            });
-    
-        // Fetch commission data from backend
-        fetch('/membre_commission/info')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch commission data');
-                }
-                return response.json();
-            })
-            .then(commission => {
-                // Mettre à jour l'état des enseignants en fonction de la commission
-                setenseignants(enseignants => {
-                    return enseignants.map(enseignant => {
-                        if (commission.includes(enseignant.Username_NSS)) {
-                            return {...enseignant, isInCommission: true};
-                        } else {
-                            return {...enseignant, isInCommission: false};
-                        }
-                    });
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching commission data:', error);
-            });
-    }, []);*/
 
   useEffect(() => {
     // Fetch enseignants data from backend
@@ -219,30 +160,80 @@ function Comission_gestion() {
   };
 
   const handleMakePresident = (username) => {
-    fetch("/membre_commission/president/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ Username_NSS: username }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to make enseignant president");
+    const currentPresident = enseignants.find((e) => e.isPresident);
+
+    if (currentPresident) {
+      fetch(
+        `/membre_commission/${currentPresident.Username_NSS}/president/delete`,
+        {
+          method: "DELETE",
         }
-        // Mettre à jour la liste des enseignants après avoir défini le président de la commission
-        setenseignants(
-          enseignants.map((enseignant) => {
-            if (enseignant.Username_NSS === username) {
-              return { ...enseignant, isPresident: true };
-            }
-            return enseignant;
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to remove current president");
+          }
+          setenseignants((enseignants) => {
+            return enseignants.map((enseignant) => {
+              if (enseignant.Username_NSS === currentPresident.Username_NSS) {
+                return { ...enseignant, isPresident: false };
+              }
+              return enseignant;
+            });
+          });
+
+          fetch("/membre_commission/president/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ Username_NSS: username }),
           })
-        );
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Failed to make enseignant president");
+              }
+              setenseignants((enseignants) =>
+                enseignants.map((enseignant) => {
+                  if (enseignant.Username_NSS === username) {
+                    return { ...enseignant, isPresident: true };
+                  }
+                  return enseignant;
+                })
+              );
+            })
+            .catch((error) => {
+              console.error("Error making enseignant president:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error removing current president:", error);
+        });
+    } else {
+      fetch("/membre_commission/president/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Username_NSS: username }),
       })
-      .catch((error) => {
-        console.error("Error making enseignant president:", error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to make enseignant president");
+          }
+          setenseignants((enseignants) =>
+            enseignants.map((enseignant) => {
+              if (enseignant.Username_NSS === username) {
+                return { ...enseignant, isPresident: true };
+              }
+              return enseignant;
+            })
+          );
+        })
+        .catch((error) => {
+          console.error("Error making enseignant president:", error);
+        });
+    }
   };
 
   const handleRemovePresident = (username) => {
@@ -440,44 +431,18 @@ function Comission_gestion() {
                   files
                 </Link>
               </li>
-              <li>
-                <Link to={`/Session`}>
-                  {" "}
-                  <LockResetIcon style={{ marginRight: "9px" }} />
-                  Session
-                </Link>
-              </li>
-              <li>
-                <Link to="/LoginG">
-                  <NewspaperIcon style={{ marginRight: "9px" }} />
-                  News
-                </Link>
-              </li>
-              <li>
+              {/*<li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
                   Logout
                 </Link>
-              </li>
+  </li>*/}
             </ul>
           </div>
         </nav>
         <div className="main-top">
           <div className="top-vice">
-            <div className="search-bar_vice">
-              {/*<input
-                type="text"
-                className="input_vice "
-                placeholder="Search by lastname"
-                value={/*searchTerm.lastname}
-                onChange={(e) =>
-                  setSearchTerm({ ...searchTerm, lastname: e.target.value })
-                }
-              />
-              <i className="search-icon">
-                <FontAwesomeIcon icon={faSearch} />
-              </i>*/}
-            </div>
+            <div className="search-bar_vice"></div>
           </div>
 
           <Button
@@ -552,3 +517,412 @@ const separatorRowStyle = {
 
 // Exportez votre composant  Admin_super_user_List
 export default Comission_gestion;
+
+/*
+// Importez React, useState et useEffect
+import React, { useState, useEffect } from "react";
+// Importez les éléments de react-router-dom
+import { NavLink, Link } from "react-router-dom";
+// Importez FontAwesomeIcon et l'icône de recherche
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import Button from "@mui/material/Button";
+import { DataGrid } from "@mui/x-data-grid";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SchoolIcon from "@mui/icons-material/School";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UpdateIcon from "@mui/icons-material/Update";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+import "./vice.css";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  borderRadius: "10px 10px 10px 10px",
+  boxShadow: 24,
+  p: 4,
+};
+
+// Définissez votre composant Admin_Viced_List
+function Comission_gestion() {
+  const { id } = useParams();
+  const [enseignants, setenseignants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+  });
+  const [binomes, setBinomes] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    fetch("/binome_comission")
+      .then((response) => response.json())
+      .then((data) => {
+        setBinomes(data);
+        setOpen(true);
+      })
+      .catch((error) => console.error("Error fetching binome data:", error));
+  };
+
+  const handleClose = () => setOpen(false);
+  const [participants, setParticipants] = useState([]);
+  const [openParticipants, setOpenParticipants] = useState(false);
+
+  useEffect(() => {
+    fetch("/enseignants")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch enseignant data");
+        }
+        return response.json();
+      })
+      .then((enseignants) => {
+        setenseignants(enseignants);
+      })
+      .catch((error) => {
+        console.error("Error fetching enseignant data:", error);
+      });
+
+    fetch("/membre_commission/info")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch commission data");
+        }
+        return response.json();
+      })
+      .then(({ commission, president }) => {
+        setenseignants((enseignants) => {
+          return enseignants.map((enseignant) => {
+            const isInCommission = commission.includes(enseignant.Username_NSS)
+              ? true
+              : false;
+            const isPresident = president.includes(enseignant.Username_NSS)
+              ? true
+              : false;
+            return { ...enseignant, isInCommission, isPresident };
+          });
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching commission data:", error);
+      });
+  }, []);
+
+  const handleClickAdd = (username) => {
+    fetch("/membre_commission", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ Username_NSS: username }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add enseignant to commission");
+        }
+        setenseignants((enseignants) => {
+          return enseignants.map((enseignant) => {
+            if (enseignant.Username_NSS === username) {
+              return { ...enseignant, isInCommission: true };
+            }
+            return enseignant;
+          });
+        });
+      })
+      .catch((error) => {
+        console.error("Error adding enseignant to commission:", error);
+      });
+  };
+
+  const handleClickRemove = (username) => {
+    fetch(`/membre_commission/${username}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to remove enseignant from commission");
+        }
+        setenseignants((enseignants) => {
+          return enseignants.map((enseignant) => {
+            if (enseignant.Username_NSS === username) {
+              return { ...enseignant, isInCommission: false };
+            }
+            return enseignant;
+          });
+        });
+      })
+      .catch((error) => {
+        console.error("Error removing enseignant from commission:", error);
+      });
+  };
+
+  const handleMakePresident = (username) => {
+    const currentPresident = enseignants.find((e) => e.isPresident);
+
+    if (currentPresident) {
+      fetch(
+        `/membre_commission/${currentPresident.Username_NSS}/president/delete`,
+        {
+          method: "DELETE",
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to remove current president");
+          }
+          setenseignants((enseignants) => {
+            return enseignants.map((enseignant) => {
+              if (enseignant.Username_NSS === currentPresident.Username_NSS) {
+                return { ...enseignant, isPresident: false };
+              }
+              return enseignant;
+            });
+          });
+
+          fetch("/membre_commission/president/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ Username_NSS: username }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Failed to make enseignant president");
+              }
+              setenseignants((enseignants) =>
+                enseignants.map((enseignant) => {
+                  if (enseignant.Username_NSS === username) {
+                    return { ...enseignant, isPresident: true };
+                  }
+                  return enseignant;
+                })
+              );
+            })
+            .catch((error) => {
+              console.error("Error making enseignant president:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error removing current president:", error);
+        });
+    } else {
+      fetch("/membre_commission/president/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Username_NSS: username }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to make enseignant president");
+          }
+          setenseignants((enseignants) =>
+            enseignants.map((enseignant) => {
+              if (enseignant.Username_NSS === username) {
+                return { ...enseignant, isPresident: true };
+              }
+              return enseignant;
+            })
+          );
+        })
+        .catch((error) => {
+          console.error("Error making enseignant president:", error);
+        });
+    }
+  };
+
+  const handleRemovePresident = (username) => {
+    fetch(`/membre_commission/${username}/president/delete`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Failed to remove enseignant from president position"
+          );
+        }
+        setenseignants((enseignants) => {
+          return enseignants.map((enseignant) => {
+            if (enseignant.Username_NSS === username) {
+              return { ...enseignant, isPresident: false };
+            }
+            return enseignant;
+          });
+        });
+      })
+      .catch((error) => {
+        console.error(
+          "Error removing enseignant from president position:",
+          error
+        );
+      });
+  };
+
+  const handlebinome_comission = () => {
+    fetch("/binome_comission/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Binômes créés avec succès !");
+        } else {
+          console.error("Échec de la création des binômes.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la création des binômes :", error);
+      });
+  };
+
+  const filteredenseignants = enseignants.filter(
+    (enseignant) =>
+      enseignant.Firstname_fr.toLowerCase().includes(
+        searchTerm.firstname.toLowerCase()
+      ) &&
+      enseignant.Lastname_fr.toLowerCase().includes(
+        searchTerm.lastname.toLowerCase()
+      ) &&
+      enseignant.Username_NSS.toLowerCase().includes(
+        searchTerm.username.toLowerCase()
+      )
+  );
+
+  return (
+    <div className="app">
+      <nav className="navbar">
+        <div className="navbar-left">
+          <div className="search-bar">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
+            <input
+              type="text"
+              placeholder="Rechercher"
+              className="search-input"
+              value={searchTerm.firstname}
+              onChange={(e) =>
+                setSearchTerm({ ...searchTerm, firstname: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        <div className="navbar-center">
+          <h1>Gestion de la Commission</h1>
+        </div>
+      </nav>
+      <div className="container">
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={filteredenseignants}
+            columns={[
+              { field: "Username_NSS", headerName: "Username" },
+              { field: "Firstname_fr", headerName: "Prénom", width: 150 },
+              { field: "Lastname_fr", headerName: "Nom", width: 150 },
+              {
+                field: "isInCommission",
+                headerName: "Membre de la Commission",
+                width: 200,
+                renderCell: (params) =>
+                  params.row.isInCommission ? (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => handleClickRemove(params.row.Username_NSS)}
+                    >
+                      Retirer
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleClickAdd(params.row.Username_NSS)}
+                    >
+                      Ajouter
+                    </Button>
+                  ),
+              },
+              {
+                field: "isPresident",
+                headerName: "Président",
+                width: 200,
+                renderCell: (params) =>
+                  params.row.isPresident ? (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() =>
+                        handleRemovePresident(params.row.Username_NSS)
+                      }
+                    >
+                      Retirer Président
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() =>
+                        handleMakePresident(params.row.Username_NSS)
+                      }
+                      disabled={!!enseignants.find((e) => e.isPresident)}
+                    >
+                      Ajouter Président
+                    </Button>
+                  ),
+              },
+            ]}
+            pageSize={10}
+            rowsPerPageOptions={[5, 10, 20]}
+            getRowId={(row) => row.Username_NSS}
+          />
+        </div>
+      </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Binômes de la Commission
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {binomes.length > 0 ? (
+              binomes.map((binome, index) => (
+                <div key={index}>
+                  {binome.participant1} et {binome.participant2}
+                </div>
+              ))
+            ) : (
+              <div>Aucun binôme trouvé.</div>
+            )}
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+export default Comission_gestion;
+*/

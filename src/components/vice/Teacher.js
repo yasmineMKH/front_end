@@ -330,25 +330,6 @@ function Teacher() {
                   files
                 </Link>
               </li>
-              <li>
-                <Link to={`/Session`}>
-                  {" "}
-                  <LockResetIcon style={{ marginRight: "9px" }} />
-                  Session
-                </Link>
-              </li>
-              <li>
-                <Link to="/LoginG">
-                  <NewspaperIcon style={{ marginRight: "9px" }} />
-                  News
-                </Link>
-              </li>
-              <li>
-                <Link to="/LoginG">
-                  <LogoutIcon style={{ marginRight: "9px" }} />
-                  Logout
-                </Link>
-              </li>
             </ul>
           </div>
         </nav>

@@ -26,6 +26,7 @@ function Page_SSHN() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isSSHNOpen, setIsSSHNOpen] = useState(false);
+  const [isSSHN2Open, setIsSSHN2Open] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [isCommissionMember, setIsCommissionMember] = useState(false);
   const [IsPresident, setIsPresident] = useState(false);
@@ -69,6 +70,22 @@ function Page_SSHN() {
           error
         );
         setIsSSHNOpen(false);
+      });
+
+    Axios.get(`http://localhost:3002/session/sshn2/is_open`)
+      .then((res) => {
+        if (res.status === 200) {
+          setIsSSHN2Open(res.data.is_open);
+        } else {
+          setIsSSHN2Open(false);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la vérification de la session MSI :",
+          error
+        );
+        setIsSSHN2Open(false);
       });
   }, [Username]);
 
@@ -302,7 +319,7 @@ function Page_SSHN() {
             className="bx bxs-folder-plus"
             style={{ fontSize: "48px", color: "purple" }}
           ></i>
-          {isSSHNOpen ? (
+          {isSSHN2Open ? (
             <Link to={`/Eseignant/SSHN2/${Username}`}>
               <span className="nav-item">Send your document</span>
             </Link>

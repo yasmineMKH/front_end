@@ -81,12 +81,12 @@ function Vice_homevice() {
                 files
               </Link>
             </li>
-            <li>
-              <Link to="/LoginG">
-                <LogoutIcon style={{ marginRight: "9px" }} />
-                Logout
-              </Link>
-            </li>
+            {/* <li>
+                <Link to="/LoginG">
+                  <LogoutIcon style={{ marginRight: "9px" }} />
+                  Logout
+                </Link>
+  </li>*/}
           </ul>
         </div>
       </nav>

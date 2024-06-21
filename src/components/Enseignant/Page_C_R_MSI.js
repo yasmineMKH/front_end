@@ -26,6 +26,7 @@ function Page_MSI() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isMSISessionOpened, setIsMSISessionOpened] = useState(false);
+  const [isMSI2SessionOpened, setIsMSI2SessionOpened] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const [isCommissionMember, setIsCommissionMember] = useState(false);
   const [IsPresident, setIsPresident] = useState(false);
@@ -88,6 +89,21 @@ function Page_MSI() {
           error
         );
         setIsMSISessionOpened(false);
+      });
+    Axios.get(`http://localhost:3002/session/msi2/is_open`)
+      .then((res) => {
+        if (res.status === 200) {
+          setIsMSI2SessionOpened(res.data.is_open);
+        } else {
+          setIsMSI2SessionOpened(false);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la vérification de la session MSI :",
+          error
+        );
+        setIsMSI2SessionOpened(false);
       });
   }, [Username]);
 
@@ -323,7 +339,7 @@ function Page_MSI() {
             className="bx bxs-folder-plus"
             style={{ fontSize: "48px", color: "purple" }}
           ></i>
-          {isMSISessionOpened ? (
+          {isMSI2SessionOpened ? (
             <Link to={`/Eseignant/MSI2/${Username}`}>
               <span className="nav-item">Send your document</span>
             </Link>

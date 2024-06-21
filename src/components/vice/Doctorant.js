@@ -161,9 +161,6 @@ function Doctorant() {
               </li>
 
               <li>
-                <Link to={`/Vice_deans/${id}/binome`}> Binome</Link>
-              </li>
-              <li>
                 <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
               </li>
               <li>
@@ -179,9 +176,12 @@ function Doctorant() {
               </li>
               <li> candidate files </li>
 
-              <li>
-                <Link to="/LoginG">Logout</Link>
-              </li>
+              {/* <li>
+                <Link to="/LoginG">
+                  <LogoutIcon style={{ marginRight: "9px" }} />
+                  Logout
+                </Link>
+  </li>*/}
             </ul>
           </div>
         </nav>

@@ -24,6 +24,21 @@
   border-radius: 5px;
 }
 
+.container-sec {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Ajoutez un espace entre les paires */
+}
+
+.session-pair {
+  display: flex;
+  gap: 20px; /* Ajoutez un espace entre les éléments côte à côte */
+}
+
+.session-pair > div {
+  flex: 1; /* Assurez-vous que les éléments prennent la même largeur */
+}
+
 /*.navbar_vice li a {
   font-size: 16px;
   color: white;  
@@ -123,7 +138,7 @@ h3 {
 .container-sec {
   flex: 1;
   border-radius: 10px 10px 10px 10px;
-  background-color: #ffffffe0;
+  background-color: #ffffff4d;
 }
 .search_bar {
   display: flex;
