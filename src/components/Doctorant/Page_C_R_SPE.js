@@ -27,6 +27,7 @@ function Page_SPE() {
   const handleClose = () => setOpen(false);
   const [isSessionOpened, setIsSessionOpened] = useState(false);
   const [isStageSessionOpened, setIsStageSessionOpened] = useState(false);
+  const [isStage2SessionOpened, setIsStage2SessionOpened] = useState(false);
 
   useEffect(() => {
     // Vérifier si la session "Recours" est ouverte
@@ -61,6 +62,22 @@ function Page_SPE() {
           error
         );
         setIsStageSessionOpened(false);
+      });
+
+    Axios.get(`http://localhost:3002/session/is_open_stage_perfectionnement2`)
+      .then((res) => {
+        if (res.status === 200) {
+          setIsStage2SessionOpened(res.data.is_open);
+        } else {
+          setIsStage2SessionOpened(false);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la vérification de la session Stage de perfectionnement :",
+          error
+        );
+        setIsStage2SessionOpened(false);
       });
   }, [Username]);
 
@@ -149,7 +166,7 @@ function Page_SPE() {
       <header>
         <nav className="nav_home_doc">
           <div className="lab">
-            <p className="seden-regular">Faculty of Chemistry</p>
+            <p className="sedan-regular1">Faculty of Chemistry</p>
           </div>
           <div className="toggle_menu">
             <i className="bx bx-grid-alt"></i>
@@ -173,11 +190,7 @@ function Page_SPE() {
               ></i>
             </Link>
           </li>
-          <li className="nav_item">
-            <Link className="nav_link" to="#">
-              Faculty
-            </Link>
-          </li>
+
           <li className="nav_item">
             <a className="nav_link dropdown_link" href="#" onClick={toggleMenu}>
               Formation <i className="bx bx-chevron-down"></i>
@@ -200,16 +213,7 @@ function Page_SPE() {
               </div>
             )}
           </li>
-          <li className="nav_item">
-            <Link className="nav_link" to="#">
-              About
-            </Link>
-          </li>
-          <li className="nav_item">
-            <Link className="nav_link" to="#">
-              Contact Us
-            </Link>
-          </li>
+
           <li className="nav_item">
             <Link className="nav_link" to="/Login">
               <i className="fas fa-user"></i>
@@ -279,8 +283,8 @@ function Page_SPE() {
             className="bx bxs-folder-plus"
             style={{ fontSize: "48px", color: "purple" }}
           ></i>
-          {isStageSessionOpened ? (
-            <Link to={`/${Username}/demandeSPE2`}>
+          {isStage2SessionOpened ? (
+            <Link to={`/demandeSPE2/${Username}`}>
               <span className="nav-item">Send your document</span>
             </Link>
           ) : (

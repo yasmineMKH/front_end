@@ -773,7 +773,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import LockResetIcon from "@mui/icons-material/LockReset";
 
-import "./Sec.css";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import "../Secrétaire/Sec.css";
 import {
   Box,
   Typography,
@@ -853,8 +855,30 @@ function Doctorants() {
     Username_Mat: "",
   });
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^(05|06|07)\d{8}$/;
+    return phoneRegex.test(number);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateEmail(formData.Mail)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (!validatePhoneNumber(formData.Numero_telephone)) {
+      alert(
+        "Please enter a valid phone number (10 digits starting with 05, 06, or 07)."
+      );
+      return;
+    }
+
     if (isEditing) {
       Axios.put(
         `http://localhost:3002/updatdoctorant/${selectedDoctorant.id}`,
@@ -1061,7 +1085,6 @@ function Doctorants() {
     });
     setOpen(true);
   };
-
   return (
     <>
       <div className="dashboard-container_sec ">
@@ -1166,30 +1189,39 @@ function Doctorants() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="Title"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Titre}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Titre: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-
-                <Select
-                  label="CLE"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.CLE}
-                  onChange={(e) =>
-                    setFormData({ ...formData, CLE: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  <MenuItem value="Inscrit">Inscrit</MenuItem>
-                  <MenuItem value="Non Inscrit">Non Inscrit</MenuItem>
-                </Select>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Title</InputLabel>
+                  <Select
+                    label="Title"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Titre}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Titre: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Mr">Mr</MenuItem>
+                    <MenuItem value="Mme">Mme</MenuItem>
+                    <MenuItem value="Mle">Mle</MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>CLE</InputLabel>
+                  <Select
+                    label="CLE"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.CLE}
+                    onChange={(e) =>
+                      setFormData({ ...formData, CLE: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Inscrit">Inscrit</MenuItem>
+                    <MenuItem value="Non Inscrit">Non Inscrit</MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="First name (FR)"
                   variant="outlined"
@@ -1251,79 +1283,171 @@ function Doctorants() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="Nationality"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Nationalit}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Nationalit: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Status"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Statut}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Statut: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Type of Registration"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Type_inscri}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Type_inscri: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Field of Study"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Filiere}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Filiere: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Domain"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Domaine}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Domaine: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Option"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Option}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Option: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <Select
-                  label="Gender"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Sexe}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Sexe: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                >
-                  <MenuItem value="M">Male</MenuItem>
-                  <MenuItem value="F">Female</MenuItem>
-                </Select>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Statut</InputLabel>
+                  <Select
+                    label="Statut"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Statut}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Statut: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Enseignante">Enseignante</MenuItem>
+                    <MenuItem value="Element libre">Element libre</MenuItem>
+                    <MenuItem value="Ingénieur de Recherche">
+                      Ingénieur de Recherche
+                    </MenuItem>
+                    <MenuItem value="Responsable Commerciale">
+                      Responsable Commerciale
+                    </MenuItem>
+                    <MenuItem value="Attachée de Recherche">
+                      Attachée de Recherche
+                    </MenuItem>
+                    <MenuItem value="Ingénieur de Labo">
+                      Ingénieur de Labo
+                    </MenuItem>
+                    <MenuItem value="Chef de Projet ">Chef de Projet </MenuItem>
+                    <MenuItem value="Police Scientifique">
+                      Police Scientifique{" "}
+                    </MenuItem>
+                    <MenuItem value="Chargée de Recherche">
+                      Chargée de Recherche
+                    </MenuItem>
+                    <MenuItem value="Analyste Développeur">
+                      Analyste Développeur
+                    </MenuItem>
+                    <MenuItem value="MDN">MDN</MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Type of Registration</InputLabel>
+                  <Select
+                    label="Type of Registration"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Type_inscri}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Type_inscri: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="DOCTORAT EN SCIENCES">
+                      DOCTORAT EN SCIENCES
+                    </MenuItem>
+                    <MenuItem value="Doctorat (3ème Cycle)">
+                      Doctorat (3ème Cycle)
+                    </MenuItem>
+                    <MenuItem value="2ème Année MAGISTER">
+                      2ème Année MAGISTER
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Field of Study</InputLabel>
+                  <Select
+                    label="Field of Study"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Filiere}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Filiere: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Chimie">Chimie</MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Statut</InputLabel>
+                  <Select
+                    label="Domain"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Domaine}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Domaine: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="SCIENCES DE LA MATIERE">
+                      SCIENCES DE LA MATIERE
+                    </MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Option</InputLabel>
+                  <Select
+                    label="Option"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Option}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Option: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Chimie Organique Appliquée">
+                      Chimie Organique Appliquée
+                    </MenuItem>
+                    <MenuItem value="Chimie du Médicament">
+                      Chimie du Médicament
+                    </MenuItem>
+                    <MenuItem value="Criminalistique">Criminalistique</MenuItem>
+                    <MenuItem value="Analyse et Contrôle">
+                      Analyse et Contrôle
+                    </MenuItem>
+                    <MenuItem value="Chimie Physique">Chimie Physique</MenuItem>
+                    <MenuItem value="Chimie Physique et Théorique">
+                      Chimie Physique et Théorique
+                    </MenuItem>
+                    <MenuItem value="Environnement">Environnement</MenuItem>
+                    <MenuItem value="Chimie Macromoléculaire">
+                      Chimie Macromoléculaire
+                    </MenuItem>
+                    <MenuItem value="Chimie et Physique des Matériaux Inorganiques">
+                      Chimie et Physique des Matériaux Inorganiques
+                    </MenuItem>
+                    <MenuItem value="Analyse et Contrôle">
+                      Analyse et Contrôle
+                    </MenuItem>
+                    <MenuItem value="Chimie Computationnelle et Spectroscopie">
+                      Chimie Computationnelle et Spectroscopie
+                    </MenuItem>
+                    <MenuItem value="Chimie Computationnelle et Spectroscopie">
+                      Chimie Computationnelle et Spectroscopie
+                    </MenuItem>
+                    <MenuItem value="Physique Chimie Théorique et Chimie Informatique">
+                      Physique Chimie Théorique et Chimie Informatique
+                    </MenuItem>
+                    <MenuItem value="Chimie de la Matière Condensée">
+                      Chimie de la Matière Condensée
+                    </MenuItem>
+
+                    <MenuItem value="Chimie des Matériaux">
+                      Chimie des Matériaux
+                    </MenuItem>
+                  </Select>{" "}
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Gender</InputLabel>
+                  <Select
+                    label="Gender"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Sexe}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Sexe: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="M">Male</MenuItem>
+                    <MenuItem value="F">Female</MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="Address"
                   variant="outlined"
@@ -1336,13 +1460,13 @@ function Doctorants() {
                 />
                 <TextField
                   label="Email"
-                  variant="outlined"
-                  fullWidth
+                  name="Mail"
                   value={formData.Mail}
                   onChange={(e) =>
                     setFormData({ ...formData, Mail: e.target.value })
                   }
-                  sx={{ mb: 2 }}
+                  fullWidth
+                  margin="normal"
                 />
                 <TextField
                   label="Employer Organization"
@@ -1354,16 +1478,25 @@ function Doctorants() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="Access Diploma"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Dip_acces}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Dip_acces: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Access Diploma</InputLabel>
+                  <Select
+                    label="Access Diploma"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.Dip_acces}
+                    onChange={(e) =>
+                      setFormData({ ...formData, Dip_acces: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="Magister">Magister</MenuItem>
+                    <MenuItem value="Master">Master</MenuItem>
+                    <MenuItem value="DEA">DEA</MenuItem>
+                    <MenuItem value="DES">DES</MenuItem>
+                    <MenuItem value="Master">Master</MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="Date Obtained"
                   variant="outlined"
@@ -1385,110 +1518,45 @@ function Doctorants() {
                   }
                   sx={{ mb: 2 }}
                 />
-                <TextField
-                  label="University Year"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.An_univer}
-                  onChange={(e) =>
-                    setFormData({ ...formData, An_univer: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Freezing"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Gel}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Gel: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Subject"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Sujet}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Sujet: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Thesis Director"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Dir_these}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Dir_these: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Director's Grade"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Grade_dir}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Grade_dir: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Place of Practice"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Lieu_exer}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Lieu_exer: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Director's Code"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Code_dir}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Code_dir: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Co-Director's Grade"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Grade_codir}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Grade_codir: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Laboratory"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Labo}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Labo: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Laboratory Director"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.D_labo}
-                  onChange={(e) =>
-                    setFormData({ ...formData, D_labo: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>University Year</InputLabel>
+                  <Select
+                    label="University Year"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.An_univer}
+                    onChange={(e) =>
+                      setFormData({ ...formData, An_univer: e.target.value })
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    <MenuItem value="2007/2008">2007/2008</MenuItem>
+                    <MenuItem value="2008/2009">2008/2009</MenuItem>
+                    <MenuItem value="2009/2010">2009/2010</MenuItem>
+                    <MenuItem value="2010/2011">2010/2011</MenuItem>
+                    <MenuItem value="2011/2012">2011/2012</MenuItem>
+                    <MenuItem value="2012/2013">2012/2013</MenuItem>
+                    <MenuItem value="2013/2014">2013/2014</MenuItem>
+                    <MenuItem value="2014/2015">2014/2015</MenuItem>
+                    <MenuItem value="2015/2016">2015/2016</MenuItem>
+                    <MenuItem value="2016/2017">2016/2017</MenuItem>
+                    <MenuItem value="2019/2018">2019/2018</MenuItem>
+                    <MenuItem value="2018/2019">2018/2019</MenuItem>
+                    <MenuItem value="2019/2020">2019/2020</MenuItem>
+                    <MenuItem value="2020/2022">2020/2022</MenuItem>
+                    <MenuItem value="2022/2023">2022/2023</MenuItem>
+                    <MenuItem value="2023/2024">2023/2024</MenuItem>
+                    <MenuItem value="2024/2025">2024/2025</MenuItem>
+                    <MenuItem value="2025/2026">2025/2026</MenuItem>
+                    <MenuItem value="2026/2027">2026/2027</MenuItem>
+                    <MenuItem value="2027/2028">2027/2028</MenuItem>
+                    <MenuItem value="2028/2029">2028/2029</MenuItem>
+                    <MenuItem value="2029/2030">2029/2030</MenuItem>
+                  </Select>{" "}
+                </FormControl>
                 <TextField
                   label="Phone Number"
-                  variant="outlined"
-                  fullWidth
+                  name="Numero_telephone"
                   value={formData.Numero_telephone}
                   onChange={(e) =>
                     setFormData({
@@ -1496,68 +1564,20 @@ function Doctorants() {
                       Numero_telephone: e.target.value,
                     })
                   }
-                  sx={{ mb: 2 }}
+                  fullWidth
+                  margin="normal"
                 />
                 <TextField
-                  label="Grade"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Grade}
+                  label="Email USTHB "
+                  name="Mail"
+                  value={formData.Mail}
                   onChange={(e) =>
-                    setFormData({ ...formData, Grade: e.target.value })
+                    setFormData({ ...formData, Mail: e.target.value })
                   }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Laboratory"
-                  variant="outlined"
                   fullWidth
-                  value={formData.Laboratoire}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Laboratoire: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
+                  margin="normal"
                 />
-                <TextField
-                  label="Department"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Departement}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Departement: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="USTHB"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Usthb}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Usthb: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="President"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.President}
-                  onChange={(e) =>
-                    setFormData({ ...formData, President: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  label="Supervisor"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.Promoteur}
-                  onChange={(e) =>
-                    setFormData({ ...formData, Promoteur: e.target.value })
-                  }
-                  sx={{ mb: 2 }}
-                />
+
                 <Button
                   variant="contained"
                   color="primary"

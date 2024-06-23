@@ -74,19 +74,23 @@ function Vice_homevice() {
                 Commission
               </Link>
             </li>
-
             <li>
-              <Link to={`/Vice_deans/${id}/Dossier`}>
-                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                files
+              <Link to={`/Vice_deans/${id}/ListeC`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                condidats
               </Link>
             </li>
-            {/* <li>
-                <Link to="/LoginG">
-                  <LogoutIcon style={{ marginRight: "9px" }} />
-                  Logout
-                </Link>
-  </li>*/}
+            <li>
+              <Link to={`/Vice_deans/${id}/Dossier`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> students files
+              </Link>
+            </li>
+
+            <li>
+              <Link to={`/Vice_deans/:id/DossierEns`}>
+                <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

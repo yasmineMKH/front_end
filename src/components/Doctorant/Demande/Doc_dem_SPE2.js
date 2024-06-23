@@ -120,7 +120,7 @@ function Doc_dem_SPE2() {
                   <li className="megamenu_item">
                     <div className="menu_icone"></div>
                     <div className="menu_link">
-                      <Link to={`/Page_SPE/${Username}`}>
+                      <Link to={`/${Username}/Page_SPE`}>
                         <span className="nav-item">
                           Stage de perfectionnent à l'étrangé
                         </span>

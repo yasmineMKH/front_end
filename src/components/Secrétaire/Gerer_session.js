@@ -279,8 +279,9 @@ function UpdateSessions() {
     { id: 3, name: "Séjour scientifique de courte durée de haut niveau" },
     { id: 4, name: "Séjour scientifique de courte durée de haut niveau2" },
     { id: 5, name: "Stage de perfectionnement à l’étrangé" },
-    { id: 6, name: "Session CSF" },
-    { id: 7, name: "Recours" },
+    { id: 6, name: "Stage de perfectionnement à l’étrangé2" },
+    { id: 7, name: "Session CSF" },
+    { id: 8, name: "Recours" },
   ];
 
   const nullifyNotes = async () => {
@@ -369,9 +370,16 @@ function UpdateSessions() {
             sessionId={5}
             sessionName="Stage de perfectionnement à l’étrangé"
           />
-          <UpdateSession sessionId={6} sessionName="Session CSF" />
+          <UpdateSession
+            sessionId={6}
+            sessionName="Stage de perfectionnement à l’étrangé2"
+          />
         </div>
-        {sessions.slice(6).map((session) => (
+        <div className="session-pair">
+          <UpdateSession sessionId={7} sessionName="Session CSF" />
+          <UpdateSession sessionId={8} sessionName="Recours" />
+        </div>
+        {sessions.slice(9).map((session) => (
           <UpdateSession
             key={session.id}
             sessionId={session.id}

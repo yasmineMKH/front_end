@@ -185,13 +185,6 @@ function DossierDoc() {
 
           <ul className="sedan-sc-regular">
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>
-                <AccountCircleIcon style={{ marginRight: "9px" }} />
-                Profile
-              </Link>
-            </li>
-
-            <li>
               <Link to={`/Vice_deans/${id}/teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
@@ -211,6 +204,12 @@ function DossierDoc() {
               <Link to={`/Vice_deans/${id}/comission`}>
                 <GroupsIcon style={{ marginRight: "9px" }} />
                 Commission
+              </Link>
+            </li>
+            <li>
+              <Link to={`/Vice_deans/${id}/ListeC`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                condidats
               </Link>
             </li>
 

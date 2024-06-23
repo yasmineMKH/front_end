@@ -3,9 +3,15 @@ import "./Demande/inscription.css";
 import { NavLink, Link } from "react-router-dom";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { styled } from "@mui/material/styles";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import {
   TextField,
   Button,
@@ -37,23 +43,38 @@ function Doc_dem_SPE() {
   const [f, setfin] = useState("");
   const [menuVisible, setMenuVisible] = useState(false);
 
+  const [dateRange, setDateRange] = React.useState([dayjs(), dayjs()]);
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [isOtherCity, setIsOtherCity] = useState(false);
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
   const addSPE = async (e) => {
     e.preventDefault();
-    if (!u || !p || !et || !pe || !d || !f || !selectedFile) {
+    if (
+      !u ||
+      !p ||
+      !et ||
+      !pe ||
+      !dateRange[0] ||
+      !dateRange[1] ||
+      !selectedFile
+    ) {
       alert("Veuillez remplir tous les champs et sélectionner un fichier");
       return;
     }
-
+    if (!validateDates()) {
+      return;
+    }
     const formData = new FormData();
     formData.append("Username_Mat", u);
     formData.append("Pays", p);
     formData.append("Etablissement_acc", et);
     formData.append("Periode_Stage", pe);
-    formData.append("Date_dep", d);
-    formData.append("Date_retour", f);
+    formData.append("Date_dep", dateRange[0]);
+    formData.append("Date_retour", dateRange[1]);
     formData.append("certificat", selectedFile);
 
     try {
@@ -80,6 +101,40 @@ function Doc_dem_SPE() {
   const [selectedFile, setSelectedFile] = React.useState(null);
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://restcountries.com/v2/all")
+      .then((response) => {
+        setCountries(response.data);
+      })
+      .catch((error) => console.error("Error fetching countries:", error));
+  }, []);
+
+  useEffect(() => {
+    if (p) {
+      axios
+        .get(
+          `http://api.geonames.org/searchJSON?country=${p}&featureClass=P&maxRows=1000&username=myaccount20`
+        )
+        .then((response) => {
+          const cityNames = response.data.geonames.map((city) => city.name);
+          setCities(cityNames);
+        })
+        .catch((error) => console.error("Error fetching cities:", error));
+    } else {
+      setCities([]);
+    }
+  }, [p]);
+
+  const validateDates = () => {
+    const today = dayjs();
+    if (dateRange[0].isBefore(today, "day")) {
+      alert("La date de début ne peut pas être inférieure à la date actuelle.");
+      return false;
+    }
+    return true;
+  };
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -122,7 +177,7 @@ function Doc_dem_SPE() {
                   <li className="megamenu_item">
                     <div className="menu_icone"></div>
                     <div className="menu_link">
-                      <Link to={`/Page_SPE/${Username}`}>
+                      <Link to={`/${Username}/Page_SPE`}>
                         <span className="nav-item">
                           Stage de perfectionnent à l'étrangé
                         </span>
@@ -162,16 +217,26 @@ function Doc_dem_SPE() {
             value={u}
             onChange={(e) => setUsername_Mat(e.target.value)}
           />
-          <TextField
-            id="Country"
-            name="Country"
-            label="Country"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={p}
-            onChange={(e) => setPays(e.target.value)}
-          />
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel id="Country-label">Country</InputLabel>
+            <Select
+              labelId="Country-label"
+              id="Country"
+              name="Country"
+              value={p}
+              onChange={(e) => setPays(e.target.value)}
+              label="Country"
+            >
+              <MenuItem value="">
+                <em>Select a country</em>
+              </MenuItem>
+              {countries.map((country) => (
+                <MenuItem key={country.alpha2Code} value={country.alpha2Code}>
+                  {country.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <TextField
             id="receiving institution"
@@ -200,34 +265,19 @@ function Doc_dem_SPE() {
               <MenuItem value="Semeter2">Semeter2</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            id="start date"
-            name="start date"
-            label="start date of the internship"
-            type="date"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={d}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setdebut(e.target.value)}
-          />
-          <TextField
-            id="end date"
-            name="end date"
-            label="end date of the internship"
-            type="date"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={f}
-            onChange={(e) => setfin(e.target.value)}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DateRangePicker", "DateRangePicker"]}>
+              <DemoItem
+                label="Internship Date Range"
+                component="DateRangePicker"
+              >
+                <DateRangePicker
+                  value={dateRange}
+                  onChange={(newValue) => setDateRange(newValue)}
+                />
+              </DemoItem>
+            </DemoContainer>
+          </LocalizationProvider>
           <form>
             <p className="sedan-regular3">
               Enter your school certificate form pdf

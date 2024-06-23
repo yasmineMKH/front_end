@@ -396,13 +396,6 @@ function Comission_gestion() {
 
             <ul className="sedan-sc-regular">
               <li>
-                <Link to={`/Vice_deans/${id}/Profile`}>
-                  <AccountCircleIcon style={{ marginRight: "9px" }} />
-                  Profile
-                </Link>
-              </li>
-
-              <li>
                 <Link to={`/Vice_deans/${id}/teachers`}>
                   <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
                 </Link>
@@ -414,7 +407,7 @@ function Comission_gestion() {
                 </Link>
               </li>
               <li>
-                <Link to={``}>
+                <Link to={`/Vice_deans/${id}/Budget`}>
                   <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
                 </Link>
               </li>
@@ -424,25 +417,23 @@ function Comission_gestion() {
                   Commission
                 </Link>
               </li>
-
+              <li>
+                <Link to={`/Vice_deans/${id}/ListeC`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                  condidats
+                </Link>
+              </li>
               <li>
                 <Link to={`/Vice_deans/${id}/Dossier`}>
-                  <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> students
                   files
                 </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/ListeC`}>
-                  <FolderCopyIcon style={{ marginRight: "9px" }} /> liste des
-                  condidats
+                <Link to={`/Vice_deans/:id/DossierEns`}>
+                  <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
                 </Link>
               </li>
-              {/*<li>
-                <Link to="/LoginG">
-                  <LogoutIcon style={{ marginRight: "9px" }} />
-                  Logout
-                </Link>
-  </li>*/}
             </ul>
           </div>
         </nav>

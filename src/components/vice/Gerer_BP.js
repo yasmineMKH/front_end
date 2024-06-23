@@ -196,13 +196,6 @@ function Gerer_BP() {
 
           <ul className="sedan-sc-regular">
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>
-                <AccountCircleIcon style={{ marginRight: "9px" }} />
-                Profile
-              </Link>
-            </li>
-
-            <li>
               <Link to={`/Vice_deans/${id}/teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
@@ -224,20 +217,23 @@ function Gerer_BP() {
                 Commission
               </Link>
             </li>
-
+            <li>
+              <Link to={`/Vice_deans/${id}/ListeC`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                condidats
+              </Link>
+            </li>
             <li>
               <Link to={`/Vice_deans/${id}/Dossier`}>
-                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                files
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> students files
               </Link>
             </li>
 
-            {/* <li>
-                <Link to="/LoginG">
-                  <LogoutIcon style={{ marginRight: "9px" }} />
-                  Logout
-                </Link>
-  </li>*/}
+            <li>
+              <Link to={`/Vice_deans/:id/DossierEns`}>
+                <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>
@@ -282,15 +278,7 @@ function Gerer_BP() {
                   onChange={(e) => setBudgetGlobal(e.target.value)}
                   required
                 />
-                {/*<TextField
-                  label="Historique"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={historique}
-                  onChange={(e) => setHistorique(e.target.value)}
-                  required
-  />*/}{" "}
+
                 <p> Enter the archival history of the benifit condidate</p>
                 <Button
                   component="label"

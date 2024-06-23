@@ -77,7 +77,7 @@ function Home_D() {
       <header>
         <nav className="nav_home_doc">
           <div className="lab">
-            <a href="#">Logo</a>
+            <p className="sedan-regular1">Faculty of Chemistry</p>
           </div>
           <div className="toggle_menu">
             <i class="bx bx-grid-alt"></i>
@@ -96,11 +96,6 @@ function Home_D() {
             <a className="nav_link" href="#">
               Profile{" "}
               <i class="bx bxs-user-detail" style={{ marginRight: "20px" }}></i>
-            </a>
-          </li>
-          <li className="nav_item">
-            <a className="nav_link" href="#">
-              Faculty
             </a>
           </li>
           <li className="nav_item">
@@ -142,11 +137,20 @@ function Home_D() {
         {user && (
           <div>
             <h1>Welcome, {user.Username}!</h1>
-            <p>Email: {user.Email}</p>
-            <p>Role: {user.Role}</p>
-            {/* Afficher d'autres informations de l'utilisateur */}
+            <h1 className="sedan-regular1">
+              Welcome, {user.Lastname} {user.Firstname}!
+            </h1>
           </div>
         )}
+      </div>
+      <div className="container-home">
+        <h1 className="sedan-regular1" font-size="10%">
+          Welcome to Our Web-site
+          <p className="sedan-regular1">
+            Here, you will find all news and updates about
+            <p className="sedan-regular1">The faculty of Chemistry At USTHB</p>
+          </p>
+        </h1>
       </div>
     </div>
   );

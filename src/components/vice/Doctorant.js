@@ -155,28 +155,48 @@ function Doctorant() {
             <div className="logo">
               <h1>Faculty of Chemistry</h1>
             </div>
-            <ul>
+            <ul className="sedan-sc-regular">
               <li>
-                <Link to={`/Vice_deans/${id}/Profile`}>Vice Doyen</Link>
-              </li>
-
-              <li>
-                <Link to={`/Vice_deans/${id}/teachers`}>Teachers</Link>
+                <Link to={`/Vice_deans/${id}/teachers`}>
+                  <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
+                </Link>
               </li>
               <li>
-                <Link to={`/Vice_deans/${id}/students`}>Students</Link>
+                <Link to={`/Vice_deans/${id}/students`}>
+                  <SchoolIcon style={{ marginRight: "9px" }} />
+                  Students
+                </Link>
               </li>
               <li>
-                <a href="#"> Parameters management</a>
+                <Link to={``}>
+                  <UpdateIcon style={{ marginRight: "9px" }} /> Parameters
+                </Link>
               </li>
               <li>
                 <Link to={`/Vice_deans/${id}/comission`}>
-                  Commission management
+                  <GroupsIcon style={{ marginRight: "9px" }} />
+                  Commission
                 </Link>
               </li>
-              <li> candidate files </li>
+              <li>
+                <Link to={`/Vice_deans/${id}/ListeC`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                  condidats
+                </Link>
+              </li>
+              <li>
+                <Link to={`/Vice_deans/${id}/Dossier`}>
+                  <FolderCopyIcon style={{ marginRight: "9px" }} /> students
+                  files
+                </Link>
+              </li>
 
-              {/* <li>
+              <li>
+                <Link to={`/Vice_deans/:id/DossierEns`}>
+                  <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
+                </Link>
+              </li>
+              {/*<li>
                 <Link to="/LoginG">
                   <LogoutIcon style={{ marginRight: "9px" }} />
                   Logout

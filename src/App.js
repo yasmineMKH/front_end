@@ -50,6 +50,7 @@ import DossierEns from "./components/vice/DossierEns";
 import Page_MSI from "./components/Enseignant/Page_C_R_MSI";
 import Page_SSHN from "./components/Enseignant/Page_C_R_SSHN";
 import Liste_Condidat from "./components/vice/Liste_condidat";
+import Doc_list from "./components/vice/Doc_List";
 import Traitement_Demande_recours from "./components/Membre_commission/Traitement_apres_recours";
 import NullifyNotesButton from "./components/vice/Vider_notes";
 function App() {
@@ -97,6 +98,7 @@ function App() {
         <Route path="/Vice_deans/:id/Profile" element={<Viced_profile />} />
         <Route path="/Vice_deans/:id" element={<Vice_homevice />} />
         <Route path="/Vice_deans/:id/teachers" element={<Teacher />} />
+        <Route path="/Vice_deans/:id/students" element={<Doc_list />} />
         <Route path="/Vice_deans/:id/Dossier" element={<DossierDoc />} />
         <Route path="/Vice_deans/:id/DossierEns" element={<DossierEns />} />
         <Route

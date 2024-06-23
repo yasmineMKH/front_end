@@ -186,13 +186,6 @@ function DossierEns() {
 
           <ul className="sedan-sc-regular">
             <li>
-              <Link to={`/Vice_deans/${id}/Profile`}>
-                <AccountCircleIcon style={{ marginRight: "9px" }} />
-                Profile
-              </Link>
-            </li>
-
-            <li>
               <Link to={`/Vice_deans/${id}/teachers`}>
                 <PeopleAltIcon style={{ marginRight: "9px" }} /> Teachers
               </Link>
@@ -214,11 +207,21 @@ function DossierEns() {
                 Commission
               </Link>
             </li>
-
+            <li>
+              <Link to={`/Vice_deans/${id}/ListeC`}>
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> list of
+                condidats
+              </Link>
+            </li>
             <li>
               <Link to={`/Vice_deans/${id}/DossierEns`}>
-                <FolderCopyIcon style={{ marginRight: "9px" }} /> Candidate
-                files
+                <FolderCopyIcon style={{ marginRight: "9px" }} /> students files
+              </Link>
+            </li>
+
+            <li>
+              <Link to={`/Vice_deans/:id/DossierEns`}>
+                <GroupsIcon style={{ marginRight: "9px" }} /> Teachers files
               </Link>
             </li>
 
